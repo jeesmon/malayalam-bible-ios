@@ -11,10 +11,9 @@
 			<string key="NS.object.0">933</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBUITextView</string>
-			<string>IBUIView</string>
-			<string>IBUIScrollView</string>
 			<string>IBProxyObject</string>
+			<string>IBUIView</string>
+			<string>IBUIWebView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -36,73 +35,26 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIScrollView" id="1014921688">
+					<object class="IBUIWebView" id="836194997">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUITextView" id="42937355">
-								<reference key="NSNextResponder" ref="1014921688"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{320, 460}</string>
-								<reference key="NSSuperview" ref="1014921688"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
-								<string key="NSReuseIdentifierKey">_NS:639</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MSAxIDEAA</bytes>
-								</object>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSMutableString" key="IBUIText">
-									<bytes key="NS.bytes">RGlzY2xhaW1lcjogSW5mb3JtYXRpb24gcHJvdmlkZWQgaW4gdGhpcyBhcHAgaXMgaW50ZW5kZWQgZm9y
-IHJlc2VhcmNoIGFuZCBlZHVjYXRpb25hbCB1c2Ugb25seS4gRGlzdHJpYnV0aW9uIG9mIHJlbGlnaW91
-cyBtYXRlcmlhbCBpcyByZXN0cmljdGVkIGFuZCBvciBwcm9oaWJpdGVkIGJ5IGxhdyBpbiBjZXJ0YWlu
-IGNvdW50cmllcywgYW5kIG1heSBjb25zdGl0dXRlIGNyaW1pbmFsIG9mZmVuY2VzLiBUaGUgb3duZXIg
-b2YgdGhpcyBhcHAgZG9lcyBub3QgZW5kb3JzZSB0aGUgcHJvcG9nYXRpb24gb2YgYW55IHJlbGlnaW9u
-IG9yIGRvY3RvcmluZSBhbmQgaXMgbm90IGxpYWJsZSBmb3IgdGhlIGFjdGlvbnMgb2YgaW5kaXZpZHVh
-bHMgd2hvIG1heSBjaG9vc2UgdG8gZGlzdHJpYnV0ZSB0aGlzIGNvbnRlbnTigKjigKgKClRlcm1zIG9m
-IFVzZTogIlRoZSBDb21wbGV0ZSBNYWxheWFsYW0gQmlibGUgSW4gVW5pY29kZSBWZXIgMi40IiB3YXMg
-ZW5jb2RlZCBieSBOaXNoYWQgS2FpcHBhbGx5LiBUaGUgQ29udGVudCBwcm92aWRlZCBoYXMgYmVlbiBy
-ZWxlYXNlZCB1bmRlciB0aGUgQ3JlYXRpdmUgQ29tbW9ucyBMaWNlbnNlLiBZb3UgYXJlIGZyZWUgdG8g
-dG8gU2hhcmUsIGNvcHksIGRpc3RyaWJ1dGUgYW5kIHRyYW5zbWl0IHRoZSB3b3JrIGZvciBub24tY29t
-bWVyY2lhbCwgbm9uLXByb2ZpdCB1c2UuIFRoZSBjb250ZW50IHByb3ZpZGVkIGhlcmUgaXMgYmFzZWQg
-b24gIlRoZSBIb2x5IEJpYmxlIiBwcmludGVkIGluIDE5NzcgYnkgIlRoZSBCaWJsZSBTb2NpZXR5IG9m
-IEluZGlhLCAyMCBNYWhhdGhtYSBHYW5kaGkgUm9hZCwgQmFuZ2Fsb3JlLiBJbmRpYSIuCgpBdHRyaWJ1
-dGlvbjogWW91IG11c3QgcHJvdmlkZSBhdHRyaWJ1dGlvbiBhbmQgYSBsaW5rIHRvIGh0dHA6Ly9tYWxh
-eWFsYW1iaWJsZS5pbi4gVGhpcyBkb2VzIG5vdCBpbXBseSB0aGF0IHRoZSBsaWNlbnNvciBlbmRvcnNl
-cyB0aGUgZGVyaXZlZCBvciBhZGFwdGVkIHdvcmsuA</bytes>
-								</object>
-								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
-									<int key="IBUIAutocapitalizationType">2</int>
-									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">1</int>
-									<double key="pointSize">14</double>
-								</object>
-								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica</string>
-									<double key="NSSize">14</double>
-									<int key="NSfFlags">16</int>
-								</object>
-							</object>
-						</array>
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="42937355"/>
-						<string key="NSReuseIdentifierKey">_NS:190</string>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						<string key="NSReuseIdentifierKey">_NS:693</string>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MSAxIDEAA</bytes>
+						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIDataDetectorTypes">1</int>
+						<bool key="IBUIDetectsPhoneNumbers">YES</bool>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="1014921688"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -124,6 +76,22 @@ cyB0aGUgZGVyaXZlZCBvciBhZGFwdGVkIHdvcmsuA</bytes>
 					</object>
 					<int key="connectionID">3</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">webView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="836194997"/>
+					</object>
+					<int key="connectionID">7</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="836194997"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">8</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -137,7 +105,7 @@ cyB0aGUgZGVyaXZlZCBvciBhZGFwdGVkIHdvcmsuA</bytes>
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1014921688"/>
+							<reference ref="836194997"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -153,17 +121,9 @@ cyB0aGUgZGVyaXZlZCBvciBhZGFwdGVkIHdvcmsuA</bytes>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">4</int>
-						<reference key="object" ref="1014921688"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="42937355"/>
-						</array>
+						<int key="objectID">6</int>
+						<reference key="object" ref="836194997"/>
 						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="42937355"/>
-						<reference key="parent" ref="1014921688"/>
 					</object>
 				</array>
 			</object>
@@ -173,20 +133,30 @@ cyB0aGUgZGVyaXZlZCBvciBhZGFwdGVkIHdvcmsuA</bytes>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">5</int>
+			<int key="maxID">8</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">Information</string>
 					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">webView</string>
+						<string key="NS.object.0">UIWebView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">webView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">webView</string>
+							<string key="candidateClassName">UIWebView</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/Information.h</string>

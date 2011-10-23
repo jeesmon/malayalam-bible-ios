@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Information : UIViewController
+@interface Information : UIViewController {
+    UIWebView *webView;
+}
+
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 
 @end

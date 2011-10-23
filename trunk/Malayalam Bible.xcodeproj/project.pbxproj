@@ -13,6 +13,8 @@
 		0FBAE74E1452015F007718D3 /* Chapters.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE74D1452015F007718D3 /* Chapters.png */; };
 		0FBAE75214520F6B007718D3 /* Information.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAE75014520F6B007718D3 /* Information.m */; };
 		0FBAE75314520F6B007718D3 /* Information.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE75114520F6B007718D3 /* Information.xib */; };
+		0FBAE7611453C9B7007718D3 /* ChapterSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAE75F1453C9B7007718D3 /* ChapterSelection.m */; };
+		0FBAE7621453C9B7007718D3 /* ChapterSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */; };
 		0FFE50881450636E00BC85EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50871450636E00BC85EE /* UIKit.framework */; };
 		0FFE508A1450636E00BC85EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50891450636E00BC85EE /* Foundation.framework */; };
 		0FFE508C1450636E00BC85EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE508B1450636E00BC85EE /* CoreGraphics.framework */; };
@@ -39,6 +41,9 @@
 		0FBAE74F14520F6B007718D3 /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
 		0FBAE75014520F6B007718D3 /* Information.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Information.m; sourceTree = "<group>"; };
 		0FBAE75114520F6B007718D3 /* Information.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Information.xib; sourceTree = "<group>"; };
+		0FBAE75E1453C9B7007718D3 /* ChapterSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterSelection.h; sourceTree = "<group>"; };
+		0FBAE75F1453C9B7007718D3 /* ChapterSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterSelection.m; sourceTree = "<group>"; };
+		0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapterSelection.xib; sourceTree = "<group>"; };
 		0FFE50831450636E00BC85EE /* Malayalam Bible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Malayalam Bible.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FFE50871450636E00BC85EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0FFE50891450636E00BC85EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -131,6 +136,9 @@
 				0FBAE74F14520F6B007718D3 /* Information.h */,
 				0FBAE75014520F6B007718D3 /* Information.m */,
 				0FBAE75114520F6B007718D3 /* Information.xib */,
+				0FBAE75E1453C9B7007718D3 /* ChapterSelection.h */,
+				0FBAE75F1453C9B7007718D3 /* ChapterSelection.m */,
+				0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */,
 			);
 			path = "Malayalam Bible";
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 				0FBAE74C1451FFB1007718D3 /* Icon.png in Resources */,
 				0FBAE74E1452015F007718D3 /* Chapters.png in Resources */,
 				0FBAE75314520F6B007718D3 /* Information.xib in Resources */,
+				0FBAE7621453C9B7007718D3 /* ChapterSelection.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +232,7 @@
 				0FFE50C0145088FD00BC85EE /* Book.m in Sources */,
 				0F5EC2281450FA07001C8727 /* ChapterPickerController.m in Sources */,
 				0FBAE75214520F6B007718D3 /* Information.m in Sources */,
+				0FBAE7611453C9B7007718D3 /* ChapterSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "/usr/include/sqlite3.h"
 #import "Information.h"
+#import "ChapterSelection.h"
 
 @class MalayalamBibleDetailViewController;
 
@@ -20,5 +21,6 @@
 
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (strong, nonatomic) Information *infoViewController;
+@property (strong, nonatomic) ChapterSelection *chapterSelectionController;
 
 @end

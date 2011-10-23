@@ -14,6 +14,7 @@
 
 @synthesize detailViewController = _detailViewController;
 @synthesize infoViewController = _infoViewController;
+@synthesize chapterSelectionController = _chapterSelectionController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,7 +54,7 @@
 {
     NSLog(@"Info View");
     self.infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
-    self.infoViewController.title = @"Terms of Use";
+    self.infoViewController.title = @"Information";
     [self.navigationController pushViewController:self.infoViewController animated:YES];
 }
 
@@ -200,14 +201,20 @@
         else {
             selectedBookName = [newTestament objectAtIndex:indexPath.row];
         }
-
         
-        self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];
-        
-                
-        self.detailViewController.selectedBook = [books objectForKey:selectedBookName];
-        
-        [self.navigationController pushViewController:self.detailViewController animated:YES];
+        Book *selectedBook = [books objectForKey:selectedBookName];
+        if(selectedBook.numOfChapters > 1) {
+            self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
+            self.chapterSelectionController.title = selectedBook.shortName;
+            self.chapterSelectionController.selectedBook = selectedBook;
+            [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
+        }
+        else {
+            self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];                
+            self.detailViewController.selectedBook = selectedBook;
+            
+            [self.navigationController pushViewController:self.detailViewController animated:YES];
+        }
     }
 }
 

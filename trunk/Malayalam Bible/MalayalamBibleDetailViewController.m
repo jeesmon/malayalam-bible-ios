@@ -20,9 +20,6 @@
 @synthesize selectedBook = _selectedBook;
 @synthesize chapterId = _chapterId;
 
-@synthesize pickerViewContainer;
-@synthesize chapterPickerController;
-@synthesize chapterPickerViewContainer;
 @synthesize chapterTableView;
 
 #pragma mark - Managing the detail item
@@ -48,10 +45,8 @@
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }        
-        chapterPickerController.numOfChapters = self.selectedBook.numOfChapters;
+        [self getChapter:self.selectedBook.bookId :self.chapterId];
     }
-    
-    [pickerViewContainer addSubview:chapterPickerViewContainer];
 }
 
 - (void)showAlert:(NSString *)message
@@ -79,7 +74,7 @@
     
     if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
         sqlite3_stmt *statement;
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d", bookId, chapterId];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
         const char *queryStmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
             while(sqlite3_step(statement) == SQLITE_ROW) {
@@ -109,13 +104,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"NoteFromChapterPicker" object:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NoteFromChapterPicker" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -219,23 +212,6 @@
     CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
     
     return labelSize.height + 10;
-}
-
-- (void)awakeFromNib {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"NoteFromChapterPicker" object:nil];
-}
-
--(void)handleNotification:(NSNotification *)pNotification
-{
-    NSNumber *num = (NSNumber*)[pNotification object];
-    self.chapterId = num.intValue;
-    
-    if(self.selectedBook) {
-        [self getChapter:self.selectedBook.bookId:self.chapterId];
-        [chapterTableView reloadData];
-    }
-    
-    [chapterPickerViewContainer removeFromSuperview];
 }
 
 @end
