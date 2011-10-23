@@ -1,0 +1,24 @@
+//
+//  MalayalamBibleMasterViewController.h
+//  Malayalam Bible
+//
+//  Created by Jeesmon Jacob on 10/20/11.
+//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "/usr/include/sqlite3.h"
+#import "Information.h"
+
+@class MalayalamBibleDetailViewController;
+
+@interface MalayalamBibleMasterViewController : UITableViewController {
+    NSMutableDictionary *books;
+    NSMutableArray *newTestament;
+    NSMutableArray *oldTestament;
+}
+
+@property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
+@property (strong, nonatomic) Information *infoViewController;
+
+@end
