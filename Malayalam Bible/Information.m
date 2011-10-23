@@ -10,11 +10,12 @@
 
 @implementation Information
 
+@synthesize webView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -32,7 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    NSString *html = @"<html><body style='font-family:verdana;'><h3>Malayalam Bible</h3><b>Version:</b> 1.0<br/><br/><b>Developed by:</b> Jeesmon Jacob (jeesmon@gmail.com)<br/><br/><b>Content obtained from:</b> Nishad  Kaippally (<a href='http://malayalambible.in'>http://malayalambible.in</a>)<br/><br/><b>Disclaimer:</b> Information provided in this App is intended for research and educational use only. Distribution of religious material is restricted and or prohibited by law in certain countries, and may constitute criminal offences. The owner of this website does not endorse the propogation of any religion or doctorine and is not liable for the actions of individuals who may choose to distribute this content<br/><br/><b>Terms of Use:</b> &quot;The Complete Malayalam Bible In Unicode <b>Ver 2.4</b>&quot; was encoded by Nishad  Kaippally. The Content provided has been released under the <a href='http://creativecommons.org/licenses/by-nc/2.5/in/'>Creative Commons License</a>. You are free to to Share, copy, distribute and transmit the work for non-commercial, non-profit use. The content provided here is based on &quot;The Holy Bible&quot; printed in 1977 by &quot;The Bible Society of India, 20 Mahathma Gandhi Road, Bangalore. India&quot;. <br><a href='http://creativecommons.org/licenses/by-nc/2.5/in/'><img src='http://i.creativecommons.org/l/by-nc/2.5/in/88x31.png'></a><br/><br/>&copy; 2011 by Jeesmon Jacob. All rights reserved.</body></html>";
+    [self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://www.jeesmon.com/mb"]];
 }
 
 - (void)viewDidUnload
@@ -46,6 +48,15 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

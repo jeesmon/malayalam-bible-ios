@@ -16,9 +16,6 @@
 @interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDelegate>
 {
     NSMutableArray *verses;
-    UIView *pickerViewContainer;
-    ChapterPickerController *chapterPickerController;
-    UIView *chapterPickerViewContainer;
     UITableView *chapterTableView;
 }
 
@@ -26,9 +23,6 @@
 @property (strong, nonatomic) Book *selectedBook;
 @property (assign, readwrite) int chapterId;
 
-@property (nonatomic, retain) IBOutlet UIView *pickerViewContainer;
-@property (nonatomic, retain) IBOutlet ChapterPickerController *chapterPickerController;
-@property (nonatomic, retain) IBOutlet UIView *chapterPickerViewContainer;
 @property (nonatomic, retain) IBOutlet UITableView *chapterTableView;
 
 - (void)showAlert:(NSString *)message;
