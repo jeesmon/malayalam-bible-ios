@@ -44,9 +44,57 @@
         self.title = [self.selectedBook shortName];
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
-        }        
+        }
         [self getChapter:self.selectedBook.bookId :self.chapterId];
+
+        NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
+        
+        int numOfButtons = 0;
+        UIBarButtonItem* bi;
+        
+        if(self.chapterId > 1) {
+            bi = [[UIBarButtonItem alloc] 
+                               initWithImage:[UIImage imageNamed:@"previous.png"]
+                               style:UIBarButtonItemStylePlain
+                               target:self
+                               action:@selector(buttonPrevClicked:)];
+            bi.style = UIBarButtonItemStylePlain;
+            [buttons addObject:bi];
+            numOfButtons++;
+        }
+        
+        bi = [[UIBarButtonItem alloc]
+              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        [buttons addObject:bi];
+        
+        if(self.chapterId < self.selectedBook.numOfChapters) {
+            bi = [[UIBarButtonItem alloc] 
+                               initWithImage:[UIImage imageNamed:@"next.png"] 
+                               style:UIBarButtonItemStylePlain
+                               target:self
+                               action:@selector(buttonNextClicked:)];
+            bi.style = UIBarButtonItemStylePlain;
+            [buttons addObject:bi];
+            numOfButtons++;
+        }
+        
+        UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, numOfButtons * 30 + 4, 44.01)];
+        [tools setItems:buttons animated:NO];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
     }
+}
+
+- (void) buttonPrevClicked: (id)sender
+{
+    self.chapterId--;
+    [self configureView];
+}
+
+- (void) buttonNextClicked: (id)sender
+{
+    self.chapterId++;
+    [self configureView];
 }
 
 - (void)showAlert:(NSString *)message
@@ -81,14 +129,20 @@
                 int verseId = sqlite3_column_int(statement, 0);
                 NSString *verse = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 1)];
+                NSString *verseWithId;
                 if(verseId > 0) {
-                    [verses addObject:verse];
+                    verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
                 }
+                else {
+                    verseWithId = verse;
+                }
+                [verses addObject:verseWithId];
             }
             sqlite3_finalize(statement);
         }        
     }
     sqlite3_close(bibleDB);
+    [self.chapterTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,7 +189,7 @@
 {
     // Return YES for supported orientations
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
     } else {
         return YES;
     }
@@ -199,14 +253,14 @@
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:FONT_SIZE];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%d. %@", indexPath.row + 1, [verses objectAtIndex:indexPath.row]];
+    cell.textLabel.text = [verses objectAtIndex:indexPath.row];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellText = [NSString stringWithFormat:@"%d. %@", indexPath.row + 1, [verses objectAtIndex:indexPath.row]];
+    NSString *cellText = [verses objectAtIndex:indexPath.row];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:FONT_SIZE];
     CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
     CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];

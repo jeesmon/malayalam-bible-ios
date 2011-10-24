@@ -89,7 +89,7 @@
 {
     // Return YES for supported orientations
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
     } else {
         return YES;
     }
@@ -210,7 +210,7 @@
             [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
         }
         else {
-            self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];                
+            self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];
             self.detailViewController.selectedBook = selectedBook;
             
             [self.navigationController pushViewController:self.detailViewController animated:YES];

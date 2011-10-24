@@ -81,14 +81,14 @@ const CGFloat tagWidthOffset = 10.0f;
     [scrollViewBar setContentSize:CGSizeMake(width, yOffset + 200)];
     
     [self.view addSubview:scrollViewBar];
+    
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
+    temporaryBarButtonItem.title = @"അദ്ധ്യായങ്ങൾ";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 }
 
 - (void) buttonClicked: (id)sender
 {
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
-    temporaryBarButtonItem.title = @"അദ്ധ്യായങ്ങൾ";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
     UIButton *btn = (UIButton *)sender;
     
     self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];                
@@ -109,12 +109,6 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void) loadView
-{
-    [super loadView];
-    NSLog(@"loadView");
 }
 
 @end
