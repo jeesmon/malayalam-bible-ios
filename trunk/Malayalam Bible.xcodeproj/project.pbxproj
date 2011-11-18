@@ -15,6 +15,12 @@
 		0FBAE75314520F6B007718D3 /* Information.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE75114520F6B007718D3 /* Information.xib */; };
 		0FBAE7611453C9B7007718D3 /* ChapterSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAE75F1453C9B7007718D3 /* ChapterSelection.m */; };
 		0FBAE7621453C9B7007718D3 /* ChapterSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */; };
+		0FBAE7641455D46D007718D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7631455D46D007718D3 /* Icon@2x.png */; };
+		0FBAE7661455D6C0007718D3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7651455D6C0007718D3 /* Default@2x.png */; };
+		0FBAE7681455D9B4007718D3 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7671455D9B3007718D3 /* previous.png */; };
+		0FBAE76A1455DB8A007718D3 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE7691455DB8A007718D3 /* next.png */; };
+		0FBAE76D1455DCEE007718D3 /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE76B1455DCEE007718D3 /* next@2x.png */; };
+		0FBAE76E1455DCEE007718D3 /* previous@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE76C1455DCEE007718D3 /* previous@2x.png */; };
 		0FFE50881450636E00BC85EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50871450636E00BC85EE /* UIKit.framework */; };
 		0FFE508A1450636E00BC85EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50891450636E00BC85EE /* Foundation.framework */; };
 		0FFE508C1450636E00BC85EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE508B1450636E00BC85EE /* CoreGraphics.framework */; };
@@ -44,6 +50,12 @@
 		0FBAE75E1453C9B7007718D3 /* ChapterSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterSelection.h; sourceTree = "<group>"; };
 		0FBAE75F1453C9B7007718D3 /* ChapterSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterSelection.m; sourceTree = "<group>"; };
 		0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapterSelection.xib; sourceTree = "<group>"; };
+		0FBAE7631455D46D007718D3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		0FBAE7651455D6C0007718D3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		0FBAE7671455D9B3007718D3 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
+		0FBAE7691455DB8A007718D3 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		0FBAE76B1455DCEE007718D3 /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "next@2x.png"; sourceTree = "<group>"; };
+		0FBAE76C1455DCEE007718D3 /* previous@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous@2x.png"; sourceTree = "<group>"; };
 		0FFE50831450636E00BC85EE /* Malayalam Bible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Malayalam Bible.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FFE50871450636E00BC85EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0FFE50891450636E00BC85EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,6 +126,9 @@
 		0FFE508D1450636E00BC85EE /* Malayalam Bible */ = {
 			isa = PBXGroup;
 			children = (
+				0FBAE7651455D6C0007718D3 /* Default@2x.png */,
+				0FBAE7671455D9B3007718D3 /* previous.png */,
+				0FBAE7631455D46D007718D3 /* Icon@2x.png */,
 				0FBAE74D1452015F007718D3 /* Chapters.png */,
 				0FBAE74B1451FFB1007718D3 /* Icon.png */,
 				0F5EC22A1451FD74001C8727 /* Default.png */,
@@ -124,6 +139,9 @@
 				0FFE509A1450636E00BC85EE /* MalayalamBibleMasterViewController.m */,
 				0FFE509C1450636E00BC85EE /* MalayalamBibleDetailViewController.h */,
 				0FFE509D1450636E00BC85EE /* MalayalamBibleDetailViewController.m */,
+				0FBAE76B1455DCEE007718D3 /* next@2x.png */,
+				0FBAE76C1455DCEE007718D3 /* previous@2x.png */,
+				0FBAE7691455DB8A007718D3 /* next.png */,
 				0FFE509F1450636E00BC85EE /* MalayalamBibleMasterViewController_iPhone.xib */,
 				0FFE50A21450636E00BC85EE /* MalayalamBibleMasterViewController_iPad.xib */,
 				0FFE50A51450636E00BC85EE /* MalayalamBibleDetailViewController_iPhone.xib */,
@@ -215,6 +233,12 @@
 				0FBAE74E1452015F007718D3 /* Chapters.png in Resources */,
 				0FBAE75314520F6B007718D3 /* Information.xib in Resources */,
 				0FBAE7621453C9B7007718D3 /* ChapterSelection.xib in Resources */,
+				0FBAE7641455D46D007718D3 /* Icon@2x.png in Resources */,
+				0FBAE7661455D6C0007718D3 /* Default@2x.png in Resources */,
+				0FBAE7681455D9B4007718D3 /* previous.png in Resources */,
+				0FBAE76A1455DB8A007718D3 /* next.png in Resources */,
+				0FBAE76D1455DCEE007718D3 /* next@2x.png in Resources */,
+				0FBAE76E1455DCEE007718D3 /* previous@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +310,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -302,7 +329,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -312,17 +339,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -332,10 +365,14 @@
 		0FFE50AE1450636E00BC85EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -345,10 +382,14 @@
 		0FFE50AF1450636E00BC85EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
