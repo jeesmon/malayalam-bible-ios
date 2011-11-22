@@ -91,7 +91,7 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     UIButton *btn = (UIButton *)sender;
     
-    self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];                
+    self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];                
     self.detailViewController.selectedBook = self.selectedBook;
     self.detailViewController.chapterId = btn.tag;
     
