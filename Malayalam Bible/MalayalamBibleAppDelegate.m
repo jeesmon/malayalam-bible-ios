@@ -27,17 +27,25 @@
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         self.window.rootViewController = self.navigationController;
     } else {
-        MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] initWithNibName:@"MalayalamBibleMasterViewController_iPad" bundle:nil];
+        
+        /*JP +20111122 to support iPad **/
+        
+        MalayalamBibleDetailViewController *detailViewController = [[MalayalamBibleDetailViewController alloc] init];
+                
+        //MalayalamBibleDetailViewController *detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPad" bundle:nil];
+        UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+        
+        MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
+        masterViewController.detailViewController = detailViewController;
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         
-        MalayalamBibleDetailViewController *detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPad" bundle:nil];
-        UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
-    	
         self.splitViewController = [[UISplitViewController alloc] init];
         self.splitViewController.delegate = detailViewController;
         self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
         
         self.window.rootViewController = self.splitViewController;
+
+        
     }
     [self.window makeKeyAndVisible];
     return YES;

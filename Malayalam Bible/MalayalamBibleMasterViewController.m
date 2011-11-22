@@ -40,11 +40,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-    }
     
+     
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
@@ -73,6 +70,17 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    // Do any additional setup after loading the view, typically from a nib.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+        NSString *selectedBookName = [oldTestament objectAtIndex:0];
+        
+        Book *selectedBook = [books objectForKey:selectedBookName];
+        
+        self.detailViewController.selectedBook = selectedBook;
+        [self.detailViewController configureiPadView];
+
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -87,6 +95,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    
     // Return YES for supported orientations
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -192,17 +201,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSString *selectedBookName;
+    
+    if(indexPath.section == 0) {
+        selectedBookName = [oldTestament objectAtIndex:indexPath.row];
+    }
+    else {
+        selectedBookName = [newTestament objectAtIndex:indexPath.row];
+    }
+    
+    Book *selectedBook = [books objectForKey:selectedBookName];
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-	    NSString *selectedBookName;
-        
-        if(indexPath.section == 0) {
-            selectedBookName = [oldTestament objectAtIndex:indexPath.row];
-        }
-        else {
-            selectedBookName = [newTestament objectAtIndex:indexPath.row];
-        }
-        
-        Book *selectedBook = [books objectForKey:selectedBookName];
+	    
         if(selectedBook.numOfChapters > 1) {
             self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
             self.chapterSelectionController.title = selectedBook.shortName;
@@ -215,6 +227,11 @@
             
             [self.navigationController pushViewController:self.detailViewController animated:YES];
         }
+    }else{//+20111122
+        
+        self.detailViewController.selectedBook = selectedBook;
+        //self.detailViewController.title = selectedBook.shortName;
+        [self.detailViewController configureiPadView];
     }
 }
 

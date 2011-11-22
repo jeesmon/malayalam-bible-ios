@@ -9,24 +9,29 @@
 #import <UIKit/UIKit.h>
 #import "/usr/include/sqlite3.h"
 #import "Book.h"
-#import "ChapterPickerController.h"
+#import "PopOverDelegate.h"
+
 
 #define FONT_SIZE 17.0f
 
-@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDelegate>
+@interface MalayalamBibleDetailViewController : UITableViewController <UISplitViewControllerDelegate, PopOverDelegate>
 {
     NSMutableArray *verses;
-    UITableView *chapterTableView;
+    //UITableView *chapterTableView;
+    UIPopoverController *popoverChapterController;
 }
 
-@property (strong, nonatomic) id detailItem;
+
 @property (strong, nonatomic) Book *selectedBook;
 @property (assign, readwrite) int chapterId;
+@property(nonatomic, retain) UIPopoverController *popoverChapterController;
 
-@property (nonatomic, retain) IBOutlet UITableView *chapterTableView;
+//@property (nonatomic, retain) IBOutlet UITableView *chapterTableView;
 
 - (void)showAlert:(NSString *)message;
 - (void)getChapter:(int)bookId:(int)chapterId;
 - (void)chapterSelectionCallback:(int)chapterId;
+
+- (void)configureiPadView;
 
 @end

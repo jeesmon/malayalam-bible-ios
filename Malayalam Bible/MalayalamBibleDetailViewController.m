@@ -7,6 +7,8 @@
 //
 
 #import "MalayalamBibleDetailViewController.h"
+#import "ChapterPopOverController.h"
+
 
 @interface MalayalamBibleDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -15,15 +17,17 @@
 
 @implementation MalayalamBibleDetailViewController
 
-@synthesize detailItem = _detailItem;
+
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedBook = _selectedBook;
 @synthesize chapterId = _chapterId;
+@synthesize popoverChapterController = _popoverChapterController;
 
-@synthesize chapterTableView;
+//@synthesize chapterTableView;
 
 #pragma mark - Managing the detail item
 
+/*
 - (void)setDetailItem:(id)newDetailItem
 {
     if (_detailItem != newDetailItem) {
@@ -36,6 +40,7 @@
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }        
 }
+*/
 
 - (void)configureView
 {
@@ -80,10 +85,15 @@
         
         UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, numOfButtons * 30 + 4, 44.01)];
         [tools setItems:buttons animated:NO];
+        //[tools setBackgroundColor:[UIColor clearColor]];
+       
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
+        
+        [self.tableView reloadData];
     }
 }
+
 
 - (void) buttonPrevClicked: (id)sender
 {
@@ -142,73 +152,62 @@
         }        
     }
     sqlite3_close(bibleDB);
-    [self.chapterTableView reloadData];
+    
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
+
+#pragma mark iPad Specific
+
+- (void)showChapters:(UIBarButtonItem *)barBtn{
+    
+    ChapterPopOverController *picker = [[ChapterPopOverController alloc] initWithNumberOfChapters:self.selectedBook.numOfChapters];
+    picker.delegate = self;
+    
+    if(self.popoverChapterController == nil){
+        self.popoverChapterController = [[UIPopoverController alloc] initWithContentViewController:picker];
+        
+    }else{
+        
+        [self.popoverChapterController setContentViewController:picker];
+    }
+    [self.popoverChapterController setPopoverContentSize:CGSizeMake(220, MIN(44*self.selectedBook.numOfChapters, self.view.frame.size.height))];
+      
+    [self.popoverChapterController presentPopoverFromBarButtonItem:barBtn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
-        return YES;
+- (void)configureiPadView{
+    
+    if (self.selectedBook) {
+        self.title = [self.selectedBook shortName];
+        if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+            self.chapterId = 1;
+        }
+        [self getChapter:self.selectedBook.bookId :self.chapterId];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
+        
+        [self.tableView reloadData];
     }
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.title = NSLocalizedString(@"Detail", @"Detail");
-    }
-    return self;
+#pragma mark PopOverDelegate
+
+-(void)dismissWithChapter:(NSUInteger)chapterId{
+   
+    NSLog(@"dismisssss");
+    self.chapterId = chapterId;
+        
+    [self.popoverChapterController dismissPopoverAnimated:YES]; 
+    [self getChapter:self.selectedBook.bookId :self.chapterId];
+    
+    [self.tableView reloadData];
+
 }
-							
-#pragma mark - Split view
+#pragma mark - iPad UISplitViewControllerDelegate
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+    barButtonItem.title = NSLocalizedString(@"പുസ്തകങ്ങൾ", @"പുസ്തകങ്ങൾ");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
@@ -219,6 +218,8 @@
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
 }
+
+#pragma Mark UITableDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return [NSString stringWithFormat:@"അദ്ധ്യായം %d", self.chapterId];
@@ -258,14 +259,78 @@
     return cell;
 }
 
+#pragma  mark UITableViewDelegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellText = [verses objectAtIndex:indexPath.row];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:FONT_SIZE];
-    CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
+    CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280
     CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
     
     return labelSize.height + 10;
+    
+}
+
+#pragma mark MemoryHandling
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	// Do any additional setup after loading the view, typically from a nib.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+    [self configureView];
+    }
+    
+}
+    /*
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+}
+*/
+#pragma Rotation Support
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    } else {
+        return YES;
+    }
 }
 
 @end
