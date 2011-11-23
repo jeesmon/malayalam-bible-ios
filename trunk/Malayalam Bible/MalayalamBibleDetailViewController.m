@@ -187,6 +187,11 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
         
         [self.tableView reloadData];
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if(orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+            [self.masterPopoverController dismissPopoverAnimated:YES];
+        }
     }
 }
 

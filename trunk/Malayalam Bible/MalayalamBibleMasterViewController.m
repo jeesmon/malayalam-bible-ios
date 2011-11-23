@@ -45,6 +45,15 @@
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSString *selectedBookName = [oldTestament objectAtIndex:0];
+        
+        Book *selectedBook = [books objectForKey:selectedBookName];
+        
+        self.detailViewController.selectedBook = selectedBook;
+        [self.detailViewController configureiPadView];
+    }
 }
 
 - (void) showInfoView:(id)sender
@@ -71,6 +80,7 @@
 {
     [super viewDidAppear:animated];
     // Do any additional setup after loading the view, typically from a nib.
+    /*
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
         NSString *selectedBookName = [oldTestament objectAtIndex:0];
@@ -81,6 +91,7 @@
         [self.detailViewController configureiPadView];
 
     }
+    */
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -230,6 +241,7 @@
     }else{//+20111122
         
         self.detailViewController.selectedBook = selectedBook;
+        self.detailViewController.chapterId = 1;
         //self.detailViewController.title = selectedBook.shortName;
         [self.detailViewController configureiPadView];
     }
