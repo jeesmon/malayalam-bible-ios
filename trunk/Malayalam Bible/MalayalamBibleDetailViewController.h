@@ -10,11 +10,11 @@
 #import "/usr/include/sqlite3.h"
 #import "Book.h"
 #import "PopOverDelegate.h"
-
+#import "SwipeController.h"
 
 #define FONT_SIZE 17.0f
 
-@interface MalayalamBibleDetailViewController : UITableViewController <UISplitViewControllerDelegate, PopOverDelegate>
+@interface MalayalamBibleDetailViewController : SwipeController <UISplitViewControllerDelegate, PopOverDelegate>
 {
     NSMutableArray *verses;
     //UITableView *chapterTableView;
