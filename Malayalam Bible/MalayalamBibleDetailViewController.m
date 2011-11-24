@@ -159,13 +159,20 @@
         self.chapterId--;
     }
     
-    if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+    /*if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
         self.chapterId = 1;
     }
     [self getChapter:self.selectedBook.bookId :self.chapterId];
 	[self.tableView reloadData];
     //To show from the beginning of a chaper
 	[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+     */
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self configureiPadView];
+    }
+    else {
+        [self configureView];
+    }
 }
 
 #pragma mark iPad Specific
@@ -228,6 +235,9 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
         
         [self.tableView reloadData];
+        
+        //To show from the beginning of a chaper
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
     if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
@@ -244,10 +254,19 @@
     self.chapterId = chapterId;
     
     [self.popoverChapterController dismissPopoverAnimated:YES]; 
-    [self getChapter:self.selectedBook.bookId :self.chapterId];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self configureiPadView];
+    }
+    else {
+        [self configureView];
+    }
+    /*[self getChapter:self.selectedBook.bookId :self.chapterId];
     
     [self.tableView reloadData];
-    
+    //To show from the beginning of a chaper
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    */
 }
 #pragma mark - iPad UISplitViewControllerDelegate
 
