@@ -94,7 +94,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         
     }
     else
-    {   
+    {    
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             
             [savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil]];
