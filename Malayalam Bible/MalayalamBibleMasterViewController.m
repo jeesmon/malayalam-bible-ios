@@ -127,7 +127,7 @@ const NSString *bmBookRow = @"BookPathRow";
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         
         MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]];
+        [appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]]; 
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:-1]];
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSDictionary dictionary]];
     }
