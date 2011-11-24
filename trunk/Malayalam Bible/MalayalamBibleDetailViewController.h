@@ -33,5 +33,5 @@
 - (void)chapterSelectionCallback:(int)chapterId;
 
 - (void)configureiPadView;
-
+- (void)configureView;
 @end

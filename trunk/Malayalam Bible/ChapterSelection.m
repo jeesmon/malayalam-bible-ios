@@ -147,7 +147,7 @@ const CGFloat tagWidthOffset = 10.0f;
     
     self.detailViewController.selectedBook = self.selectedBook;
     self.detailViewController.chapterId = chapter;
-    
+    [self.detailViewController configureView];
     [self.navigationController pushViewController:self.detailViewController animated:YES];
 }
 - (void)viewDidUnload

@@ -12,7 +12,7 @@
 
 @interface MalayalamBibleDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
+
 @end
 
 @implementation MalayalamBibleDetailViewController
