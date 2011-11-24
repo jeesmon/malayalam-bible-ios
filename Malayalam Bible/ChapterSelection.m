@@ -10,6 +10,13 @@
 
 #define FONT_SIZE 17.0f
 
+
+@interface ChapterSelection (Private)
+
+- (void) openPageWithChapter:(NSUInteger)chapter;
+
+@end
+
 @implementation ChapterSelection
 
 @synthesize scrollViewBar;
@@ -85,19 +92,51 @@ const CGFloat tagWidthOffset = 10.0f;
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
     temporaryBarButtonItem.title = @"അദ്ധ്യായങ്ങൾ";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
+    
+    NSNumber *numberChpater = [dictSavedState valueForKey:@"ChaperId"];
+    if(numberChpater){
+        NSUInteger bmChapterid =  [numberChpater intValue];
+        [self openPageWithChapter:bmChapterid];
+    }
+        
 }
-
+- (void) viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dictSavedState = [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
+    [dictSavedState removeObjectForKey:@"ChaperId"];
+    [def synchronize];
+}
 - (void) buttonClicked: (id)sender
 {
     UIButton *btn = (UIButton *)sender;
     
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dictSavedState =  [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
+    
+    [dictSavedState setObject:[NSNumber numberWithInt:btn.tag] forKey:@"ChaperId"];
+   
+    [def synchronize];
+       
+
+    
+    [self openPageWithChapter:btn.tag];
+}
+
+- (void) openPageWithChapter:(NSUInteger)chapter{
+    
     self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];                
     self.detailViewController.selectedBook = self.selectedBook;
-    self.detailViewController.chapterId = btn.tag;
+    self.detailViewController.chapterId = chapter;
     
     [self.navigationController pushViewController:self.detailViewController animated:YES];
 }
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];

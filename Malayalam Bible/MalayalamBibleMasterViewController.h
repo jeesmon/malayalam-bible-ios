@@ -23,4 +23,6 @@
 @property (strong, nonatomic) Information *infoViewController;
 @property (strong, nonatomic) ChapterSelection *chapterSelectionController;
 
+//- (void) selectBookwithName:(NSString *)selectedBookName;
+
 @end

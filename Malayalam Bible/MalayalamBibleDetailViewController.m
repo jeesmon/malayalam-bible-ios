@@ -155,6 +155,22 @@
     
 }
 
+- (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
+	
+    if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
+        
+        self.chapterId++;
+    }else{
+        self.chapterId--;
+    }
+    
+    if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+        self.chapterId = 1;
+    }
+    [self getChapter:self.selectedBook.bookId :self.chapterId];
+	[self.tableView reloadData];
+	
+}
 
 #pragma mark iPad Specific
 
@@ -179,9 +195,9 @@
     
     if (self.selectedBook) {
         self.title = [self.selectedBook shortName];
-        if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+        //if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
-        }
+        //}
         [self getChapter:self.selectedBook.bookId :self.chapterId];
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
@@ -193,7 +209,12 @@
             [self.masterPopoverController dismissPopoverAnimated:YES];
         }
     }
+    if (self.masterPopoverController != nil) {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }        
 }
+
+
 
 #pragma mark PopOverDelegate
 
