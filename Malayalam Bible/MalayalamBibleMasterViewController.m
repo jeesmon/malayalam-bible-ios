@@ -33,7 +33,7 @@ const NSString *bmBookRow = @"BookPathRow";
     if (self) {
         self.title = NSLocalizedString(@"പുസ്തകങ്ങൾ", @"പുസ്തകങ്ങൾ");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            self.clearsSelectionOnViewWillAppear = NO;
+            //+20111124self.clearsSelectionOnViewWillAppear = NO;
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
     }
@@ -90,7 +90,7 @@ const NSString *bmBookRow = @"BookPathRow";
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
         
         if(indexPath){
-            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+            //[self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
             
             
             if(indexPath.section == 0) {
@@ -152,8 +152,8 @@ const NSString *bmBookRow = @"BookPathRow";
         NSUInteger row = [[dictSavedState objectForKey:bmBookRow] intValue];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
         
-        
         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
     }
 }
 
