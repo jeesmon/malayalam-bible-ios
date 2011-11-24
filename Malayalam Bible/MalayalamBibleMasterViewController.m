@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "MalayalamBibleAppDelegate.h"
 #import "MalayalamBibleMasterViewController.h"
 #import "MalayalamBibleDetailViewController.h"
 #import "Book.h"
@@ -15,8 +16,8 @@ const NSString *bmBookRow = @"BookPathRow";
 
 @interface MalayalamBibleMasterViewController(Private)
 
-- (void) selectBookWithName:(NSString *)selectedBookName;
-
+- (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter;
+- (void) loadData;
 @end
 
 @implementation MalayalamBibleMasterViewController
@@ -25,19 +26,55 @@ const NSString *bmBookRow = @"BookPathRow";
 @synthesize infoViewController = _infoViewController;
 @synthesize chapterSelectionController = _chapterSelectionController;
 
-
+- (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
+    
+    
+    NSDictionary *dict = [selectionArray objectAtIndex:0];
+    NSLog(@"restore savedLocation dict= %@", dict);
+    
+    NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
+    NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
+    NSString *selectedBookName;
+    
+    if(section == 0) {
+        selectedBookName = [oldTestament objectAtIndex:row];
+    }
+    else {
+        selectedBookName = [newTestament objectAtIndex:row];
+    }
+    
+    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    int chapterId = [[appDelegate.savedLocation objectAtIndex:1] intValue];
+    
+    [self selectBookWithName:selectedBookName AndChapter:chapterId];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+        
+        [self.chapterSelectionController restoreLevelWithSelectionArray:selectionArray];
+    }
+    
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"പുസ്തകങ്ങൾ", @"പുസ്തകങ്ങൾ");
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            //+20111124self.clearsSelectionOnViewWillAppear = NO;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            
+            self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
+            self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
+            //WithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil
+        }else{
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
+        [self loadData];
     }
     return self;
+}
+
+- (id)init{
+    return [self initWithNibName:nil bundle:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,63 +90,12 @@ const NSString *bmBookRow = @"BookPathRow";
     [super viewDidLoad];
     
     
+    
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     
-    
-    
-    
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
-    
-    NSString *selectedBookName = nil;
-    if(dictSavedState == nil){
         
-        NSMutableDictionary *newSavedState = [[NSMutableDictionary alloc] initWithCapacity:3];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            
-            NSIndexPath *indexPathToSelect = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:indexPathToSelect animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-            selectedBookName = [oldTestament objectAtIndex:0];
-            
-            
-            [newSavedState setObject:[NSNumber numberWithInt:0] forKey:bmBookSection];
-            [newSavedState setObject:[NSNumber numberWithInt:0] forKey:bmBookRow];
-            
-        }
-        [def setObject:newSavedState forKey:@"SavedState"];
-        [def synchronize];
-        
-    }else{
-        
-        NSUInteger section = [[dictSavedState objectForKey:bmBookSection] intValue];
-        NSUInteger row = [[dictSavedState objectForKey:bmBookRow] intValue];
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-        
-        if(indexPath){
-            //[self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-            
-            
-            if(indexPath.section == 0) {
-                selectedBookName = [oldTestament objectAtIndex:indexPath.row];
-            }
-            else {
-                selectedBookName = [newTestament objectAtIndex:indexPath.row];
-            }
-        }else{
-            [dictSavedState removeAllObjects];
-            [def synchronize];
-        }
-        
-    }
-    
-    [self selectBookWithName:selectedBookName];
-    
-    
-    
     
 }
 
@@ -138,23 +124,13 @@ const NSString *bmBookRow = @"BookPathRow";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // Do any additional setup after loading the view, typically from a nib.
+        
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-        [def removeObjectForKey:@"SavedState"];
-        [def synchronize];
-    }else{
-        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
         
-        NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
-        
-        NSUInteger section = [[dictSavedState objectForKey:bmBookSection] intValue];
-        NSUInteger row = [[dictSavedState objectForKey:bmBookRow] intValue];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-        
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]];
     }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -170,12 +146,13 @@ const NSString *bmBookRow = @"BookPathRow";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     
+    return YES;
     // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return YES;
+    /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
     } else {
         return YES;
-    }
+    }*/
 }
 
 // Customize the number of sections in the table view.
@@ -277,13 +254,14 @@ const NSString *bmBookRow = @"BookPathRow";
 {
     
     
+    // save off this level's selection to our AppDelegate
+	MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dictSavedState =  [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
-    [dictSavedState setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
-    [dictSavedState setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
-    [def setObject:dictSavedState forKey:@"SavedState"];
-    [def synchronize];
+    NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
+    [dict setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
+    [dict setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
+    [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
+	[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];   
     
     NSString *selectedBookName;
     
@@ -294,7 +272,7 @@ const NSString *bmBookRow = @"BookPathRow";
         selectedBookName = [newTestament objectAtIndex:indexPath.row];
     }
     
-    [self selectBookWithName:selectedBookName];
+    [self selectBookWithName:selectedBookName AndChapter:1];
 }
 
 
@@ -306,7 +284,7 @@ const NSString *bmBookRow = @"BookPathRow";
         return @"പുതിയനിയമം";
     }
 }
-- (void) selectBookWithName:(NSString *)selectedBookName{
+- (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter{
     
     if(selectedBookName){
         
@@ -315,22 +293,23 @@ const NSString *bmBookRow = @"BookPathRow";
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
             if(selectedBook.numOfChapters > 1) {
-                self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
-                self.chapterSelectionController.title = selectedBook.shortName;
+                
+                
                 self.chapterSelectionController.selectedBook = selectedBook;
+                [self.chapterSelectionController configureView];
                 [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
             }
             else {
-                self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
-                self.detailViewController.selectedBook = selectedBook;
                 
+                self.detailViewController.selectedBook = selectedBook;
+                self.detailViewController.chapterId = chapter;
                 [self.navigationController pushViewController:self.detailViewController animated:YES];
             }
-        }else{//+20111122
+        }else{
+            
             
             self.detailViewController.selectedBook = selectedBook;
-            self.detailViewController.chapterId = 1;
-            //self.detailViewController.title = selectedBook.shortName;
+            self.detailViewController.chapterId = chapter;
             [self.detailViewController configureiPadView];
         }
         
@@ -342,6 +321,8 @@ const NSString *bmBookRow = @"BookPathRow";
 {
     [super loadView];
     
+}
+- (void) loadData{
     books = [NSMutableDictionary dictionary];
     oldTestament = [NSMutableArray array];
     newTestament = [NSMutableArray array];
@@ -388,6 +369,6 @@ const NSString *bmBookRow = @"BookPathRow";
         }        
     }
     sqlite3_close(bibleDB);
+    
 }
-
 @end

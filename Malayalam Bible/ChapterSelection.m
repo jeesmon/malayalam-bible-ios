@@ -5,7 +5,7 @@
 //  Created by Jeesmon Jacob on 10/23/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
-
+#import "MalayalamBibleAppDelegate.h"
 #import "ChapterSelection.h"
 
 #define FONT_SIZE 17.0f
@@ -30,6 +30,7 @@ const CGFloat tagWidthOffset = 10.0f;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];  
     }
     return self;
 }
@@ -43,17 +44,21 @@ const CGFloat tagWidthOffset = 10.0f;
 }
 
 #pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+-(void) configureView{
     
     self.title = self.selectedBook.shortName;
-    [self configureView];
-}
-
-- (void) configureView
-{        
+    
+    /** Clear Screen ***/
+    NSArray *existingBtns = [scrollViewBar subviews];
+    int i = 0;
+    for(UIView *sView in existingBtns){
+        if(i++ > 0) {
+            [sView removeFromSuperview];
+        }
+    }
+    [scrollViewBar removeFromSuperview];
+    /******/
+    
     NSInteger width = 0;
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if(orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
@@ -89,7 +94,7 @@ const CGFloat tagWidthOffset = 10.0f;
         [tagButton setTitle:number forState:UIControlStateDisabled];
         
         [tagButton addTarget: self 
-            action: @selector(buttonClicked:) 
+                      action: @selector(buttonClicked:) 
             forControlEvents: UIControlEventTouchDown];
         
         [scrollViewBar addSubview:tagButton];
@@ -99,51 +104,47 @@ const CGFloat tagWidthOffset = 10.0f;
     
     [scrollViewBar setContentSize:CGSizeMake(width, yOffset + 200)];
     
+    
     [self.view addSubview:scrollViewBar];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
     temporaryBarButtonItem.title = @"അദ്ധ്യായങ്ങൾ";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
+    [self configureView];
     
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
-    
-    NSNumber *numberChpater = [dictSavedState valueForKey:@"ChaperId"];
-    if(numberChpater){
-        NSUInteger bmChapterid =  [numberChpater intValue];
-        [self openPageWithChapter:bmChapterid];
-    }
-        
 }
 - (void) viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
+ 
+    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
+}
+- (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
     
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dictSavedState = [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
-    [dictSavedState removeObjectForKey:@"ChaperId"];
-    [def synchronize];
+    NSInteger chapterid = [[selectionArray objectAtIndex:1] intValue];
+	if (chapterid != -1)
+	{
+        [self openPageWithChapter:chapterid];
+    }
+    
 }
 - (void) buttonClicked: (id)sender
 {
     UIButton *btn = (UIButton *)sender;
     
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *dictSavedState =  [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
-    
-    [dictSavedState setObject:[NSNumber numberWithInt:btn.tag] forKey:@"ChaperId"];
-   
-    [def synchronize];
-       
-
-    
+      
     [self openPageWithChapter:btn.tag];
 }
 
 - (void) openPageWithChapter:(NSUInteger)chapter{
     
-    self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];                
+    
     self.detailViewController.selectedBook = self.selectedBook;
     self.detailViewController.chapterId = chapter;
     
@@ -159,7 +160,7 @@ const CGFloat tagWidthOffset = 10.0f;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return YES;
+    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -175,6 +176,7 @@ const CGFloat tagWidthOffset = 10.0f;
     }
     
     [self configureView];
+     
 }
-
+ 
 @end

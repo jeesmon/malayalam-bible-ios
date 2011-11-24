@@ -19,6 +19,6 @@
 @property (strong, nonatomic) Book *selectedBook;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 
-- (void)configureView;
-
+-(void) configureView;
+- (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray;
 @end
