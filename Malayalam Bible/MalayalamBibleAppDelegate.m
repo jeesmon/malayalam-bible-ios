@@ -65,14 +65,14 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 	{
 		// user has not launched this app nor navigated to a particular level yet, start at level 1, with no selection
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
-            savedLocation = [NSMutableArray arrayWithObjects:
+            self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithCapacity:1],	// book selection 
                              [NSNumber numberWithInt:-1],	// .. 2nd level  the chapter idex
                              [NSMutableDictionary dictionaryWithCapacity:1],
                              nil];
             
         }else{
-            savedLocation = [NSMutableArray arrayWithObjects:
+            self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
                              [NSNumber numberWithInt:0],	// .. 2nd level , the chapter idex
                              [NSMutableDictionary dictionaryWithCapacity:1],	
@@ -98,8 +98,12 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     {    
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             
-            [savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil]];
-            [(MalayalamBibleMasterViewController*)self.navigationController.topViewController restoreLevelWithSelectionArray:savedLocation];
+            self.savedLocation = [NSMutableArray arrayWithObjects:
+                                  [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
+                                  [NSNumber numberWithInt:0],	// .. 2nd level , the chapter idex
+                                  [NSMutableDictionary dictionaryWithCapacity:1],	
+                                  nil];
+            [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:self.savedLocation];
         }
         // no saved selection, so user was at level 1 the last time
     }
