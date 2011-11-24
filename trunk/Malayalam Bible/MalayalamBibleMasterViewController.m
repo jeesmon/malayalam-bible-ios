@@ -59,19 +59,20 @@ const NSString *bmBookRow = @"BookPathRow";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = NSLocalizedString(@"പുസ്തകങ്ങൾ", @"പുസ്തകങ്ങൾ");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
             self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
             self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
             //WithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil
         }else{
+            self.clearsSelectionOnViewWillAppear = NO;
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         [self loadData];
     }
     return self;
 }
-
 - (id)init{
     return [self initWithNibName:nil bundle:nil];
 }
