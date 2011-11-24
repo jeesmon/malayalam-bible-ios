@@ -49,8 +49,20 @@ const CGFloat tagWidthOffset = 10.0f;
     [super viewDidLoad];
     
     self.title = self.selectedBook.shortName;
-        
-    NSInteger width = self.view.frame.size.width;
+    [self configureView];
+}
+
+- (void) configureView
+{        
+    NSInteger width = 0;
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if(orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        width = 320;
+    }
+    else {
+        width = 460;
+    }
+    
     NSInteger buttonWidth = 40;
     NSInteger buttonHeight = 40;
     NSInteger spacer = 10;
@@ -147,7 +159,22 @@ const CGFloat tagWidthOffset = 10.0f;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"orientation change");
+    
+    NSArray *viewsToRemove = [scrollViewBar subviews];
+    int i = 0;
+    for (UIView *v in viewsToRemove) {
+        if(i++ > 0) {
+            [v removeFromSuperview];
+        }
+    }
+    
+    [self configureView];
 }
 
 @end

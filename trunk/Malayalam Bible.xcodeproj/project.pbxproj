@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F5EC2281450FA07001C8727 /* ChapterPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EC2271450FA07001C8727 /* ChapterPickerController.m */; };
 		0F5EC22B1451FD74001C8727 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EC22A1451FD74001C8727 /* Default.png */; };
+		0F861958147DB4E000245D12 /* UIToolbarCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F861957147DB4E000245D12 /* UIToolbarCustom.m */; };
 		0FBAE74C1451FFB1007718D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE74B1451FFB1007718D3 /* Icon.png */; };
 		0FBAE74E1452015F007718D3 /* Chapters.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBAE74D1452015F007718D3 /* Chapters.png */; };
 		0FBAE75214520F6B007718D3 /* Information.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBAE75014520F6B007718D3 /* Information.m */; };
@@ -44,6 +45,8 @@
 		0F5EC2261450FA07001C8727 /* ChapterPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterPickerController.h; sourceTree = "<group>"; };
 		0F5EC2271450FA07001C8727 /* ChapterPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterPickerController.m; sourceTree = "<group>"; };
 		0F5EC22A1451FD74001C8727 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		0F861956147DB4E000245D12 /* UIToolbarCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIToolbarCustom.h; sourceTree = "<group>"; };
+		0F861957147DB4E000245D12 /* UIToolbarCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIToolbarCustom.m; sourceTree = "<group>"; };
 		0FBAE74B1451FFB1007718D3 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0FBAE74D1452015F007718D3 /* Chapters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chapters.png; sourceTree = "<group>"; };
 		0FBAE74F14520F6B007718D3 /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 				0FBAE7601453C9B7007718D3 /* ChapterSelection.xib */,
 				8F8A773C147C1B4700613427 /* ChapterPopOverController.h */,
 				8F8A773D147C1B4700613427 /* ChapterPopOverController.m */,
+				0F861956147DB4E000245D12 /* UIToolbarCustom.h */,
+				0F861957147DB4E000245D12 /* UIToolbarCustom.m */,
 				8F8564CF147D62F800827770 /* SwipeController.h */,
 				8F8564D0147D62F800827770 /* SwipeController.m */,
 			);
@@ -278,6 +283,7 @@
 				0FBAE75214520F6B007718D3 /* Information.m in Sources */,
 				0FBAE7611453C9B7007718D3 /* ChapterSelection.m in Sources */,
 				8F8A773E147C1B4700613427 /* ChapterPopOverController.m in Sources */,
+				0F861958147DB4E000245D12 /* UIToolbarCustom.m in Sources */,
 				8F8564D1147D62F800827770 /* SwipeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

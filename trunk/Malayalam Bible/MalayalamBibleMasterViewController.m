@@ -172,7 +172,7 @@ const NSString *bmBookRow = @"BookPathRow";
     
     // Return YES for supported orientations
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        return YES;
     } else {
         return YES;
     }
@@ -321,7 +321,7 @@ const NSString *bmBookRow = @"BookPathRow";
                 [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
             }
             else {
-                self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];
+                self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
                 self.detailViewController.selectedBook = selectedBook;
                 
                 [self.navigationController pushViewController:self.detailViewController animated:YES];
@@ -329,6 +329,7 @@ const NSString *bmBookRow = @"BookPathRow";
         }else{//+20111122
             
             self.detailViewController.selectedBook = selectedBook;
+            self.detailViewController.chapterId = 1;
             //self.detailViewController.title = selectedBook.shortName;
             [self.detailViewController configureiPadView];
         }

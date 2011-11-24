@@ -8,6 +8,7 @@
 
 #import "MalayalamBibleDetailViewController.h"
 #import "ChapterPopOverController.h"
+#import "UIToolbarCustom.h"
 
 
 @interface MalayalamBibleDetailViewController ()
@@ -52,43 +53,22 @@
         }
         [self getChapter:self.selectedBook.bookId :self.chapterId];
 
-        NSMutableArray* buttons = [[NSMutableArray alloc] initWithCapacity:3];
+        UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray         arrayWithObjects:[UIImage imageNamed:@"previous.png"],[UIImage imageNamed:@"next.png"], nil]];
+        control.segmentedControlStyle = UISegmentedControlStyleBar;
+        control.momentary = YES;
+        [control addTarget:self action:@selector(nextPrevious:) forControlEvents:UIControlEventValueChanged];
         
-        int numOfButtons = 0;
-        UIBarButtonItem* bi;
-        
-        if(self.chapterId > 1) {
-            bi = [[UIBarButtonItem alloc] 
-                               initWithImage:[UIImage imageNamed:@"previous.png"]
-                               style:UIBarButtonItemStylePlain
-                               target:self
-                               action:@selector(buttonPrevClicked:)];
-            bi.style = UIBarButtonItemStylePlain;
-            [buttons addObject:bi];
-            numOfButtons++;
+        if(self.chapterId <= 1) {
+            [control setEnabled:NO forSegmentAtIndex:0];
         }
         
-        bi = [[UIBarButtonItem alloc]
-              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        [buttons addObject:bi];
-        
-        if(self.chapterId < self.selectedBook.numOfChapters) {
-            bi = [[UIBarButtonItem alloc] 
-                               initWithImage:[UIImage imageNamed:@"next.png"] 
-                               style:UIBarButtonItemStylePlain
-                               target:self
-                               action:@selector(buttonNextClicked:)];
-            bi.style = UIBarButtonItemStylePlain;
-            [buttons addObject:bi];
-            numOfButtons++;
+        if(self.chapterId >= self.selectedBook.numOfChapters) {
+            [control setEnabled:NO forSegmentAtIndex:1];
         }
         
-        UIToolbar* tools = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, numOfButtons * 30 + 4, 44.01)];
-        [tools setItems:buttons animated:NO];
-        //[tools setBackgroundColor:[UIColor clearColor]];
-       
+        UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
         
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
+        self.navigationItem.rightBarButtonItem = controlItem;
         
         [self.tableView reloadData];
     }
@@ -105,6 +85,25 @@
 {
     self.chapterId++;
     [self configureView];
+}
+
+- (void) nextPrevious:(id)sender
+{
+    switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
+        case 0:
+            self.chapterId--;
+            break;
+        case 1:
+            self.chapterId++;
+            break;
+    }
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self configureiPadView];
+    }
+    else {
+        [self configureView];
+    }
 }
 
 - (void)showAlert:(NSString *)message
@@ -195,13 +194,40 @@
     
     if (self.selectedBook) {
         self.title = [self.selectedBook shortName];
-        //if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+        if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
-        //}
+        }
         [self getChapter:self.selectedBook.bookId :self.chapterId];
         
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
+        UIToolbarCustom* tools = [[UIToolbarCustom alloc] initWithFrame:CGRectMake(0, 0, 190, 44)];
+        [tools setBackgroundColor:[UIColor clearColor]];
         
+        UIBarButtonItem* chapterItem =[[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
+        
+        UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        
+        UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray         arrayWithObjects:[UIImage imageNamed:@"previous.png"],[UIImage imageNamed:@"next.png"], nil]];
+        control.segmentedControlStyle = UISegmentedControlStyleBar;
+        control.tintColor = [UIColor darkGrayColor];
+        control.momentary = YES;
+        [control addTarget:self action:@selector(nextPrevious:) forControlEvents:UIControlEventValueChanged];
+        
+        if(self.chapterId <= 1) {
+            [control setEnabled:NO forSegmentAtIndex:0];
+        }
+        
+        if(self.chapterId >= self.selectedBook.numOfChapters) {
+            [control setEnabled:NO forSegmentAtIndex:1];
+        }
+        
+        UIBarButtonItem *controlItem = [[UIBarButtonItem alloc] initWithCustomView:control];
+        
+        NSArray *items = [[NSArray alloc] initWithObjects:chapterItem, flex, controlItem, nil];
+        
+        [tools setItems:items animated:NO];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
+                
         [self.tableView reloadData];
     }
     if (self.masterPopoverController != nil) {
@@ -311,7 +337,7 @@
     self.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	// Do any additional setup after loading the view, typically from a nib.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
-    [self configureView];
+        [self configureView];
     }
     
 }
@@ -348,7 +374,7 @@
 {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        return YES;
     } else {
         return YES;
     }
