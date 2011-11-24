@@ -30,8 +30,7 @@ const NSString *bmBookRow = @"BookPathRow";
     
     
     NSDictionary *dict = [selectionArray objectAtIndex:0];
-    NSLog(@"restore savedLocation dict= %@", dict);
-    
+        
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
     NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
     NSString *selectedBookName;
@@ -129,6 +128,8 @@ const NSString *bmBookRow = @"BookPathRow";
         
         MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]];
+        [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:-1]];
+        [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSDictionary dictionary]];
     }
     
 }
