@@ -10,11 +10,22 @@
 #import "MalayalamBibleDetailViewController.h"
 #import "Book.h"
 
+const NSString *bmBookSection = @"BookPathSection";
+const NSString *bmBookRow = @"BookPathRow";
+
+@interface MalayalamBibleMasterViewController(Private)
+
+- (void) selectBookWithName:(NSString *)selectedBookName;
+
+@end
+
 @implementation MalayalamBibleMasterViewController
 
 @synthesize detailViewController = _detailViewController;
 @synthesize infoViewController = _infoViewController;
 @synthesize chapterSelectionController = _chapterSelectionController;
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +39,7 @@
     }
     return self;
 }
-							
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -41,19 +52,65 @@
 {
     [super viewDidLoad];
     
-     
+    
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSString *selectedBookName = [oldTestament objectAtIndex:0];
+    
+    
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
+    
+    NSString *selectedBookName = nil;
+    if(dictSavedState == nil){
         
-        Book *selectedBook = [books objectForKey:selectedBookName];
+        NSMutableDictionary *newSavedState = [[NSMutableDictionary alloc] initWithCapacity:3];
         
-        self.detailViewController.selectedBook = selectedBook;
-        [self.detailViewController configureiPadView];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            
+            NSIndexPath *indexPathToSelect = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView selectRowAtIndexPath:indexPathToSelect animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+            selectedBookName = [oldTestament objectAtIndex:0];
+            
+            
+            [newSavedState setObject:[NSNumber numberWithInt:0] forKey:bmBookSection];
+            [newSavedState setObject:[NSNumber numberWithInt:0] forKey:bmBookRow];
+            
+        }
+        [def setObject:newSavedState forKey:@"SavedState"];
+        [def synchronize];
+        
+    }else{
+        
+        NSUInteger section = [[dictSavedState objectForKey:bmBookSection] intValue];
+        NSUInteger row = [[dictSavedState objectForKey:bmBookRow] intValue];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        
+        if(indexPath){
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+            
+            
+            if(indexPath.section == 0) {
+                selectedBookName = [oldTestament objectAtIndex:indexPath.row];
+            }
+            else {
+                selectedBookName = [newTestament objectAtIndex:indexPath.row];
+            }
+        }else{
+            [dictSavedState removeAllObjects];
+            [def synchronize];
+        }
+        
     }
+    
+    [self selectBookWithName:selectedBookName];
+    
+    
+    
+    
 }
 
 - (void) showInfoView:(id)sender
@@ -69,29 +126,35 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     // Do any additional setup after loading the view, typically from a nib.
-    /*
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-        NSString *selectedBookName = [oldTestament objectAtIndex:0];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        [def removeObjectForKey:@"SavedState"];
+        [def synchronize];
+    }else{
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
         
-        Book *selectedBook = [books objectForKey:selectedBookName];
+        NSMutableDictionary *dictSavedState = [def objectForKey:@"SavedState"];
         
-        self.detailViewController.selectedBook = selectedBook;
-        [self.detailViewController configureiPadView];
-
+        NSUInteger section = [[dictSavedState objectForKey:bmBookSection] intValue];
+        NSUInteger row = [[dictSavedState objectForKey:bmBookRow] intValue];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        
+        
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
-    */
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -144,7 +207,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-
+    
     // Configure the cell.
     if(indexPath.section == 0) {
         cell.textLabel.text = [oldTestament objectAtIndex:indexPath.row];
@@ -173,45 +236,54 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source.
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+ }   
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dictSavedState =  [NSMutableDictionary dictionaryWithDictionary:[def objectForKey:@"SavedState"]];
+    [dictSavedState setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
+    [dictSavedState setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
+    [def setObject:dictSavedState forKey:@"SavedState"];
+    [def synchronize];
     
     NSString *selectedBookName;
     
@@ -222,29 +294,7 @@
         selectedBookName = [newTestament objectAtIndex:indexPath.row];
     }
     
-    Book *selectedBook = [books objectForKey:selectedBookName];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-	    
-        if(selectedBook.numOfChapters > 1) {
-            self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
-            self.chapterSelectionController.title = selectedBook.shortName;
-            self.chapterSelectionController.selectedBook = selectedBook;
-            [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
-        }
-        else {
-            self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];
-            self.detailViewController.selectedBook = selectedBook;
-            
-            [self.navigationController pushViewController:self.detailViewController animated:YES];
-        }
-    }else{//+20111122
-        
-        self.detailViewController.selectedBook = selectedBook;
-        self.detailViewController.chapterId = 1;
-        //self.detailViewController.title = selectedBook.shortName;
-        [self.detailViewController configureiPadView];
-    }
+    [self selectBookWithName:selectedBookName];
 }
 
 
@@ -255,6 +305,36 @@
     else {
         return @"പുതിയനിയമം";
     }
+}
+- (void) selectBookWithName:(NSString *)selectedBookName{
+    
+    if(selectedBookName){
+        
+        Book *selectedBook = [books objectForKey:selectedBookName];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            
+            if(selectedBook.numOfChapters > 1) {
+                self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
+                self.chapterSelectionController.title = selectedBook.shortName;
+                self.chapterSelectionController.selectedBook = selectedBook;
+                [self.navigationController pushViewController:self.chapterSelectionController animated:YES];
+            }
+            else {
+                self.detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil];
+                self.detailViewController.selectedBook = selectedBook;
+                
+                [self.navigationController pushViewController:self.detailViewController animated:YES];
+            }
+        }else{//+20111122
+            
+            self.detailViewController.selectedBook = selectedBook;
+            //self.detailViewController.title = selectedBook.shortName;
+            [self.detailViewController configureiPadView];
+        }
+        
+    }
+    
 }
 
 - (void) loadView
@@ -276,15 +356,15 @@
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
             while(sqlite3_step(statement) == SQLITE_ROW) {
                 NSString *alphaCode = [[NSString alloc] initWithUTF8String:
-                                    (const char *) sqlite3_column_text(statement, 0)];
+                                       (const char *) sqlite3_column_text(statement, 0)];
                 int bookId = sqlite3_column_int(statement, 1);
                 NSString *englishName = [[NSString alloc] initWithUTF8String:
-                                  (const char *) sqlite3_column_text(statement, 2)];
+                                         (const char *) sqlite3_column_text(statement, 2)];
                 int numOfChapters = sqlite3_column_int(statement, 3);
                 NSString *shortName = [[NSString alloc] initWithUTF8String:
-                                  (const char *) sqlite3_column_text(statement, 4)];
+                                       (const char *) sqlite3_column_text(statement, 4)];
                 NSString *longName = [[NSString alloc] initWithUTF8String:
-                                  (const char *) sqlite3_column_text(statement, 5)];
+                                      (const char *) sqlite3_column_text(statement, 5)];
                 
                 if(bookId > 39) {
                     [newTestament addObject:shortName];
