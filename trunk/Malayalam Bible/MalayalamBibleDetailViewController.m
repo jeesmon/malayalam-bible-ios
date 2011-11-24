@@ -5,11 +5,10 @@
 //  Created by Jeesmon Jacob on 10/20/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
-
+#import "MalayalamBibleAppDelegate.h"
 #import "MalayalamBibleDetailViewController.h"
 #import "ChapterPopOverController.h"
 #import "UIToolbarCustom.h"
-
 
 @interface MalayalamBibleDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -28,21 +27,7 @@
 
 #pragma mark - Managing the detail item
 
-/*
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
-        [self configureView];
-    }
-    
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
-}
-*/
-
+/** To configure iPhone detail view each time **/
 - (void)configureView
 {
     // Update the user interface for the detail item.
@@ -51,8 +36,12 @@
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
+        
+        
+        
+        
         [self getChapter:self.selectedBook.bookId :self.chapterId];
-
+        
         UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray         arrayWithObjects:[UIImage imageNamed:@"previous.png"],[UIImage imageNamed:@"next.png"], nil]];
         control.segmentedControlStyle = UISegmentedControlStyleBar;
         control.momentary = YES;
@@ -71,6 +60,9 @@
         self.navigationItem.rightBarButtonItem = controlItem;
         
         [self.tableView reloadData];
+        
+        //To show from the beginning of a chaper
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
 
@@ -86,7 +78,6 @@
     self.chapterId++;
     [self configureView];
 }
-
 - (void) nextPrevious:(id)sender
 {
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
@@ -105,7 +96,6 @@
         [self configureView];
     }
 }
-
 - (void)showAlert:(NSString *)message
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message 
@@ -123,6 +113,12 @@
 
 - (void)getChapter:(int)bookId:(int)chapterId
 {
+    
+    // save off this level's selection to our AppDelegate
+    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:chapterId]];
+    [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+    
     verses = [NSMutableArray array];
     
     NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
@@ -137,7 +133,7 @@
             while(sqlite3_step(statement) == SQLITE_ROW) {
                 int verseId = sqlite3_column_int(statement, 0);
                 NSString *verse = [[NSString alloc] initWithUTF8String:
-                                       (const char *) sqlite3_column_text(statement, 1)];
+                                   (const char *) sqlite3_column_text(statement, 1)];
                 NSString *verseWithId;
                 if(verseId > 0) {
                     verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
@@ -153,7 +149,7 @@
     sqlite3_close(bibleDB);
     
 }
-
+#pragma mark User Swipe Handiling
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
     if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
@@ -168,7 +164,8 @@
     }
     [self getChapter:self.selectedBook.bookId :self.chapterId];
 	[self.tableView reloadData];
-	
+    //To show from the beginning of a chaper
+	[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 #pragma mark iPad Specific
@@ -186,7 +183,7 @@
         [self.popoverChapterController setContentViewController:picker];
     }
     [self.popoverChapterController setPopoverContentSize:CGSizeMake(220, MIN(44*self.selectedBook.numOfChapters, self.view.frame.size.height))];
-      
+    
     [self.popoverChapterController presentPopoverFromBarButtonItem:barBtn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
@@ -194,6 +191,8 @@
     
     if (self.selectedBook) {
         self.title = [self.selectedBook shortName];
+        
+        
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
@@ -227,7 +226,7 @@
         [tools setItems:items animated:NO];
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
-                
+        
         [self.tableView reloadData];
     }
     if (self.masterPopoverController != nil) {
@@ -240,15 +239,15 @@
 #pragma mark PopOverDelegate
 
 -(void)dismissWithChapter:(NSUInteger)chapterId{
-   
+    
     NSLog(@"dismisssss");
     self.chapterId = chapterId;
-        
+    
     [self.popoverChapterController dismissPopoverAnimated:YES]; 
     [self getChapter:self.selectedBook.bookId :self.chapterId];
     
     [self.tableView reloadData];
-
+    
 }
 #pragma mark - iPad UISplitViewControllerDelegate
 
@@ -341,40 +340,40 @@
     }
     
 }
-    /*
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-*/
+/*
+ 
+ - (void)viewDidUnload
+ {
+ [super viewDidUnload];
+ }
+ 
+ - (void)viewWillAppear:(BOOL)animated
+ {
+ [super viewWillAppear:animated];
+ }
+ 
+ - (void)viewDidAppear:(BOOL)animated
+ {
+ [super viewDidAppear:animated];
+ }
+ 
+ - (void)viewWillDisappear:(BOOL)animated
+ {
+ [super viewWillDisappear:animated];
+ }
+ 
+ - (void)viewDidDisappear:(BOOL)animated
+ {
+ [super viewDidDisappear:animated];
+ }
+ */
 #pragma Rotation Support
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return YES;
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
     } else {
         return YES;
     }

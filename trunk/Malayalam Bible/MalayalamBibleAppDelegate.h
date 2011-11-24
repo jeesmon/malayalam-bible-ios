@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MalayalamBibleAppDelegate : UIResponder <UIApplicationDelegate>
+@interface MalayalamBibleAppDelegate : UIResponder <UIApplicationDelegate>{
+    
+    NSMutableArray		*savedLocation;	// an array of selections for each drill level
+    // [ dictionary bookPathSection and bookpathRow keys, NSNumber chapterIndex , dictionary scrollposition]   
+}
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (nonatomic, retain) NSMutableArray *savedLocation;
 @property (strong, nonatomic) UINavigationController *navigationController;
 
 @property (strong, nonatomic) UISplitViewController *splitViewController;
