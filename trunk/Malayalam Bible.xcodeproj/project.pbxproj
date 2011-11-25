@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F24AB9414803B130096403E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB9314803B130096403E /* Icon-72.png */; };
+		0F24AB96148040360096403E /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB95148040360096403E /* Default-Portrait.png */; };
+		0F24AB98148043D90096403E /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB97148043D90096403E /* Default-Landscape.png */; };
 		0F5EC2281450FA07001C8727 /* ChapterPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5EC2271450FA07001C8727 /* ChapterPickerController.m */; };
 		0F5EC22B1451FD74001C8727 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EC22A1451FD74001C8727 /* Default.png */; };
 		0F861958147DB4E000245D12 /* UIToolbarCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F861957147DB4E000245D12 /* UIToolbarCustom.m */; };
@@ -41,6 +44,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F24AB9314803B130096403E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		0F24AB95148040360096403E /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
+		0F24AB97148043D90096403E /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		0F5EC2261450FA07001C8727 /* ChapterPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterPickerController.h; sourceTree = "<group>"; };
 		0F5EC2271450FA07001C8727 /* ChapterPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterPickerController.m; sourceTree = "<group>"; };
 		0F5EC22A1451FD74001C8727 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -133,6 +139,9 @@
 		0FFE508D1450636E00BC85EE /* Malayalam Bible */ = {
 			isa = PBXGroup;
 			children = (
+				0F24AB97148043D90096403E /* Default-Landscape.png */,
+				0F24AB95148040360096403E /* Default-Portrait.png */,
+				0F24AB9314803B130096403E /* Icon-72.png */,
 				8F8A773F147C20EC00613427 /* Protocols */,
 				0FBAE7651455D6C0007718D3 /* Default@2x.png */,
 				0FBAE7671455D9B3007718D3 /* previous.png */,
@@ -259,6 +268,9 @@
 				0FBAE76A1455DB8A007718D3 /* next.png in Resources */,
 				0FBAE76D1455DCEE007718D3 /* next@2x.png in Resources */,
 				0FBAE76E1455DCEE007718D3 /* previous@2x.png in Resources */,
+				0F24AB9414803B130096403E /* Icon-72.png in Resources */,
+				0F24AB96148040360096403E /* Default-Portrait.png in Resources */,
+				0F24AB98148043D90096403E /* Default-Landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +363,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -374,7 +386,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -391,13 +403,13 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "775A40F1-17CA-40EA-BA6D-834D6D56FB80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -411,13 +423,13 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeesmon Jacob";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "775A40F1-17CA-40EA-BA6D-834D6D56FB80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A4D735B8-0C7C-4455-95F5-10BF19314F4B";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -10,7 +10,9 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
+		<string>Icon-72.png</string>
 		<string>Icon.png</string>
+		<string>Icon@2x.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.jeesmon.apps.${PRODUCT_NAME:rfc1034identifier}</string>
