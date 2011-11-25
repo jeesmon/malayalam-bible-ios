@@ -165,8 +165,7 @@ const CGFloat tagWidthOffset = 10.0f;
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSLog(@"orientation change");
-    
+       
     NSArray *viewsToRemove = [scrollViewBar subviews];
     int i = 0;
     for (UIView *v in viewsToRemove) {

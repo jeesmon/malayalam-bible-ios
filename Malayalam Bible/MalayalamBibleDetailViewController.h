@@ -10,14 +10,14 @@
 #import "/usr/include/sqlite3.h"
 #import "Book.h"
 #import "PopOverDelegate.h"
-#import "SwipeController.h"
+
 
 #define FONT_SIZE 17.0f
 
-@interface MalayalamBibleDetailViewController : SwipeController <UISplitViewControllerDelegate, PopOverDelegate>
+@interface MalayalamBibleDetailViewController : UITableViewController <UISplitViewControllerDelegate, PopOverDelegate>
 {
     NSMutableArray *verses;
-    //UITableView *chapterTableView;
+   
     UIPopoverController *popoverChapterController;
 }
 
@@ -26,11 +26,10 @@
 @property (assign, readwrite) int chapterId;
 @property(nonatomic, retain) UIPopoverController *popoverChapterController;
 
-//@property (nonatomic, retain) IBOutlet UITableView *chapterTableView;
 
 - (void)showAlert:(NSString *)message;
 - (void)getChapter:(int)bookId:(int)chapterId;
-- (void)chapterSelectionCallback:(int)chapterId;
+
 
 - (void)configureiPadView;
 - (void)configureView;
