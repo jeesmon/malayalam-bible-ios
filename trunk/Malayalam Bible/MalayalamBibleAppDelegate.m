@@ -81,7 +81,6 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         }
     }
 	
-    NSLog(@"savedLocation =%@", savedLocation);
     NSNumber *selection = [[savedLocation objectAtIndex:0] valueForKey:@"BookPathSection"];	// read the saved selection at level 1
     if (selection)
     {

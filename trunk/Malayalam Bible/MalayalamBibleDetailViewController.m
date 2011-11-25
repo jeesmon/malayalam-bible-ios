@@ -106,11 +106,6 @@
     [alert show];
 }
 
-- (void)chapterSelectionCallback:(int)chapterId
-{
-    NSLog(@"callback");
-}
-
 - (void)getChapter:(int)bookId:(int)chapterId
 {
     
@@ -250,7 +245,7 @@
 
 -(void)dismissWithChapter:(NSUInteger)chapterId{
     
-    NSLog(@"dismisssss");
+    
     self.chapterId = chapterId;
     
     [self.popoverChapterController dismissPopoverAnimated:YES]; 
@@ -351,6 +346,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    recognizer.direction = UISwipeGestureRecognizerDirectionRight;
+	[self.view addGestureRecognizer:recognizer];
+	
+	
+    
+    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+	swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    
+    [self.view addGestureRecognizer:swipeLeftRecognizer];
     
     self.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	// Do any additional setup after loading the view, typically from a nib.

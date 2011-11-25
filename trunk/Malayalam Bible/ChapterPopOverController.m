@@ -163,8 +163,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    NSLog(@"dismissss = %i", [[arrayChapters objectAtIndex:indexPath.row] intValue]);
-    
+       
     [self.delegate dismissWithChapter:[[arrayChapters objectAtIndex:indexPath.row] intValue]];
 }
 

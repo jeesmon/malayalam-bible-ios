@@ -101,7 +101,7 @@ const NSString *bmBookRow = @"BookPathRow";
 
 - (void) showInfoView:(id)sender
 {
-    NSLog(@"Info View");
+   
     self.infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
     self.infoViewController.title = @"Information";
     [self.navigationController pushViewController:self.infoViewController animated:YES];
