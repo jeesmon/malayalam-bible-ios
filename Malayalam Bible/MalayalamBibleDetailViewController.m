@@ -13,6 +13,9 @@
 @interface MalayalamBibleDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
+- (void) resetBottomToolbar;
+-(void)displayComposerSheet:(NSArray *)arraySelectedIndesPath;
+
 @end
 
 @implementation MalayalamBibleDetailViewController
@@ -22,10 +25,11 @@
 @synthesize selectedBook = _selectedBook;
 @synthesize chapterId = _chapterId;
 @synthesize popoverChapterController = _popoverChapterController;
+@synthesize toolBarBottom = _toolBarBottom;
 
-//@synthesize chapterTableView;
 
 #pragma mark - Managing the detail item
+
 
 /** To configure iPhone detail view each time **/
 - (void)configureView
@@ -59,6 +63,10 @@
         
         self.navigationItem.rightBarButtonItem = controlItem;
         
+        [self resetBottomToolbar];
+        self.tableView.editing = NO;
+        self.tableView.allowsMultipleSelectionDuringEditing = NO;
+
         [self.tableView reloadData];
         
         //To show from the beginning of a chaper
@@ -147,30 +155,36 @@
 #pragma mark User Swipe Handiling
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
-    if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
+    if(!self.tableView.isEditing){
         
-        self.chapterId++;
-    }else{
-        self.chapterId--;
+        if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
+            
+            self.chapterId++;
+        }else{
+            self.chapterId--;
+        }
+        
+        /*if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
+         self.chapterId = 1;
+         }
+         [self getChapter:self.selectedBook.bookId :self.chapterId];
+         [self.tableView reloadData];
+         //To show from the beginning of a chaper
+         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+         */
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            [self configureiPadView];
+        }
+        else {
+            [self configureView];
+        }
     }
     
-    /*if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
-        self.chapterId = 1;
-    }
-    [self getChapter:self.selectedBook.bookId :self.chapterId];
-	[self.tableView reloadData];
-    //To show from the beginning of a chaper
-	[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-     */
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self configureiPadView];
-    }
-    else {
-        [self configureView];
-    }
 }
 
 #pragma mark iPad Specific
+
+
 
 - (void)showChapters:(UIBarButtonItem *)barBtn{
     
@@ -229,6 +243,11 @@
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
         
+        
+        self.tableView.editing = NO;
+        self.tableView.allowsMultipleSelectionDuringEditing = NO;
+        [self resetBottomToolbar];
+
         [self.tableView reloadData];
         
         //To show from the beginning of a chaper
@@ -267,7 +286,7 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"പുസ്തകങ്ങൾ", @"പുസ്തകങ്ങൾ");
+    barButtonItem.title = NSLocalizedString(@"Books", @"പുസ്തകങ്ങൾ");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
@@ -328,10 +347,44 @@
     CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280
     CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
     
+    //if([[tableView cellForRowAtIndexPath:indexPath] isSelected]){
+        
+        //labelSize.height += 100;
+    //}
+    
     return labelSize.height + 10;
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 45.0;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    
+    
+    if(self.toolBarBottom == nil){
+        UIToolbar *toolBarB = [[UIToolbar alloc] init];
+        toolBarB.barStyle = UIBarStyleBlackTranslucent;
+        
+        
+        
+        toolBarB.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        toolBarB.frame = CGRectMake(0, 0, self.view.frame.size.width, 456);
+        
+        
+        
+        
+        self.toolBarBottom = toolBarB;
+
+        
+        [self resetBottomToolbar];
+        
+    }
+    return self.toolBarBottom;
+}
 #pragma mark MemoryHandling
 
 
@@ -343,9 +396,13 @@
 
 #pragma mark - View lifecycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+       
+    self.tableView.allowsSelection = NO;
     
     UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     recognizer.direction = UISwipeGestureRecognizerDirectionRight;
@@ -360,11 +417,13 @@
     [self.view addGestureRecognizer:swipeLeftRecognizer];
     
     self.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    
 	// Do any additional setup after loading the view, typically from a nib.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
         [self configureView];
     }
-    
+   
+    //[self.tableView allowsMultipleSelection];
 }
 /*
  
@@ -405,5 +464,130 @@
         return YES;
     }*/
 }
+
+#pragma mark private methods
+
+- (void) resetBottomToolbar{
+    
+    NSMutableArray *arrayOfTools = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    
+    UIBarButtonItem *action = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionPerformed:)];
+    
+    
+    
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc]
+                             initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil action:nil];
+    [arrayOfTools addObject:flex];
+    [arrayOfTools addObject:action];
+    
+    self.toolBarBottom.items = arrayOfTools;    
+
+}
+
+#pragma mark @selector methods
+- (void) actionPerformed:(id)sender{
+    
+    
+    NSMutableArray *arrayOfTools = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction:)];
+    
+    
+    
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc]
+                             initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil action:nil];
+    
+    
+    UIBarButtonItem *email = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Test", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(emailVerses:)];
+    
+    [arrayOfTools addObject:flex];
+    
+    [arrayOfTools addObject:email];
+    [arrayOfTools addObject:cancel];
+    
+    self.toolBarBottom.items = arrayOfTools;
+    
+    
+    self.tableView.editing = YES;
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
+    [self.tableView reloadData];
+    
+}
+
+- (void) emailVerses:(id)sender{
+    
+    NSArray *arraySelectedIndesPath = [self.tableView indexPathsForSelectedRows];
+    
+    
+    
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    if (mailClass != nil)
+    {
+        // We must always check whether the current device is configured for sending emails
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet:arraySelectedIndesPath];
+        }
+        
+    }
+}
+
+- (void) cancelAction:(id)sender{
+    
+    [self resetBottomToolbar];
+        
+    self.tableView.editing = NO;
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    [self.tableView reloadData];
+
+}
+
+#pragma mark mail actions
+
+-(void)displayComposerSheet:(NSArray *)arraySelectedIndesPath{
+	
+    
+    NSLog(@"book = %@", self.selectedBook.shortName);
+    NSLog(@"chapter = %i", self.chapterId);
+    
+    for(NSIndexPath *path in arraySelectedIndesPath){
+        
+        NSLog(@"sel = %@", [verses objectAtIndex:path.row]);
+    }
+    
+	//+20101105
+	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+	picker.mailComposeDelegate = self;
+	
+	//[picker setSubject:@"Hello from California!"];
+	
+	
+	// Set up recipients
+	//NSArray *toRecipients = [NSArray arrayWithObject:emailid]; 
+	// NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil]; 
+	// NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com"]; 
+	
+	//[picker setToRecipients:toRecipients];
+	//[picker setCcRecipients:ccRecipients];	
+	//[picker setBccRecipients:bccRecipients];
+	
+	// Attach an image to the email
+	// NSString *path = [[NSBundle mainBundle] pathForResource:@"rainy" ofType:@"png"];
+	// NSData *myData = [NSData dataWithContentsOfFile:path];
+	// [picker addAttachmentData:myData mimeType:@"image/png" fileName:@"rainy"];
+	
+	// Fill out the email body text
+	//NSString *emailBody = @"It is raining in sunny California!";
+	//[picker setMessageBody:emailBody isHTML:NO];
+	
+	[self.navigationController presentModalViewController:picker animated:YES];
+	
+	
+}
+
 
 @end

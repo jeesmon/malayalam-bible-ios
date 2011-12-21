@@ -40,6 +40,7 @@
 		0FFE50BB1450744400BC85EE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50BA1450744400BC85EE /* libsqlite3.dylib */; };
 		0FFE50BD145074E300BC85EE /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE50BC145074E200BC85EE /* malayalam-bible.db */; };
 		0FFE50C0145088FD00BC85EE /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE50BF145088FD00BC85EE /* Book.m */; };
+		8F7BD9AD1499045600205D28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BD9AB1499045600205D28 /* Localizable.strings */; };
 		8F8A773E147C1B4700613427 /* ChapterPopOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A773D147C1B4700613427 /* ChapterPopOverController.m */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		0FFE50BC145074E200BC85EE /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
 		0FFE50BE145088FD00BC85EE /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		0FFE50BF145088FD00BC85EE /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		8F7BD9AC1499045600205D28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F8A773C147C1B4700613427 /* ChapterPopOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterPopOverController.h; sourceTree = "<group>"; };
 		8F8A773D147C1B4700613427 /* ChapterPopOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterPopOverController.m; sourceTree = "<group>"; };
 		8F8A7740147C213D00613427 /* PopOverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopOverDelegate.h; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		0FFE508D1450636E00BC85EE /* Malayalam Bible */ = {
 			isa = PBXGroup;
 			children = (
+				8F7BD9A71499032B00205D28 /* Resources */,
 				0F24AB97148043D90096403E /* Default-Landscape.png */,
 				0F24AB95148040360096403E /* Default-Portrait.png */,
 				0F24AB9314803B130096403E /* Icon-72.png */,
@@ -191,6 +194,14 @@
 				0FFE50951450636E00BC85EE /* Malayalam Bible-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8F7BD9A71499032B00205D28 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8F7BD9AB1499045600205D28 /* Localizable.strings */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		8F8A773F147C20EC00613427 /* Protocols */ = {
@@ -271,6 +282,7 @@
 				0F24AB9414803B130096403E /* Icon-72.png in Resources */,
 				0F24AB96148040360096403E /* Default-Portrait.png in Resources */,
 				0F24AB98148043D90096403E /* Default-Landscape.png in Resources */,
+				8F7BD9AD1499045600205D28 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +347,14 @@
 				0FFE50A91450636E00BC85EE /* en */,
 			);
 			name = MalayalamBibleDetailViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		8F7BD9AB1499045600205D28 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F7BD9AC1499045600205D28 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
