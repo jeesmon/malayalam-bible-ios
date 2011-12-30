@@ -356,6 +356,9 @@
     
 }
 
+ 
+/* on iPad, if a chapter has 2-3 verses (if table has 2-3 cells), the toolbar will appear on biddle of the screen, so we can add the toolbar to this view instead of set as footer. 
+*/
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
     return 45.0;
@@ -372,7 +375,7 @@
         
         
         toolBarB.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        toolBarB.frame = CGRectMake(0, 0, self.view.frame.size.width, 456);
+        toolBarB.frame = CGRectMake(0, 0, self.view.frame.size.width, 45);
         
         
         
@@ -385,6 +388,8 @@
     }
     return self.toolBarBottom;
 }
+
+
 #pragma mark MemoryHandling
 
 
@@ -502,11 +507,12 @@
                              target:nil action:nil];
     
     
-    UIBarButtonItem *email = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Test", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(emailVerses:)];
+    UIBarButtonItem *email = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"email", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(emailVerses:)];
     
-    [arrayOfTools addObject:flex];
+    
     
     [arrayOfTools addObject:email];
+    [arrayOfTools addObject:flex];
     [arrayOfTools addObject:cancel];
     
     self.toolBarBottom.items = arrayOfTools;
@@ -551,19 +557,40 @@
 -(void)displayComposerSheet:(NSArray *)arraySelectedIndesPath{
 	
     
-    NSLog(@"book = %@", self.selectedBook.shortName);
-    NSLog(@"chapter = %i", self.chapterId);
+    NSMutableString *emailBody = [[NSMutableString alloc] init ];
+    [emailBody appendFormat:@"%@", self.selectedBook.shortName];
+    [emailBody appendFormat:@" %i", self.chapterId];
     
-    for(NSIndexPath *path in arraySelectedIndesPath){
+    NSUInteger countV = [arraySelectedIndesPath count];
+   
+    if(countV == 0){
         
-        NSLog(@"sel = %@", [verses objectAtIndex:path.row]);
+        //return ? or mail entire chapter ?
+        
+    }else if(countV == 1){
+        
+        NSIndexPath *path = [arraySelectedIndesPath objectAtIndex:0];
+        [emailBody appendFormat:@" : %@\n", [verses objectAtIndex:path.row]];
+        
+    }else{
+        
+        [emailBody appendFormat:@"\n"];
+        for(NSUInteger i=0; i<countV ; i++ ){
+            
+            NSIndexPath *path = [arraySelectedIndesPath objectAtIndex:i];
+            [emailBody appendFormat:@"%@\n", [verses objectAtIndex:path.row]];
+        }
     }
+    
+    
+    
+    [emailBody appendFormat:@"\n%@", NSLocalizedString(@"MailFooter", @"footer message")];
     
 	//+20101105
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
 	picker.mailComposeDelegate = self;
 	
-	//[picker setSubject:@"Hello from California!"];
+	[picker setSubject:@"Bible Verses"];
 	
 	
 	// Set up recipients
@@ -582,11 +609,34 @@
 	
 	// Fill out the email body text
 	//NSString *emailBody = @"It is raining in sunny California!";
-	//[picker setMessageBody:emailBody isHTML:NO];
+	[picker setMessageBody:emailBody isHTML:NO];
 	
 	[self.navigationController presentModalViewController:picker animated:YES];
 	
 	
+}
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+    
+    switch (result)
+	{
+		case MFMailComposeResultCancelled:
+			//(@"Result: canceled");
+			break;
+		case MFMailComposeResultSaved:
+			//(@"Result: saved");
+			break;
+		case MFMailComposeResultSent:
+			//(@"Result: sent");
+			break;
+		case MFMailComposeResultFailed:
+			//(@"Result: failed");
+			break;
+		default:
+			//(@"Result: not sent");
+			break;
+	}
+    [[self navigationController] dismissModalViewControllerAnimated:YES];
+
 }
 
 
