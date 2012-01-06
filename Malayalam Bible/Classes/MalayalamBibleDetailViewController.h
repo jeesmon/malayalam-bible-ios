@@ -15,18 +15,21 @@
 
 #define FONT_SIZE 17.0f
 
-@interface MalayalamBibleDetailViewController : UITableViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate >// UITableViewDataSource, UITableViewDelegate
+@interface MalayalamBibleDetailViewController : UITableViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate >// 
 {
     NSMutableArray *verses;
-    UIToolbar *toolBarBottom;
+
     UIPopoverController *popoverChapterController;
+    
+    UITableView *tableViewVerses;
 }
 
 
 @property (strong, nonatomic) Book *selectedBook;
 @property (assign, readwrite) int chapterId;
 @property(nonatomic, retain) UIPopoverController *popoverChapterController;
-@property(nonatomic, retain) UIToolbar *toolBarBottom;
+
+@property(nonatomic, retain) UITableView *tableViewVerses;
 
 - (void)showAlert:(NSString *)message;
 - (void)getChapter:(int)bookId:(int)chapterId;
