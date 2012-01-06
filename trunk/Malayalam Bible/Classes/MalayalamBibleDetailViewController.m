@@ -25,7 +25,7 @@
 @synthesize selectedBook = _selectedBook;
 @synthesize chapterId = _chapterId;
 @synthesize popoverChapterController = _popoverChapterController;
-@synthesize toolBarBottom = _toolBarBottom;
+@synthesize tableViewVerses = _tableViewVerses;
 
 
 #pragma mark - Managing the detail item
@@ -40,10 +40,7 @@
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
-        
-        
-        
-        
+                
         [self getChapter:self.selectedBook.bookId :self.chapterId];
         
         UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray         arrayWithObjects:[UIImage imageNamed:@"previous.png"],[UIImage imageNamed:@"next.png"], nil]];
@@ -64,17 +61,18 @@
         self.navigationItem.rightBarButtonItem = controlItem;
         
         [self resetBottomToolbar];
-        self.tableView.editing = NO;
-        self.tableView.allowsMultipleSelectionDuringEditing = NO;
+        self.tableViewVerses.editing = NO;
+        self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
 
-        [self.tableView reloadData];
+        
+        [self.tableViewVerses reloadData];
         
         //To show from the beginning of a chaper
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.tableViewVerses scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
 
-
+/*
 - (void) buttonPrevClicked: (id)sender
 {
     self.chapterId--;
@@ -86,8 +84,10 @@
     self.chapterId++;
     [self configureView];
 }
+*/
 - (void) nextPrevious:(id)sender
 {
+    
     switch([(UISegmentedControl *)sender selectedSegmentIndex]) {
         case 0:
             self.chapterId--;
@@ -155,7 +155,7 @@
 #pragma mark User Swipe Handiling
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
-    if(!self.tableView.isEditing){
+    if(!self.tableViewVerses.isEditing){
         
         if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
             
@@ -164,14 +164,7 @@
             self.chapterId--;
         }
         
-        /*if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
-         self.chapterId = 1;
-         }
-         [self getChapter:self.selectedBook.bookId :self.chapterId];
-         [self.tableView reloadData];
-         //To show from the beginning of a chaper
-         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-         */
+        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [self configureiPadView];
         }
@@ -244,14 +237,14 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
         
         
-        self.tableView.editing = NO;
-        self.tableView.allowsMultipleSelectionDuringEditing = NO;
+        self.tableViewVerses.editing = NO;
+        self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
         [self resetBottomToolbar];
 
-        [self.tableView reloadData];
+        [self.tableViewVerses reloadData];
         
         //To show from the beginning of a chaper
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.tableViewVerses scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
     if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
@@ -275,12 +268,7 @@
     else {
         [self configureView];
     }
-    /*[self getChapter:self.selectedBook.bookId :self.chapterId];
-    
-    [self.tableView reloadData];
-    //To show from the beginning of a chaper
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    */
+ 
 }
 #pragma mark - iPad UISplitViewControllerDelegate
 
@@ -308,16 +296,18 @@
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(verses) {
-        return [verses count];
+        
+       return [verses count];
     }
     else {
-        return 0;
+       return 0;
     }
 }
 
@@ -325,6 +315,7 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
+        
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -346,49 +337,10 @@
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:FONT_SIZE];
     CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280
     CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
-    
-    //if([[tableView cellForRowAtIndexPath:indexPath] isSelected]){
-        
-        //labelSize.height += 100;
-    //}
-    
+       
     return labelSize.height + 10;
     
 }
-
- 
-/* on iPad, if a chapter has 2-3 verses (if table has 2-3 cells), the toolbar will appear on biddle of the screen, so we can add the toolbar to this view instead of set as footer. 
-*/
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
-    return 45.0;
-}
-
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    
-    
-    if(self.toolBarBottom == nil){
-        UIToolbar *toolBarB = [[UIToolbar alloc] init];
-        toolBarB.barStyle = UIBarStyleBlackTranslucent;
-        
-        
-        
-        toolBarB.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        toolBarB.frame = CGRectMake(0, 0, self.view.frame.size.width, 45);
-        
-        
-        
-        
-        self.toolBarBottom = toolBarB;
-
-        
-        [self resetBottomToolbar];
-        
-    }
-    return self.toolBarBottom;
-}
-
 
 #pragma mark MemoryHandling
 
@@ -401,13 +353,45 @@
 
 #pragma mark - View lifecycle
 
+- (void) loadView{
+    
+    [super loadView];
+    
+    CGRect cgRect = self.view.frame;
+    
+    
+	
+	UIView *myView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, cgRect.size.width, cgRect.size.height)]; //initilize the view    
+	myView.autoresizesSubviews = YES;              //allow it to tweak size of elements in view 
+	myView.backgroundColor = [UIColor whiteColor];
+	myView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+	self.view = myView;
+    
+    
+    
+    self.tableViewVerses = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];//
+    self.tableViewVerses.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.tableViewVerses.delegate = self;
+    self.tableViewVerses.dataSource = self;
+    
+    [self.view addSubview:self.tableViewVerses];
+    
+    
+    
+   
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
     
-       
-    self.tableView.allowsSelection = NO;
+    
+    
+    
+    self.tableViewVerses.allowsSelection = NO;
     
     UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     recognizer.direction = UISwipeGestureRecognizerDirectionRight;
@@ -487,7 +471,8 @@
     [arrayOfTools addObject:flex];
     [arrayOfTools addObject:action];
     
-    self.toolBarBottom.items = arrayOfTools;    
+    //self.toolBarBottom.items = arrayOfTools;    
+    self.toolbarItems = arrayOfTools;    
 
 }
 
@@ -515,18 +500,18 @@
     [arrayOfTools addObject:flex];
     [arrayOfTools addObject:cancel];
     
-    self.toolBarBottom.items = arrayOfTools;
+    self.toolbarItems = arrayOfTools;
     
     
-    self.tableView.editing = YES;
-    self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    [self.tableView reloadData];
+    self.tableViewVerses.editing = YES;
+    self.tableViewVerses.allowsMultipleSelectionDuringEditing = YES;
+    [self.tableViewVerses reloadData];
     
 }
 
 - (void) emailVerses:(id)sender{
     
-    NSArray *arraySelectedIndesPath = [self.tableView indexPathsForSelectedRows];
+    NSArray *arraySelectedIndesPath = [self.tableViewVerses indexPathsForSelectedRows];
     
     
     
@@ -546,9 +531,9 @@
     
     [self resetBottomToolbar];
         
-    self.tableView.editing = NO;
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
-    [self.tableView reloadData];
+    self.tableViewVerses.editing = NO;
+    self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
+    [self.tableViewVerses reloadData];
 
 }
 
@@ -586,29 +571,11 @@
     
     [emailBody appendFormat:@"\n%@", NSLocalizedString(@"MailFooter", @"footer message")];
     
-	//+20101105
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
 	picker.mailComposeDelegate = self;
 	
 	[picker setSubject:@"Bible Verses"];
 	
-	
-	// Set up recipients
-	//NSArray *toRecipients = [NSArray arrayWithObject:emailid]; 
-	// NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil]; 
-	// NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com"]; 
-	
-	//[picker setToRecipients:toRecipients];
-	//[picker setCcRecipients:ccRecipients];	
-	//[picker setBccRecipients:bccRecipients];
-	
-	// Attach an image to the email
-	// NSString *path = [[NSBundle mainBundle] pathForResource:@"rainy" ofType:@"png"];
-	// NSData *myData = [NSData dataWithContentsOfFile:path];
-	// [picker addAttachmentData:myData mimeType:@"image/png" fileName:@"rainy"];
-	
-	// Fill out the email body text
-	//NSString *emailBody = @"It is raining in sunny California!";
 	[picker setMessageBody:emailBody isHTML:NO];
 	
 	[self.navigationController presentModalViewController:picker animated:YES];

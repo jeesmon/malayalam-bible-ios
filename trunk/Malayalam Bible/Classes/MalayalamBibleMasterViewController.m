@@ -274,6 +274,7 @@ const NSString *bmBookRow = @"BookPathRow";
         selectedBookName = [newTestament objectAtIndex:indexPath.row];
     }
     
+        
     [self selectBookWithName:selectedBookName AndChapter:1];
 }
 
@@ -290,6 +291,8 @@ const NSString *bmBookRow = @"BookPathRow";
     
     if(selectedBookName){
         
+        
+        
         Book *selectedBook = [books objectForKey:selectedBookName];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -303,8 +306,10 @@ const NSString *bmBookRow = @"BookPathRow";
             }
             else {
                 
+                               
                 self.detailViewController.selectedBook = selectedBook;
                 self.detailViewController.chapterId = chapter;
+                [self.detailViewController configureView];
                 [self.navigationController pushViewController:self.detailViewController animated:YES];
             }
         }else{
