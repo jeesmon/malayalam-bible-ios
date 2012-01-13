@@ -1,28 +1,22 @@
 //
-//  ChapterPopOverController.m
+//  LanguageViewController.m
 //  Malayalam Bible
 //
-//  Created by Jijo Pulikkottil on 22/11/11.
-//  Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
+//  Created by jijo on 1/13/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ChapterPopOverController.h"
-#import "BibleDao.h"
+#import "LanguageViewController.h"
+#import "SelectionController.h"
+#import "MBConstants.h"
 
-@implementation ChapterPopOverController
+@implementation LanguageViewController
 
-@synthesize delegate = _delegate;
-@synthesize arrayChapters = _arrayChapters;
-
-- (id)initWithNumberOfChapters:(NSUInteger)count
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:UITableViewStylePlain];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        arrayChapters = [[NSMutableArray alloc] initWithCapacity:count];
-        for(NSUInteger i=1; i<= count ; i++){
-            [arrayChapters addObject:[NSNumber numberWithInt:i]];
-        }
     }
     return self;
 }
@@ -40,9 +34,10 @@
 - (void)viewDidLoad
 {
     
-    
+     
     [super viewDidLoad];
 
+        
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -60,6 +55,36 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    if(dictPref == nil){
+        
+        
+        dictPref = [[NSMutableDictionary alloc] init];
+        [dictPref setValue:kLangMalayalam forKey:@"primaryLanguage"];
+        [dictPref setValue:kLangNone forKey:@"secondaryLanguage"];
+        
+       
+        
+        [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:kStorePreference];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    NSString *selectedPriLan = NSLocalizedString([dictPref valueForKey:@"primaryLanguage"], @"");; 
+    NSString *selectedSecLan = NSLocalizedString([dictPref valueForKey:@"secondaryLanguage"], @"");
+        
+    
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Primary", @"") ,@"label",selectedPriLan, @"value",[dictPref valueForKey:@"primaryLanguage"], @"languageid", nil];
+    
+    
+    
+    NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Secondary", @"") ,@"label",selectedSecLan, @"value",[dictPref valueForKey:@"secondaryLanguage"], @"languageid", nil];
+    
+    arrayLangs = [NSArray arrayWithObjects:dict1,dict2, nil];
+
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -80,10 +105,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    return @"Languages";
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -96,7 +126,7 @@
 {
 
     // Return the number of rows in the section.
-    return [arrayChapters count];
+    return [arrayLangs count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,11 +135,13 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %i",[BibleDao getTitleChapter], [[arrayChapters objectAtIndex:indexPath.row] intValue]];
+    NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
+    cell.textLabel.text = [dict valueForKey:@"label"];
+    cell.detailTextLabel.text = [dict valueForKey:@"value"];
     // Configure the cell...
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -158,14 +190,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
+    NSArray *options = nil;
+    
+    NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
+    if([[dict valueForKey:@"label"] isEqualToString:NSLocalizedString(@"Primary", @"")]){
+      
+        
+        NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangMalayalam, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangMalayalam] ? @"YES" : @"NO", @"isSelected", kLangMalayalam, @"languageid", nil];
+        
+        NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangEnglishASV, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangEnglishASV] ? @"YES" : @"NO", @"isSelected", kLangEnglishASV, @"languageid", nil];
+        
+        NSMutableDictionary *dict3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangEnglishKJV, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangEnglishKJV] ? @"YES" : @"NO", @"isSelected", kLangEnglishKJV, @"languageid", nil];
+        
+        options = [NSArray arrayWithObjects:dict1, dict2, dict3, nil];
+        
+    }
+       
+    
+    SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-       
-    [self.delegate dismissWithChapter:[[arrayChapters objectAtIndex:indexPath.row] intValue]];
+     
 }
 
 @end

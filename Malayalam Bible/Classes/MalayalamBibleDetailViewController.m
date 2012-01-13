@@ -203,7 +203,7 @@ __VA_ARGS__ \
         UIToolbarCustom* tools = [[UIToolbarCustom alloc] initWithFrame:CGRectMake(0, 0, 190, 44)];
         [tools setBackgroundColor:[UIColor clearColor]];
         
-        UIBarButtonItem* chapterItem =[[UIBarButtonItem alloc] initWithTitle:@"അദ്ധ്യായങ്ങൾ" style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
+        UIBarButtonItem* chapterItem =[[UIBarButtonItem alloc] initWithTitle:[BibleDao getTitleChapterButton] style:UIBarButtonItemStyleBordered target:self action:@selector(showChapters:)];
         
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
@@ -267,7 +267,7 @@ __VA_ARGS__ \
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Books", @"പുസ്തകങ്ങൾ");
+    barButtonItem.title = [BibleDao getTitleBooks];
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
@@ -282,7 +282,7 @@ __VA_ARGS__ \
 #pragma Mark UITableDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"അദ്ധ്യായം %d", self.chapterId];
+    return [NSString stringWithFormat:@"%@ %d",[BibleDao getTitleChapter], self.chapterId];
 }
 
 

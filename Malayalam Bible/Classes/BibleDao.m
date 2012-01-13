@@ -9,6 +9,7 @@
 #import "BibleDao.h"
 #import "/usr/include/sqlite3.h"
 #import "Book.h"
+#import "MBConstants.h"
 
 @implementation BibleDao
 
@@ -19,13 +20,31 @@
    NSMutableArray *oldTestament = [NSMutableArray array];
    NSMutableArray *newTestament = [NSMutableArray array];
     
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    NSString *querySQL = nil;
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
+        
+    }else{
+    
+         querySQL = @"SELECT AlphaCode, book_id, MalayalamShortName, num_chptr, EnglishShortName , MalayalamLongName FROM books";
+    }
+        
+    
+    
+    
 	NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
     
     if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
         sqlite3_stmt *statement;
-        NSString *querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
+        
+        
+        
         const char *queryStmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
             while(sqlite3_step(statement) == SQLITE_ROW) {
@@ -33,14 +52,14 @@
                 NSString *alphaCode = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 0)];
                 int bookId = sqlite3_column_int(statement, 1);
-                NSString *englishName = [[NSString alloc] initWithUTF8String:
-                                         (const char *) sqlite3_column_text(statement, 2)];
+                //NSString *englishName = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
                 int numOfChapters = sqlite3_column_int(statement, 3);
                 NSString *shortName = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 4)];
                 NSString *longName = [[NSString alloc] initWithUTF8String:
                                       (const char *) sqlite3_column_text(statement, 5)];
                 
+                              
                 if(bookId > 39) {
                     [newTestament addObject:shortName];
                 }
@@ -51,7 +70,7 @@
                 Book *book = [[Book alloc] init];
                 book.alphaCode = alphaCode;
                 book.bookId = bookId;
-                book.englishName = englishName;
+                //book.englishName = englishName;
                 book.numOfChapters = numOfChapters;
                 book.shortName = shortName;
                 book.longName = longName;
@@ -73,6 +92,22 @@
 {
     
     
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    NSString *querySQL = nil;
+       
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
+        
+    }else if([kLangEnglishASV isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_asv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
+    }else{
+        
+        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_kjv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
+    }
+    
     
    NSMutableArray *verses = [NSMutableArray array];
     
@@ -82,7 +117,7 @@
     
     if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
         sqlite3_stmt *statement;
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
+       
         const char *queryStmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
             while(sqlite3_step(statement) == SQLITE_ROW) {
@@ -104,5 +139,69 @@
     sqlite3_close(bibleDB);
     
     return verses;
+}
+
++ (NSString *)getTitleBooks{
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        return @"പുസ്തകങ്ങൾ";
+        
+    }         
+    return @"Books";
+    
+    
+}
++ (NSString *)getTitleOldTestament{
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        return @"പഴയനിയമം";
+        
+    }         
+    return @"Old Testament";
+}
++ (NSString *)getTitleNewTestament{
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        return @"പുതിയനിയമം";
+        
+    }         
+    return @"New Testament";
+}
++ (NSString *)getTitleChapter{
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        return @"അദ്ധ്യായം";
+        
+    }         
+    return @"Chapter";
+}
++ (NSString *)getTitleChapterButton{
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    
+    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+        
+        return @"അദ്ധ്യായങ്ങൾ";
+        
+    }         
+    return @"Chapters";
+    
 }
 @end

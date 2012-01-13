@@ -1,28 +1,22 @@
 //
-//  ChapterPopOverController.m
+//  SettingsViewController.m
 //  Malayalam Bible
 //
-//  Created by Jijo Pulikkottil on 22/11/11.
-//  Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
+//  Created by jijo on 1/13/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ChapterPopOverController.h"
-#import "BibleDao.h"
+#import "SettingsViewController.h"
+#import "LanguageViewController.h"
 
-@implementation ChapterPopOverController
 
-@synthesize delegate = _delegate;
-@synthesize arrayChapters = _arrayChapters;
+@implementation SettingsViewController
 
-- (id)initWithNumberOfChapters:(NSUInteger)count
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:UITableViewStylePlain];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        arrayChapters = [[NSMutableArray alloc] initWithCapacity:count];
-        for(NSUInteger i=1; i<= count ; i++){
-            [arrayChapters addObject:[NSNumber numberWithInt:i]];
-        }
     }
     return self;
 }
@@ -39,10 +33,11 @@
 
 - (void)viewDidLoad
 {
-    
-    
     [super viewDidLoad];
 
+    
+    NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Languages", @"") ,@"title",NSLocalizedString(@"SelectLanguages", @""), @"subTitle", nil];
+    arrayPrefs = [NSArray arrayWithObjects:dict1, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -79,11 +74,16 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-	return YES;
+    return YES;
 }
 
 #pragma mark - Table view data source
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+
+    return @"Preferences";
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -96,7 +96,7 @@
 {
 
     // Return the number of rows in the section.
-    return [arrayChapters count];
+    return [arrayPrefs count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,11 +105,15 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %i",[BibleDao getTitleChapter], [[arrayChapters objectAtIndex:indexPath.row] intValue]];
     // Configure the cell...
+    NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
+    cell.textLabel.text = [dict valueForKey:@"title"];
+    cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -158,14 +162,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+    
+     LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
      // ...
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-       
-    [self.delegate dismissWithChapter:[[arrayChapters objectAtIndex:indexPath.row] intValue]];
+     
 }
 
 @end

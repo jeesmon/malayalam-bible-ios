@@ -1,28 +1,22 @@
 //
-//  ChapterPopOverController.m
+//  SelectionController.m
 //  Malayalam Bible
 //
-//  Created by Jijo Pulikkottil on 22/11/11.
-//  Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
+//  Created by jijo on 1/13/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ChapterPopOverController.h"
-#import "BibleDao.h"
+#import "SelectionController.h"
+#import "MBConstants.h"
 
-@implementation ChapterPopOverController
+@implementation SelectionController
 
-@synthesize delegate = _delegate;
-@synthesize arrayChapters = _arrayChapters;
-
-- (id)initWithNumberOfChapters:(NSUInteger)count
+- (id)initWithStyle:(UITableViewStyle)style Options:(NSArray *)options
 {
-    self = [super initWithStyle:UITableViewStylePlain];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        arrayChapters = [[NSMutableArray alloc] initWithCapacity:count];
-        for(NSUInteger i=1; i<= count ; i++){
-            [arrayChapters addObject:[NSNumber numberWithInt:i]];
-        }
+        arrayOptions = options;
     }
     return self;
 }
@@ -39,8 +33,6 @@
 
 - (void)viewDidLoad
 {
-    
-    
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -69,6 +61,25 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
+    for (NSUInteger i=0; i<[arrayOptions count] ; i++) {
+        
+        NSMutableDictionary *dict = [arrayOptions objectAtIndex:i];
+        
+        if([[dict valueForKey:@"isSelected"] boolValue]){
+            
+            NSMutableDictionary *dictPref = (NSMutableDictionary *)[[[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference] mutableCopy];
+            
+            [dictPref setValue:[dict valueForKey:@"languageid"] forKey:@"primaryLanguage"];
+                        
+            [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            break;
+        }
+            
+                                
+    }
+
     [super viewWillDisappear:animated];
 }
 
@@ -80,7 +91,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
@@ -96,7 +107,7 @@
 {
 
     // Return the number of rows in the section.
-    return [arrayChapters count];
+    return [arrayOptions count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,9 +118,20 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %i",[BibleDao getTitleChapter], [[arrayChapters objectAtIndex:indexPath.row] intValue]];
+    NSDictionary *dict = [arrayOptions objectAtIndex:indexPath.row];
+        
+    cell.textLabel.text = [dict valueForKey:@"display_value"];
+    if([[dict valueForKey:@"isSelected"] boolValue]){
+        
+        
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        
+        
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     // Configure the cell...
+    
     
     return cell;
 }
@@ -157,15 +179,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-       
-    [self.delegate dismissWithChapter:[[arrayChapters objectAtIndex:indexPath.row] intValue]];
+    for (NSUInteger i=0; i<[arrayOptions count] ; i++) {
+        
+        NSMutableDictionary *dict = [arrayOptions objectAtIndex:i];
+        if(indexPath.row == i){
+            [dict setValue:@"YES" forKey:@"isSelected"];
+            
+            
+        }else{
+            [dict setValue:@"NO" forKey:@"isSelected"];
+        }
+        
+    }
+    
+            
+    [self.tableView reloadData];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
