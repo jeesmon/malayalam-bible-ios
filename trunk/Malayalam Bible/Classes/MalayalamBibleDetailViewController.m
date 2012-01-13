@@ -10,6 +10,22 @@
 #import "ChapterPopOverController.h"
 #import "UIToolbarCustom.h"
 
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
+#define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 675.000000
+#endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0 //50000
+
+#define IF_IOS5_OR_GREATER(...) \
+if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_5_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS5_OR_GREATER(...)
+#endif
+
 @interface MalayalamBibleDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
@@ -412,14 +428,13 @@
 {
     [super viewDidLoad];
    
-#if defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
+    IF_IOS5_OR_GREATER(
+                       self.navigationController.toolbarHidden = NO;
+                       self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
+                       
+    )
 
-
-    self.navigationController.toolbarHidden = NO;
-    self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
-    
-#endif    
-    
+   
     
     self.tableViewVerses.allowsSelection = NO;
     
