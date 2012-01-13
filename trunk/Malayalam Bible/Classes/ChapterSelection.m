@@ -7,6 +7,7 @@
 //
 #import "MalayalamBibleAppDelegate.h"
 #import "ChapterSelection.h"
+#import "BibleDao.h"
 
 #define FONT_SIZE 17.0f
 
@@ -112,7 +113,7 @@ const CGFloat tagWidthOffset = 10.0f;
     [super viewDidLoad];
     
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
-    temporaryBarButtonItem.title = @"അദ്ധ്യായങ്ങൾ";
+    temporaryBarButtonItem.title = [BibleDao getTitleChapterButton];//@"അദ്ധ്യായങ്ങൾ"
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
     [self configureView];
