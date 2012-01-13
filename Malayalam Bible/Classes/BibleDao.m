@@ -24,7 +24,7 @@
     
     NSString *querySQL = nil;
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
         
@@ -96,7 +96,7 @@
     
     NSString *querySQL = nil;
        
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
         
@@ -146,7 +146,7 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         return @"പുസ്തകങ്ങൾ";
         
@@ -160,7 +160,7 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         return @"പഴയനിയമം";
         
@@ -172,7 +172,7 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         return @"പുതിയനിയമം";
         
@@ -184,7 +184,7 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         return @"അദ്ധ്യായം";
         
@@ -196,7 +196,7 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if([kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
         return @"അദ്ധ്യായങ്ങൾ";
         
