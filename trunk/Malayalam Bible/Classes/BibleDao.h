@@ -13,4 +13,10 @@
 - (NSDictionary *)fetchBookNames;
 - (NSMutableArray *) getChapter:(int)bookId:(int)chapterId;
 
++ (NSString *)getTitleBooks;
++ (NSString *)getTitleOldTestament;
++ (NSString *)getTitleNewTestament;
++ (NSString *)getTitleChapter;
++ (NSString *)getTitleChapterButton;
+
 @end

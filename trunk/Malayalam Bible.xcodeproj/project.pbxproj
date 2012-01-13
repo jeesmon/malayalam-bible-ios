@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
+		03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D3FFE814C02D8E004A8BE8 /* Settings.png */; };
+		03D3FFEC14C030BE004A8BE8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */; };
+		03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEE14C036E8004A8BE8 /* LanguageViewController.m */; };
+		03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF114C04096004A8BE8 /* SelectionController.m */; };
+		03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF514C053FC004A8BE8 /* MBConstants.m */; };
 		0F24AB9414803B130096403E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB9314803B130096403E /* Icon-72.png */; };
 		0F24AB96148040360096403E /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB95148040360096403E /* Default-Portrait.png */; };
 		0F24AB98148043D90096403E /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB97148043D90096403E /* Default-Landscape.png */; };
@@ -49,6 +54,15 @@
 /* Begin PBXFileReference section */
 		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
 		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
+		03D3FFE814C02D8E004A8BE8 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		03D3FFEA14C030BD004A8BE8 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		03D3FFED14C036E8004A8BE8 /* LanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageViewController.h; sourceTree = "<group>"; };
+		03D3FFEE14C036E8004A8BE8 /* LanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageViewController.m; sourceTree = "<group>"; };
+		03D3FFF014C04095004A8BE8 /* SelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionController.h; sourceTree = "<group>"; };
+		03D3FFF114C04096004A8BE8 /* SelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionController.m; sourceTree = "<group>"; };
+		03D3FFF414C053FB004A8BE8 /* MBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBConstants.h; sourceTree = "<group>"; };
+		03D3FFF514C053FC004A8BE8 /* MBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConstants.m; sourceTree = "<group>"; };
 		0F24AB9314803B130096403E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		0F24AB95148040360096403E /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		0F24AB97148043D90096403E /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
@@ -221,6 +235,14 @@
 				8FB58B6D14A246D0009226AE /* UIToolbarCustom.m */,
 				03D3FFE214BFF40A004A8BE8 /* BibleDao.h */,
 				03D3FFE314BFF40A004A8BE8 /* BibleDao.m */,
+				03D3FFEA14C030BD004A8BE8 /* SettingsViewController.h */,
+				03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */,
+				03D3FFED14C036E8004A8BE8 /* LanguageViewController.h */,
+				03D3FFEE14C036E8004A8BE8 /* LanguageViewController.m */,
+				03D3FFF014C04095004A8BE8 /* SelectionController.h */,
+				03D3FFF114C04096004A8BE8 /* SelectionController.m */,
+				03D3FFF414C053FB004A8BE8 /* MBConstants.h */,
+				03D3FFF514C053FC004A8BE8 /* MBConstants.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -228,6 +250,7 @@
 		8FB58B6E14A246D0009226AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				03D3FFE814C02D8E004A8BE8 /* Settings.png */,
 				8FB58B6F14A246D0009226AE /* Chapters.png */,
 				8FB58B7014A246D0009226AE /* next.png */,
 				8FB58B7114A246D0009226AE /* next@2x.png */,
@@ -308,6 +331,7 @@
 				8FB58B7E14A246D0009226AE /* next@2x.png in Resources */,
 				8FB58B7F14A246D0009226AE /* previous.png in Resources */,
 				8FB58B8014A246D0009226AE /* previous@2x.png in Resources */,
+				03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +353,10 @@
 				8FB58B7A14A246D0009226AE /* MalayalamBibleMasterViewController.m in Sources */,
 				8FB58B7B14A246D0009226AE /* UIToolbarCustom.m in Sources */,
 				03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */,
+				03D3FFEC14C030BE004A8BE8 /* SettingsViewController.m in Sources */,
+				03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */,
+				03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */,
+				03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

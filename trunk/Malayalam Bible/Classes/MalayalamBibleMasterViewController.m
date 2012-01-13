@@ -11,6 +11,7 @@
 #import "MalayalamBibleDetailViewController.h"
 #import "Book.h"
 #import "BibleDao.h"
+#import "SettingsViewController.h"
 
 const NSString *bmBookSection = @"BookPathSection";
 const NSString *bmBookRow = @"BookPathRow";
@@ -60,7 +61,7 @@ const NSString *bmBookRow = @"BookPathRow";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Books", @"പുസ്തകങ്ങൾ");
+        self.title = [BibleDao getTitleBooks];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
             self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
@@ -96,17 +97,18 @@ const NSString *bmBookRow = @"BookPathRow";
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     
-        
+       
     
+    UIButton* settingsButton = [[UIButton alloc] init];
+    UIImage *img = [UIImage imageNamed:@"Settings.png"] ;
+    [settingsButton setImage:img forState:UIControlStateNormal];
+    CGRect rect = self.navigationController.navigationBar.frame;
+    settingsButton.frame = CGRectMake(0, (rect.size.height-img.size.height)/2, img.size.width, img.size.height);
+	[settingsButton addTarget:self action:@selector(showPreferences:) forControlEvents:UIControlEventTouchUpInside];
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
 }
 
-- (void) showInfoView:(id)sender
-{
-   
-    self.infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
-    self.infoViewController.title = @"Information";
-    [self.navigationController pushViewController:self.infoViewController animated:YES];
-}
+
 
 - (void)viewDidUnload
 {
@@ -119,7 +121,7 @@ const NSString *bmBookRow = @"BookPathRow";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+        
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -158,6 +160,9 @@ const NSString *bmBookRow = @"BookPathRow";
     }*/
 }
 
+
+#pragma mark UItableDataSource
+
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -187,7 +192,7 @@ const NSString *bmBookRow = @"BookPathRow";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-    
+    cell.textLabel.numberOfLines = 2;
     // Configure the cell.
     if(indexPath.section == 0) {
         cell.textLabel.text = [oldTestament objectAtIndex:indexPath.row];
@@ -281,13 +286,33 @@ const NSString *bmBookRow = @"BookPathRow";
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
     if(section == 0) {
-        return @"പഴയനിയമം";
+        return [BibleDao getTitleOldTestament];
     }
     else {
-        return @"പുതിയനിയമം";
+        return [BibleDao getTitleNewTestament];
+        
     }
 }
+
+#pragma mark @Selector methods
+- (void) showInfoView:(id)sender
+{
+    
+    self.infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
+    self.infoViewController.title = @"Information";
+    [self.navigationController pushViewController:self.infoViewController animated:YES];
+}
+- (void) showPreferences:(id)sender{
+    
+    SettingsViewController *ctrlr = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:ctrlr animated:YES];
+}
+
+
+#pragma mark --
+
 - (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter{
     
     if(selectedBookName){
@@ -325,11 +350,6 @@ const NSString *bmBookRow = @"BookPathRow";
     
 }
 
-- (void) loadView
-{
-    [super loadView];
-    
-}
 - (void) loadData{
     
     BibleDao *dao = [[BibleDao alloc] init];

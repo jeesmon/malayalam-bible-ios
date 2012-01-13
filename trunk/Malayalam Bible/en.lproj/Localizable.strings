@@ -5,7 +5,18 @@
   Created by Jijo Pulikkottil on 14/12/11.
   Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
 */
-"Books"         = "പുസ്തകങ്ങൾ";
+
 "Cancel"        = "Cancel";
 "email"         = "Email";
 "MailFooter"    = "Shared via Malayalam Bible for iOS";
+
+"Languages"     = "Languages";
+"SelectLanguages"   = "Select Languages";
+
+"Primary"       = "Primary Language";
+"Secondary"     = "Secondary Language";
+
+"malayalam"  = "Malayalam";
+"english_asv"   = "English KSV";
+"english_kjv"   = "English KJV";
+"none"          = "None";
