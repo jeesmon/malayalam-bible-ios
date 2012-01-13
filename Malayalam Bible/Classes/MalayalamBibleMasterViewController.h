@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "/usr/include/sqlite3.h"
+
 #import "Information.h"
 #import "ChapterSelection.h"
 

@@ -10,4 +10,7 @@
 
 @interface BibleDao : NSObject
 
+- (NSDictionary *)fetchBookNames;
+- (NSMutableArray *) getChapter:(int)bookId:(int)chapterId;
+
 @end
