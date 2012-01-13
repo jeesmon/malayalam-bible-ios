@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
 		0F24AB9414803B130096403E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB9314803B130096403E /* Icon-72.png */; };
 		0F24AB96148040360096403E /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB95148040360096403E /* Default-Portrait.png */; };
 		0F24AB98148043D90096403E /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB97148043D90096403E /* Default-Landscape.png */; };
@@ -46,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
+		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
 		0F24AB9314803B130096403E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		0F24AB95148040360096403E /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		0F24AB97148043D90096403E /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				8FB58B6A14A246D0009226AE /* MalayalamBibleMasterViewController.m */,
 				8FB58B6C14A246D0009226AE /* UIToolbarCustom.h */,
 				8FB58B6D14A246D0009226AE /* UIToolbarCustom.m */,
+				03D3FFE214BFF40A004A8BE8 /* BibleDao.h */,
+				03D3FFE314BFF40A004A8BE8 /* BibleDao.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 				8FB58B7914A246D0009226AE /* MalayalamBibleDetailViewController.m in Sources */,
 				8FB58B7A14A246D0009226AE /* MalayalamBibleMasterViewController.m in Sources */,
 				8FB58B7B14A246D0009226AE /* UIToolbarCustom.m in Sources */,
+				03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -344,6 +344,7 @@ const NSString *bmBookRow = @"BookPathRow";
         const char *queryStmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
             while(sqlite3_step(statement) == SQLITE_ROW) {
+                                
                 NSString *alphaCode = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 0)];
                 int bookId = sqlite3_column_int(statement, 1);
@@ -373,7 +374,10 @@ const NSString *bmBookRow = @"BookPathRow";
                 [books setObject:book forKey:shortName];                
             }
             sqlite3_finalize(statement);
-        }        
+        }else{
+            
+            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+        }
     }
     sqlite3_close(bibleDB);
     
