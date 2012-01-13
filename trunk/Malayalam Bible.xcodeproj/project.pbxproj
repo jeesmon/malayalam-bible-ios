@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03D3001814C08AC3004A8BE8 /* malayalam-english-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03D3001714C08AC3004A8BE8 /* malayalam-english-bible.db */; };
 		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
 		03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D3FFE814C02D8E004A8BE8 /* Settings.png */; };
 		03D3FFEC14C030BE004A8BE8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */; };
@@ -33,7 +34,6 @@
 		0FFE50A71450636E00BC85EE /* MalayalamBibleDetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE50A51450636E00BC85EE /* MalayalamBibleDetailViewController_iPhone.xib */; };
 		0FFE50AA1450636E00BC85EE /* MalayalamBibleDetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE50A81450636E00BC85EE /* MalayalamBibleDetailViewController_iPad.xib */; };
 		0FFE50BB1450744400BC85EE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50BA1450744400BC85EE /* libsqlite3.dylib */; };
-		0FFE50BD145074E300BC85EE /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE50BC145074E200BC85EE /* malayalam-bible.db */; };
 		8F7BD9AD1499045600205D28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BD9AB1499045600205D28 /* Localizable.strings */; };
 		8FB58B7414A246D0009226AE /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B5E14A246D0009226AE /* Book.m */; };
 		8FB58B7514A246D0009226AE /* ChapterPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6014A246D0009226AE /* ChapterPickerController.m */; };
@@ -52,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03D3001714C08AC3004A8BE8 /* malayalam-english-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-english-bible.db"; sourceTree = "<group>"; };
 		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
 		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
 		03D3FFE814C02D8E004A8BE8 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		0FFE50A61450636E00BC85EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MalayalamBibleDetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		0FFE50A91450636E00BC85EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MalayalamBibleDetailViewController_iPad.xib; sourceTree = "<group>"; };
 		0FFE50BA1450744400BC85EE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		0FFE50BC145074E200BC85EE /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
 		8F7BD9AC1499045600205D28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FB58B5D14A246D0009226AE /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		8FB58B5E14A246D0009226AE /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
@@ -175,7 +175,6 @@
 				0F5EC22A1451FD74001C8727 /* Default.png */,
 				0FFE50961450636E00BC85EE /* MalayalamBibleAppDelegate.h */,
 				0FFE50971450636E00BC85EE /* MalayalamBibleAppDelegate.m */,
-				0FFE50BC145074E200BC85EE /* malayalam-bible.db */,
 				0FFE509F1450636E00BC85EE /* MalayalamBibleMasterViewController_iPhone.xib */,
 				0FFE50A21450636E00BC85EE /* MalayalamBibleMasterViewController_iPad.xib */,
 				0FFE50A51450636E00BC85EE /* MalayalamBibleDetailViewController_iPhone.xib */,
@@ -201,6 +200,7 @@
 		8F7BD9A71499032B00205D28 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03D3001714C08AC3004A8BE8 /* malayalam-english-bible.db */,
 				8F7BD9AB1499045600205D28 /* Localizable.strings */,
 			);
 			name = Resources;
@@ -315,7 +315,6 @@
 				0FFE50A41450636E00BC85EE /* MalayalamBibleMasterViewController_iPad.xib in Resources */,
 				0FFE50A71450636E00BC85EE /* MalayalamBibleDetailViewController_iPhone.xib in Resources */,
 				0FFE50AA1450636E00BC85EE /* MalayalamBibleDetailViewController_iPad.xib in Resources */,
-				0FFE50BD145074E300BC85EE /* malayalam-bible.db in Resources */,
 				0F5EC22B1451FD74001C8727 /* Default.png in Resources */,
 				0FBAE74C1451FFB1007718D3 /* Icon.png in Resources */,
 				0FBAE75314520F6B007718D3 /* Information.xib in Resources */,
@@ -332,6 +331,7 @@
 				8FB58B7F14A246D0009226AE /* previous.png in Resources */,
 				8FB58B8014A246D0009226AE /* previous@2x.png in Resources */,
 				03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */,
+				03D3001814C08AC3004A8BE8 /* malayalam-english-bible.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
