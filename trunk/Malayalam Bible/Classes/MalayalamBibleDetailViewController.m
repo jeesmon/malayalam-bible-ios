@@ -9,7 +9,7 @@
 #import "MalayalamBibleDetailViewController.h"
 #import "ChapterPopOverController.h"
 #import "UIToolbarCustom.h"
-
+#import "BibleDao.h"
 
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
 #define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 675.000000
@@ -56,8 +56,13 @@ __VA_ARGS__ \
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
-                
-        [self getChapter:self.selectedBook.bookId :self.chapterId];
+        // save off this level's selection to our AppDelegate
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];    
+        
+        BibleDao *bDao = [[BibleDao alloc] init];
+        verses = [bDao getChapter:self.selectedBook.bookId :self.chapterId];
         
         UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray         arrayWithObjects:[UIImage imageNamed:@"previous.png"],[UIImage imageNamed:@"next.png"], nil]];
         control.segmentedControlStyle = UISegmentedControlStyleBar;
@@ -76,10 +81,12 @@ __VA_ARGS__ \
         
         self.navigationItem.rightBarButtonItem = controlItem;
         
+        if(!self.navigationController.toolbarHidden){
+        
         [self resetBottomToolbar];
         self.tableViewVerses.editing = NO;
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
-
+        }
         
         [self.tableViewVerses reloadData];
         
@@ -130,44 +137,7 @@ __VA_ARGS__ \
     [alert show];
 }
 
-- (void)getChapter:(int)bookId:(int)chapterId
-{
-    
-    // save off this level's selection to our AppDelegate
-    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:chapterId]];
-    [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
-    
-    verses = [NSMutableArray array];
-    
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
-    const char *dbpath = [pathname UTF8String];
-    sqlite3 *bibleDB;
-    
-    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
-        sqlite3_stmt *statement;
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
-        const char *queryStmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
-            while(sqlite3_step(statement) == SQLITE_ROW) {
-                int verseId = sqlite3_column_int(statement, 0);
-                NSString *verse = [[NSString alloc] initWithUTF8String:
-                                   (const char *) sqlite3_column_text(statement, 1)];
-                NSString *verseWithId;
-                if(verseId > 0) {
-                    verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
-                }
-                else {
-                    verseWithId = verse;
-                }
-                [verses addObject:verseWithId];
-            }
-            sqlite3_finalize(statement);
-        }        
-    }
-    sqlite3_close(bibleDB);
-    
-}
+
 #pragma mark User Swipe Handiling
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
@@ -221,7 +191,14 @@ __VA_ARGS__ \
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
-        [self getChapter:self.selectedBook.bookId :self.chapterId];
+        // save off this level's selection to our AppDelegate
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+        
+        BibleDao *bDao = [[BibleDao alloc] init];
+        verses = [bDao getChapter:self.selectedBook.bookId :self.chapterId];
+
         
         UIToolbarCustom* tools = [[UIToolbarCustom alloc] initWithFrame:CGRectMake(0, 0, 190, 44)];
         [tools setBackgroundColor:[UIColor clearColor]];
@@ -252,11 +229,11 @@ __VA_ARGS__ \
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
         
-        
+        if(!self.navigationController.toolbarHidden){
         self.tableViewVerses.editing = NO;
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
         [self resetBottomToolbar];
-
+        }
         [self.tableViewVerses reloadData];
         
         //To show from the beginning of a chaper

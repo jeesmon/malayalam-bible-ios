@@ -10,6 +10,7 @@
 #import "MalayalamBibleMasterViewController.h"
 #import "MalayalamBibleDetailViewController.h"
 #import "Book.h"
+#import "BibleDao.h"
 
 const NSString *bmBookSection = @"BookPathSection";
 const NSString *bmBookRow = @"BookPathRow";
@@ -330,56 +331,12 @@ const NSString *bmBookRow = @"BookPathRow";
     
 }
 - (void) loadData{
-    books = [NSMutableDictionary dictionary];
-    oldTestament = [NSMutableArray array];
-    newTestament = [NSMutableArray array];
     
-	NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
-    const char *dbpath = [pathname UTF8String];
-    sqlite3 *bibleDB;
-    
-    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
-        sqlite3_stmt *statement;
-        NSString *querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
-        const char *queryStmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
-            while(sqlite3_step(statement) == SQLITE_ROW) {
-                                
-                NSString *alphaCode = [[NSString alloc] initWithUTF8String:
-                                       (const char *) sqlite3_column_text(statement, 0)];
-                int bookId = sqlite3_column_int(statement, 1);
-                NSString *englishName = [[NSString alloc] initWithUTF8String:
-                                         (const char *) sqlite3_column_text(statement, 2)];
-                int numOfChapters = sqlite3_column_int(statement, 3);
-                NSString *shortName = [[NSString alloc] initWithUTF8String:
-                                       (const char *) sqlite3_column_text(statement, 4)];
-                NSString *longName = [[NSString alloc] initWithUTF8String:
-                                      (const char *) sqlite3_column_text(statement, 5)];
-                
-                if(bookId > 39) {
-                    [newTestament addObject:shortName];
-                }
-                else {
-                    [oldTestament addObject:shortName];
-                }
-                
-                Book *book = [[Book alloc] init];
-                book.alphaCode = alphaCode;
-                book.bookId = bookId;
-                book.englishName = englishName;
-                book.numOfChapters = numOfChapters;
-                book.shortName = shortName;
-                book.longName = longName;
-                
-                [books setObject:book forKey:shortName];                
-            }
-            sqlite3_finalize(statement);
-        }else{
-            
-            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
-        }
-    }
-    sqlite3_close(bibleDB);
-    
+    BibleDao *dao = [[BibleDao alloc] init];
+    NSDictionary *dict = [dao fetchBookNames];
+    books = [dict objectForKey:@"books"];
+    oldTestament = [dict objectForKey:@"oldTestament"];
+    newTestament = [dict objectForKey:@"newTestament"];
+                    
 }
 @end

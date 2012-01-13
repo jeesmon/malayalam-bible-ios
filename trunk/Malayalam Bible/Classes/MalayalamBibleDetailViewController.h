@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "/usr/include/sqlite3.h"
+
 #import "Book.h"
 #import "PopOverDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
@@ -32,7 +32,7 @@
 @property(nonatomic, retain) UITableView *tableViewVerses;
 
 - (void)showAlert:(NSString *)message;
-- (void)getChapter:(int)bookId:(int)chapterId;
+
 
 
 - (void)configureiPadView;
