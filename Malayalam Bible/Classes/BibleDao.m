@@ -14,6 +14,8 @@
 @implementation BibleDao
 
 
+//remove old table malayalam-bible.db
+
 - (NSDictionary *)fetchBookNames{
     
    NSMutableDictionary *books = [NSMutableDictionary dictionary];
@@ -33,14 +35,31 @@
          querySQL = @"SELECT AlphaCode, book_id, MalayalamShortName, num_chptr, EnglishShortName , MalayalamLongName FROM books";
     }
         
-    
-    
-    
-	NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
-    const char *dbpath = [pathname UTF8String];
+        
+	   
     sqlite3 *bibleDB;
+    BOOL success;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"malayalam-english-bible.db"];
+	
+		
+    success = [fileManager fileExistsAtPath:dbPath];
+	
+    if (!success){
+		
+		// The writable database does not exist, so copy the default to the appropriate location.
+		NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"malayalam-english-bible.db"];
+		success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
+		if (!success) {
+			NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+		}
+	}
     
-    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {
+        
         sqlite3_stmt *statement;
         
         
@@ -108,18 +127,37 @@
         querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_kjv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
     }
     
+        
+    NSMutableArray *verses = [NSMutableArray array];
     
-   NSMutableArray *verses = [NSMutableArray array];
-    
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
-    const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
+    BOOL success;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"malayalam-english-bible.db"];
+	
     
-    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+    success = [fileManager fileExistsAtPath:dbPath];
+	
+    if (!success){
+		
+		// The writable database does not exist, so copy the default to the appropriate location.
+		NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"malayalam-english-bible.db"];
+		success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
+		if (!success) {
+			NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+		}
+	}
+    
+	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {
         sqlite3_stmt *statement;
        
         const char *queryStmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
+            
+            
             while(sqlite3_step(statement) == SQLITE_ROW) {
                 int verseId = sqlite3_column_int(statement, 0);
                 NSString *verse = [[NSString alloc] initWithUTF8String:
@@ -134,7 +172,10 @@
                 [verses addObject:verseWithId];
             }
             sqlite3_finalize(statement);
-        }        
+        }else{
+            
+            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+        }
     }
     sqlite3_close(bibleDB);
     
