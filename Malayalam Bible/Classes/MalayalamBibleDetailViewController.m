@@ -330,6 +330,33 @@
 }
 
 #pragma  mark UITableViewDelegate
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return (action == @selector(copy:));
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    if (action == @selector(copy:)){
+        
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        
+        NSMutableString *copiedVerse = [[NSMutableString alloc] init ];
+        [copiedVerse appendFormat:@"%@", self.selectedBook.shortName];
+        [copiedVerse appendFormat:@" %i", self.chapterId];
+        
+   
+       [copiedVerse appendFormat:@":%@\n", [verses objectAtIndex:indexPath.row]];
+        
+        pasteboard.string = copiedVerse;
+                
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -385,10 +412,13 @@
 {
     [super viewDidLoad];
    
+#if defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
+
+
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
     
-    
+#endif    
     
     
     self.tableViewVerses.allowsSelection = NO;
