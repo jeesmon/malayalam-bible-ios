@@ -64,7 +64,7 @@ const NSString *bmBookRow = @"BookPathRow";
         self.title = [BibleDao getTitleBooks];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
-            self.chapterSelectionController = [[ChapterSelection alloc] initWithNibName:@"ChapterSelection" bundle:nil];
+            self.chapterSelectionController = [[ChapterSelection alloc] init];//WithNibName:@"ChapterSelection" bundle:nil
             self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
             //WithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil
         }else{
@@ -106,12 +106,16 @@ const NSString *bmBookRow = @"BookPathRow";
     settingsButton.frame = CGRectMake(0, (rect.size.height-img.size.height)/2, img.size.width, img.size.height);
 	[settingsButton addTarget:self action:@selector(showPreferences:) forControlEvents:UIControlEventTouchUpInside];
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
+    
+    //Adding observer to notify the language changes
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
 }
 
 
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -260,12 +264,9 @@ const NSString *bmBookRow = @"BookPathRow";
  }
  */
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableViewClicked:(NSIndexPath *)indexPath{
     
-    
-    // save off this level's selection to our AppDelegate
-	MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
     [dict setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
@@ -282,8 +283,16 @@ const NSString *bmBookRow = @"BookPathRow";
         selectedBookName = [newTestament objectAtIndex:indexPath.row];
     }
     
-        
+    
     [self selectBookWithName:selectedBookName AndChapter:1];
+
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    // save off this level's selection to our AppDelegate
+    [self tableViewClicked:indexPath];
 }
 
 
@@ -361,4 +370,27 @@ const NSString *bmBookRow = @"BookPathRow";
     newTestament = [dict objectForKey:@"newTestament"];
                     
 }
+
+#pragma mark NotifyTableReload
+
+- (void)refreshList:(NSNotification *)note
+{
+	
+	//NSDictionary *dict = [note userInfo];
+    [self loadData];
+    self.title = [BibleDao getTitleBooks];
+    [self.tableView reloadData];
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if(indexPath){
+            [self tableViewClicked:indexPath];
+    }else{
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.chapterSelectionController.navigationItem.backBarButtonItem.title = [BibleDao getTitleChapterButton];
+    }
+    
+    
+}
+
 @end

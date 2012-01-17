@@ -20,7 +20,7 @@
 
 @implementation ChapterSelection
 
-@synthesize scrollViewBar;
+@synthesize scrollViewBar, lblChapter;
 @synthesize selectedBook = _selectedBook;
 @synthesize detailViewController = _detailViewController;
 
@@ -32,6 +32,8 @@ const CGFloat tagWidthOffset = 10.0f;
     if (self) {
         // Custom initialization
         self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];  
+        
+        scrollViewBar = [[UIScrollView alloc] init];
     }
     return self;
 }
@@ -57,10 +59,29 @@ const CGFloat tagWidthOffset = 10.0f;
             [sView removeFromSuperview];
         }
     }
-    [scrollViewBar removeFromSuperview];
+    
+    [self.scrollViewBar removeFromSuperview];
     /******/
     
-    NSInteger width = 0;
+    self.view.backgroundColor = [UIColor whiteColor];
+    [scrollViewBar setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+
+    
+    self.lblChapter = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 30)];
+    
+    lblChapter.text = [BibleDao getTitleChapterButton];
+    
+    lblChapter.textAlignment = UITextAlignmentCenter;
+    lblChapter.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    lblChapter.tag = 10;
+    [[scrollViewBar viewWithTag:10] removeFromSuperview];
+    [scrollViewBar addSubview:lblChapter];
+    
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    //scrollViewBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+
+         
+    NSInteger width = scrollViewBar.frame.size.width;
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if(orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
         width = 320;
@@ -72,14 +93,14 @@ const CGFloat tagWidthOffset = 10.0f;
     NSInteger buttonWidth = 40;
     NSInteger buttonHeight = 40;
     NSInteger spacer = 10;
-    NSInteger offsetStart = 55;
+    NSInteger offsetStart = 16;//55;
     NSInteger xOffset = offsetStart;
     NSInteger yOffset = 50;
     for (int i=0; i<self.selectedBook.numOfChapters; i++) {
         NSString *number = [NSString stringWithFormat:@"%d", i+1];
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         
-        if(xOffset > width) {
+        if(xOffset+5 > width) {
             xOffset = offsetStart;
             yOffset = yOffset + buttonHeight + spacer;
         }
@@ -101,9 +122,11 @@ const CGFloat tagWidthOffset = 10.0f;
         [scrollViewBar addSubview:tagButton];
         
         xOffset += buttonWidth + spacer;
+        
+        
     }
-    
-    [scrollViewBar setContentSize:CGSizeMake(width, yOffset + 200)];
+          
+    [scrollViewBar setContentSize:CGSizeMake(width, yOffset+50)];
     
     
     [self.view addSubview:scrollViewBar];
@@ -111,6 +134,9 @@ const CGFloat tagWidthOffset = 10.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+      
+    
     
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
     temporaryBarButtonItem.title = [BibleDao getTitleChapterButton];//@"അദ്ധ്യായങ്ങൾ"
@@ -125,7 +151,13 @@ const CGFloat tagWidthOffset = 10.0f;
  
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        
+        self.navigationController.toolbarHidden = YES;
+    }
 }
+
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
     
     NSInteger chapterid = [[selectionArray objectAtIndex:1] intValue];

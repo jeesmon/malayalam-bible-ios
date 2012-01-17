@@ -30,7 +30,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         
-        MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] initWithNibName:@"MalayalamBibleMasterViewController_iPhone" bundle:nil];
+        MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         self.window.rootViewController = self.navigationController;
         
@@ -116,6 +116,42 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:savedLocationDict];
 	[[NSUserDefaults standardUserDefaults] synchronize];
     
+    
+    /*NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    if(pathname != nil){
+        
+        NSLog(@"pathname = %@", pathname);
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if([fileManager fileExistsAtPath:pathname]){
+            
+            NSLog(@"file exist = %@", pathname);
+             NSError *error;
+            if([fileManager removeItemAtPath:pathname error:&error]){
+                NSLog(@"removed old db");
+            }else{
+                 NSLog(@"err %@",[error localizedDescription]);
+            }
+        }
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"malayalam-english-bible.db"];
+
+    if(dbPath != nil){
+        
+        NSLog(@"dbPath = %@", dbPath);
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if([fileManager fileExistsAtPath:dbPath]){
+            
+            NSLog(@"file exist = %@", dbPath);
+            NSError *error;
+            if([fileManager removeItemAtPath:dbPath error:&error]){
+                NSLog(@"removed old db");
+            }else{
+                NSLog(@"err %@",[error localizedDescription]);
+            }
+        }
+    }*/
     return YES;
 }
 

@@ -12,9 +12,11 @@
 
 @interface ChapterSelection : UIViewController {
     UIScrollView *scrollViewBar;
+    UILabel *lblChapter;
 }
 
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewBar;
+@property (nonatomic, retain) UIScrollView *scrollViewBar;
+@property (nonatomic, retain) UILabel *lblChapter;
 
 @property (strong, nonatomic) Book *selectedBook;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
