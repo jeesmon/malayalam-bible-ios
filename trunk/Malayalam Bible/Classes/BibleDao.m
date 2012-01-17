@@ -37,7 +37,7 @@
         
         
 	   
-    sqlite3 *bibleDB;
+    /*sqlite3 *bibleDB;
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
@@ -58,7 +58,12 @@
 		}
 	}
     
-	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {
+	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {*/
+    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    const char *dbpath = [pathname UTF8String];
+    sqlite3 *bibleDB;
+    
+    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
         
         sqlite3_stmt *statement;
         
@@ -130,7 +135,7 @@
         
     NSMutableArray *verses = [NSMutableArray array];
     
-    sqlite3 *bibleDB;
+    /*sqlite3 *bibleDB;
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
@@ -151,7 +156,13 @@
 		}
 	}
     
-	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {
+	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {*/
+    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    const char *dbpath = [pathname UTF8String];
+    sqlite3 *bibleDB;
+    
+    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+        
         sqlite3_stmt *statement;
        
         const char *queryStmt = [querySQL UTF8String];
@@ -237,11 +248,14 @@
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
+    
     if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
+       
         return @"അദ്ധ്യായങ്ങൾ";
         
-    }         
+    }   
+    
     return @"Chapters";
     
 }

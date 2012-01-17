@@ -74,6 +74,11 @@
                         
             [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
+             nil];
+
+            
             break;
         }
             
