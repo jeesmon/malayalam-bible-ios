@@ -323,6 +323,23 @@ __VA_ARGS__ \
 }
 
 #pragma  mark UITableViewDelegate
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    IF_IOS5_OR_GREATER(
+    return 44.0;
+                       )
+    return 0.0;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    
+    IF_IOS5_OR_GREATER(
+    UIView *fview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    [fview setBackgroundColor:[UIColor clearColor]];
+    return  fview;
+    )
+    return nil;
+}
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
@@ -409,7 +426,7 @@ __VA_ARGS__ \
                        self.navigationController.toolbarHidden = NO;
                        self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
                        
-    )
+                       )
 
    
     
@@ -436,6 +453,19 @@ __VA_ARGS__ \
    
     //[self.tableView allowsMultipleSelection];
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+IF_IOS5_OR_GREATER(
+                   
+                   self.navigationController.toolbarHidden = NO;
+                   self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
+                   
+                   )
+}
+    
+}
 /*
  
  - (void)viewDidUnload
@@ -448,10 +478,7 @@ __VA_ARGS__ \
  [super viewWillAppear:animated];
  }
  
- - (void)viewDidAppear:(BOOL)animated
- {
- [super viewDidAppear:animated];
- }
+
  
  - (void)viewWillDisappear:(BOOL)animated
  {
