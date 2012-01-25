@@ -11,8 +11,11 @@
 @interface SelectionController : UITableViewController{
     
     NSArray *arrayOptions;
+    
+    
 }
 
+@property(nonatomic, assign) NSUInteger optionType;
 - (id)initWithStyle:(UITableViewStyle)style Options:(NSArray *)options;
 
 @end
