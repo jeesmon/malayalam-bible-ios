@@ -190,26 +190,56 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    NSArray *options = nil;
+    NSMutableArray *options = [[NSMutableArray alloc] initWithCapacity:4];
+    
+    NSArray *arrayAllLangs = [NSArray arrayWithObjects:kLangNone, kLangMalayalam, kLangEnglishASV, kLangEnglishKJV, nil];
     
     NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
+    
+    
+    
     if([[dict valueForKey:@"label"] isEqualToString:NSLocalizedString(@"Primary", @"")]){
       
+        for(NSString *langId in arrayAllLangs){
+            
+            if(![langId isEqualToString:kLangNone]){
+                
+                NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(langId, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:langId] ? @"YES" : @"NO", @"isSelected", langId, @"languageid", nil];
+                
+                [options addObject:dict1];
+            }
+        }
+                      
+        SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
+        detailViewController.optionType = 1;
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:detailViewController animated:YES];
         
-        NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangMalayalam, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangMalayalam] ? @"YES" : @"NO", @"isSelected", kLangMalayalam, @"languageid", nil];
+    }else if([[dict valueForKey:@"label"] isEqualToString:NSLocalizedString(@"Secondary", @"")]){
         
-        NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangEnglishASV, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangEnglishASV] ? @"YES" : @"NO", @"isSelected", kLangEnglishASV, @"languageid", nil];
+        NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+        NSString *primaryL = [dictPref valueForKey:@"primaryLanguage"];
         
-        NSMutableDictionary *dict3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(kLangEnglishKJV, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:kLangEnglishKJV] ? @"YES" : @"NO", @"isSelected", kLangEnglishKJV, @"languageid", nil];
         
-        options = [NSArray arrayWithObjects:dict1, dict2, dict3, nil];
+        for(NSString *langId in arrayAllLangs){
+            
+            if(![langId isEqualToString:primaryL]){
+                
+                NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(langId, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:langId] ? @"YES" : @"NO", @"isSelected", langId, @"languageid", nil];
+                
+                [options addObject:dict1];
+            }
+        }
         
+               
+        SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
+        detailViewController.optionType = 2;
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:detailViewController animated:YES];
     }
        
     
-    SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+    
      
 }
 

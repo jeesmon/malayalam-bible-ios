@@ -11,6 +11,8 @@
 
 @implementation SelectionController
 
+@synthesize optionType = _optionType;
+
 - (id)initWithStyle:(UITableViewStyle)style Options:(NSArray *)options
 {
     self = [super initWithStyle:style];
@@ -70,14 +72,35 @@
             
             NSMutableDictionary *dictPref = (NSMutableDictionary *)[[[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference] mutableCopy];
             
-            [dictPref setValue:[dict valueForKey:@"languageid"] forKey:@"primaryLanguage"];
-                        
-            [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
-             nil];
+            if(self.optionType == 1){
+                
+                [dictPref setValue:[dict valueForKey:@"languageid"] forKey:@"primaryLanguage"];
+                
+                //to reset the secondary Lang if we set primary lang as same as the secondary                
+                if([[dict valueForKey:@"languageid"] isEqualToString:[dictPref valueForKey:@"secondaryLanguage"]]){
+                    
+                    [dictPref setValue:kLangNone forKey:@"secondaryLanguage"];
+                }
+                
+                [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
+                 nil];
 
+
+            }else if(self.optionType == 2){
+                
+                [dictPref setValue:[dict valueForKey:@"languageid"] forKey:@"secondaryLanguage"];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
+                 nil];
+            }
+            
+            
             
             break;
         }
