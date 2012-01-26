@@ -24,17 +24,18 @@
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
-    NSString *querySQL = nil;
+    NSString *querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
-        
-        querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
-        
-    }else{
+    NSString *primaryL = kLangMalayalam;
+    NSString *secondaryL = kLangNone;
     
-         querySQL = @"SELECT AlphaCode, book_id, MalayalamShortName, num_chptr, EnglishShortName , MalayalamLongName FROM books";
+    if(dictPref !=nil ){
+            
+        primaryL = [dictPref valueForKey:@"primaryLanguage"];
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
     }
-        
+             
         
 	   
     /*sqlite3 *bibleDB;
@@ -76,19 +77,35 @@
                 NSString *alphaCode = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 0)];
                 int bookId = sqlite3_column_int(statement, 1);
-                //NSString *englishName = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+                NSString *englishName = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
                 int numOfChapters = sqlite3_column_int(statement, 3);
-                NSString *shortName = [[NSString alloc] initWithUTF8String:
+                NSString *mallayalamName = [[NSString alloc] initWithUTF8String:
                                        (const char *) sqlite3_column_text(statement, 4)];
                 NSString *longName = [[NSString alloc] initWithUTF8String:
                                       (const char *) sqlite3_column_text(statement, 5)];
                 
+                NSString *shortName = nil;
+                if([primaryL isEqualToString:kLangMalayalam]){
+                    
+                    shortName = mallayalamName;
+                    
+                }else{
+                    shortName = englishName;
+                }
+                
+                NSMutableString *displayValue = [NSMutableString stringWithString:shortName];
+                if([secondaryL isEqualToString:kLangMalayalam]){
+                    
+                    [displayValue appendFormat:@"\n%@", mallayalamName];                    
+                }else if([secondaryL isEqualToString:kLangEnglishKJV] || [secondaryL isEqualToString:kLangEnglishASV]){
+                    [displayValue appendFormat:@"\n%@", englishName];                    
+                }
                               
                 if(bookId > 39) {
-                    [newTestament addObject:shortName];
+                    [newTestament addObject:displayValue];
                 }
                 else {
-                    [oldTestament addObject:shortName];
+                    [oldTestament addObject:displayValue];
                 }
                 
                 Book *book = [[Book alloc] init];
@@ -99,7 +116,7 @@
                 book.shortName = shortName;
                 book.longName = longName;
                 
-                [books setObject:book forKey:shortName];                
+                [books setObject:book forKey:displayValue];                
             }
             sqlite3_finalize(statement);
         }else{
@@ -118,20 +135,22 @@
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
-    NSString *querySQL = nil;
-       
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
-        
-        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
-        
-    }else if([kLangEnglishASV isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
-        
-        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_asv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
-    }else{
-        
-        querySQL = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_kjv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
-    }
+    NSString *queryMalayalam = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];;
+               
+    NSString *queryEnglisgASV = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_asv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
+ 
+    NSString *queryEnglisgKJV = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_kjv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
     
+    
+    NSString *primaryL = kLangMalayalam;
+    NSString *secondaryL = kLangNone;
+    
+    if(dictPref !=nil ){
+        
+        primaryL = [dictPref valueForKey:@"primaryLanguage"];
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
+    }
         
     NSMutableArray *verses = [NSMutableArray array];
     
@@ -163,16 +182,44 @@
     
     if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
         
-        sqlite3_stmt *statement;
+        sqlite3_stmt *statement1;
+        sqlite3_stmt *statement2;
        
-        const char *queryStmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
+        NSString *queryStmt1 = nil;
+        NSString *queryStmt2 = nil;
+        if([primaryL isEqualToString:kLangMalayalam]){
+            
+            queryStmt1 = queryMalayalam;
+            
+        }else if([primaryL isEqualToString:kLangEnglishASV]){
+            
+            queryStmt1 = queryEnglisgASV;
+            
+        }else{
+            queryStmt1 = queryEnglisgKJV;            
+        }
+        if([secondaryL isEqualToString:kLangMalayalam]){
+            
+            queryStmt2 = queryMalayalam;
+        }else if([secondaryL isEqualToString:kLangEnglishASV]){
+            queryStmt2 = queryEnglisgASV;
+        }else if([secondaryL isEqualToString:kLangEnglishKJV]){
+            queryStmt2 = queryEnglisgKJV;
+        }else{
+            
+        }
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init ];
+        
+        if (sqlite3_prepare_v2(bibleDB, [queryStmt1 UTF8String], -1, &statement1, NULL) == SQLITE_OK){
             
             
-            while(sqlite3_step(statement) == SQLITE_ROW) {
-                int verseId = sqlite3_column_int(statement, 0);
+            while(sqlite3_step(statement1) == SQLITE_ROW) {
+                int verseId = sqlite3_column_int(statement1, 0);
                 NSString *verse = [[NSString alloc] initWithUTF8String:
-                                   (const char *) sqlite3_column_text(statement, 1)];
+                                   (const char *) sqlite3_column_text(statement1, 1)];
+                
+                
                 NSString *verseWithId;
                 if(verseId > 0) {
                     verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
@@ -180,15 +227,62 @@
                 else {
                     verseWithId = verse;
                 }
-                [verses addObject:verseWithId];
+                if(queryStmt2 != nil){
+                    [dict setObject:verseWithId forKey:[NSNumber numberWithInt:verseId]];
+                }else{
+                    [verses addObject:verseWithId];
+                }
+                
+                
             }
-            sqlite3_finalize(statement);
+            sqlite3_finalize(statement1);
         }else{
             
             NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
         }
+        
+        if(queryStmt2 != nil){
+            
+            if (sqlite3_prepare_v2(bibleDB, [queryStmt2 UTF8String], -1, &statement2, NULL) == SQLITE_OK){
+                
+                
+                while(sqlite3_step(statement2) == SQLITE_ROW) {
+                    int verseId = sqlite3_column_int(statement2, 0);
+                    NSString *verse = [[NSString alloc] initWithUTF8String:
+                                       (const char *) sqlite3_column_text(statement2, 1)];
+                    
+                    
+                    NSString *verseWithId;
+                    if(verseId > 0) {
+                        verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
+                    }
+                    else {
+                        verseWithId = verse;
+                    }
+                    
+                    NSString *primaryVerse = [dict objectForKey:[NSNumber numberWithInt:verseId]];
+                    
+                    if(primaryVerse == nil) primaryVerse = @"";
+                    
+                    [dict removeObjectForKey:primaryVerse];
+                    
+                    [verses addObject:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId]];
+                    
+                }
+                sqlite3_finalize(statement2);
+            }else{
+                
+                NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+            }
+
+        }
+        
+        
     }
     sqlite3_close(bibleDB);
+    
+    //just a try to include additional verses from primary lang if exist
+   
     
     return verses;
 }
