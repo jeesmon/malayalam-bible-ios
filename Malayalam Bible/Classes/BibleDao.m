@@ -211,6 +211,7 @@
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init ];
         
+        
         if (sqlite3_prepare_v2(bibleDB, [queryStmt1 UTF8String], -1, &statement1, NULL) == SQLITE_OK){
             
             
@@ -262,11 +263,16 @@
                     
                     NSString *primaryVerse = [dict objectForKey:[NSNumber numberWithInt:verseId]];
                     
-                    if(primaryVerse == nil) primaryVerse = @"";
+                    if(primaryVerse == nil){
+                        [verses addObject:[NSString stringWithFormat:@"%@", verseWithId]];
+                    }else{
+                        [verses addObject:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId]];
+                    }
                     
-                    [dict removeObjectForKey:primaryVerse];
+                    //removing the verses from dict
+                    [dict removeObjectForKey:[NSNumber numberWithInt:verseId]];
                     
-                    [verses addObject:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId]];
+                    
                     
                 }
                 sqlite3_finalize(statement2);
@@ -277,12 +283,20 @@
 
         }
         
+        sqlite3_close(bibleDB);
         
+        //just a try to include additional verses from primary lang if exist
+        NSLog(@"dict = %@", dict);
+        NSEnumerator *enumm = [dict keyEnumerator];
+        NSString *key = [enumm nextObject];
+        while(key){
+            NSLog(@"key = %@", key);
+            [verses insertObject:[dict objectForKey:key] atIndex:[key intValue]];
+            key = [enumm nextObject];
+        }
     }
-    sqlite3_close(bibleDB);
     
-    //just a try to include additional verses from primary lang if exist
-   
+    
     
     return verses;
 }
