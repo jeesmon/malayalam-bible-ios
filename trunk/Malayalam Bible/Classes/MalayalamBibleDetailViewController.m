@@ -81,12 +81,12 @@ __VA_ARGS__ \
         
         self.navigationItem.rightBarButtonItem = controlItem;
         
-        if(!self.navigationController.toolbarHidden){
+        //if(!self.navigationController.toolbarHidden){
         
         [self resetBottomToolbar];
         self.tableViewVerses.editing = NO;
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
-        }
+        //}
         
         [self.tableViewVerses reloadData];
         
@@ -229,11 +229,11 @@ __VA_ARGS__ \
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tools];
         
-        if(!self.navigationController.toolbarHidden){
+        //if(!self.navigationController.toolbarHidden){
         self.tableViewVerses.editing = NO;
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
         [self resetBottomToolbar];
-        }
+        //}
         [self.tableViewVerses reloadData];
         
         //To show from the beginning of a chaper
