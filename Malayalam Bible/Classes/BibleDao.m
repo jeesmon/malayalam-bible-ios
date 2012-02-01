@@ -286,11 +286,11 @@
         sqlite3_close(bibleDB);
         
         //just a try to include additional verses from primary lang if exist
-        NSLog(@"dict = %@", dict);
+        
         NSEnumerator *enumm = [dict keyEnumerator];
         NSString *key = [enumm nextObject];
         while(key){
-            NSLog(@"key = %@", key);
+            
             [verses insertObject:[dict objectForKey:key] atIndex:[key intValue]];
             key = [enumm nextObject];
         }
