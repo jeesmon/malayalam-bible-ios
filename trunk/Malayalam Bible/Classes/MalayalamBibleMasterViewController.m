@@ -100,7 +100,7 @@ const NSString *bmBookRow = @"BookPathRow";
        
     
     UIButton* settingsButton = [[UIButton alloc] init];
-    UIImage *img = [UIImage imageNamed:@"Settings.png"] ;
+    UIImage *img = [UIImage imageNamed:@"Gear.png"] ;
     [settingsButton setImage:img forState:UIControlStateNormal];
     CGRect rect = self.navigationController.navigationBar.frame;
     settingsButton.frame = CGRectMake(0, (rect.size.height-img.size.height)/2, img.size.width, img.size.height);
