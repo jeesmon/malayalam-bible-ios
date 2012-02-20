@@ -85,7 +85,9 @@ __VA_ARGS__ \
         
         [self resetBottomToolbar];
         self.tableViewVerses.editing = NO;
+        IF_IOS5_OR_GREATER(
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
+                           )
         //}
         
         [self.tableViewVerses reloadData];
@@ -231,7 +233,9 @@ __VA_ARGS__ \
         
         //if(!self.navigationController.toolbarHidden){
         self.tableViewVerses.editing = NO;
+        IF_IOS5_OR_GREATER(
         self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
+                           )
         [self resetBottomToolbar];
         //}
         [self.tableViewVerses reloadData];
@@ -553,7 +557,9 @@ IF_IOS5_OR_GREATER(
     
     
     self.tableViewVerses.editing = YES;
+    IF_IOS5_OR_GREATER(
     self.tableViewVerses.allowsMultipleSelectionDuringEditing = YES;
+                       )
     [self.tableViewVerses reloadData];
     
 }
@@ -581,7 +587,9 @@ IF_IOS5_OR_GREATER(
     [self resetBottomToolbar];
         
     self.tableViewVerses.editing = NO;
+    IF_IOS5_OR_GREATER(
     self.tableViewVerses.allowsMultipleSelectionDuringEditing = NO;
+                       )
     [self.tableViewVerses reloadData];
 
 }
