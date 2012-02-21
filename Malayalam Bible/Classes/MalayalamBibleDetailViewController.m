@@ -453,6 +453,10 @@ __VA_ARGS__ \
 	// Do any additional setup after loading the view, typically from a nib.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
         [self configureView];
+    }else{
+        
+        //Adding observer to notify the language changes
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
     }
    
     //[self.tableView allowsMultipleSelection];
@@ -663,5 +667,17 @@ IF_IOS5_OR_GREATER(
 
 }
 
+#pragma mark NotifyTableReload
 
+- (void)refreshList:(NSNotification *)note
+{
+	
+    
+	//NSDictionary *dict = [note userInfo];
+    
+    BibleDao *bDao = [[BibleDao alloc] init];
+    verses = [bDao getChapter:self.selectedBook.bookId :self.chapterId];
+    [self.tableViewVerses reloadData];
+    
+}
 @end

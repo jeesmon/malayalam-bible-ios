@@ -17,12 +17,14 @@
     NSMutableDictionary *books;
     NSMutableArray *newTestament;
     NSMutableArray *oldTestament;
+    
+    BOOL isNeedReload;
 }
 
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (strong, nonatomic) Information *infoViewController;
 @property (strong, nonatomic) ChapterSelection *chapterSelectionController;
-
+@property (nonatomic, assign) BOOL isNeedReload;
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray;
 
