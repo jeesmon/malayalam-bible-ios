@@ -10,6 +10,7 @@
 #import "ChapterPopOverController.h"
 #import "UIToolbarCustom.h"
 #import "BibleDao.h"
+#import "MBConstants.h"
 
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
 #define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 675.000000
@@ -602,6 +603,12 @@ IF_IOS5_OR_GREATER(
 
 -(void)displayComposerSheet:(NSArray *)arraySelectedIndesPath{
 	
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    NSString *secondaryL = kLangNone;
+    if(dictPref !=nil ){
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+    }
+    
     
     NSMutableString *emailBody = [[NSMutableString alloc] init ];
     [emailBody appendFormat:@"%@", self.selectedBook.shortName];
@@ -613,7 +620,7 @@ IF_IOS5_OR_GREATER(
         
         //return ? or mail entire chapter ?
         
-    }else if(countV == 1){
+    }else if(countV == 1 && secondaryL == kLangNone){
         
         NSIndexPath *path = [arraySelectedIndesPath objectAtIndex:0];
         [emailBody appendFormat:@" : %@\n", [verses objectAtIndex:path.row]];
@@ -652,9 +659,11 @@ IF_IOS5_OR_GREATER(
 			break;
 		case MFMailComposeResultSaved:
 			//(@"Result: saved");
+            [self cancelAction:self];
 			break;
 		case MFMailComposeResultSent:
 			//(@"Result: sent");
+            [self cancelAction:self];
 			break;
 		case MFMailComposeResultFailed:
 			//(@"Result: failed");
