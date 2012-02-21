@@ -27,6 +27,7 @@ const NSString *bmBookRow = @"BookPathRow";
 @synthesize detailViewController = _detailViewController;
 @synthesize infoViewController = _infoViewController;
 @synthesize chapterSelectionController = _chapterSelectionController;
+@synthesize isNeedReload = _isNeedReload;
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
     
@@ -140,6 +141,19 @@ const NSString *bmBookRow = @"BookPathRow";
         [appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]]; 
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:-1]];
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSDictionary dictionary]];
+    }
+    if(self.isNeedReload){
+        
+        [self loadData];
+        self.title = [BibleDao getTitleBooks];
+        //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        [self.tableView reloadData];
+        
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            self.chapterSelectionController.navigationItem.backBarButtonItem.title = [BibleDao getTitleChapterButton];
+        }
+        self.isNeedReload = NO;
     }
     
 }
@@ -375,20 +389,10 @@ const NSString *bmBookRow = @"BookPathRow";
 
 - (void)refreshList:(NSNotification *)note
 {
-	
+	self.isNeedReload = YES;
+    
 	//NSDictionary *dict = [note userInfo];
-    [self loadData];
-    self.title = [BibleDao getTitleBooks];
-    [self.tableView reloadData];
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    if(indexPath){
-            [self tableViewClicked:indexPath];
-    }else{
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-    }
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.chapterSelectionController.navigationItem.backBarButtonItem.title = [BibleDao getTitleChapterButton];
-    }
+    
     
     
 }
