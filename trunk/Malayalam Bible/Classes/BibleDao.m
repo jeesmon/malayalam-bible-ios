@@ -285,13 +285,19 @@
         
         sqlite3_close(bibleDB);
         
-        //just a try to include additional verses from primary lang if exist
+       //just a try to include additional verses from primary lang if exist
         
         NSEnumerator *enumm = [dict keyEnumerator];
         NSString *key = [enumm nextObject];
         while(key){
             
-            [verses insertObject:[dict objectForKey:key] atIndex:[key intValue]];
+            if([key intValue] < [verses count]){
+                
+                [verses insertObject:[dict objectForKey:key] atIndex:[key intValue]];
+            }else{
+                [verses addObject:[dict objectForKey:key]];
+            }
+            
             key = [enumm nextObject];
         }
     }
