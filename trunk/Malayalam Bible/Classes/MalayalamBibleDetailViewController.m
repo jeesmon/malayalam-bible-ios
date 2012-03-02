@@ -365,8 +365,19 @@ __VA_ARGS__ \
         [copiedVerse appendFormat:@"%@", self.selectedBook.shortName];
         [copiedVerse appendFormat:@" %i", self.chapterId];
         
-   
-       [copiedVerse appendFormat:@":%@\n", [verses objectAtIndex:indexPath.row]];
+        
+        NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+        NSString *secondaryL = kLangNone;
+        if(dictPref !=nil ){
+            secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        }
+        
+        if(secondaryL == kLangNone) {
+            [copiedVerse appendFormat:@":%@\n", [verses objectAtIndex:indexPath.row]];
+        }
+        else {
+            [copiedVerse appendFormat:@"\n%@\n", [verses objectAtIndex:indexPath.row]];
+        }
         
         pasteboard.string = copiedVerse;
                 
