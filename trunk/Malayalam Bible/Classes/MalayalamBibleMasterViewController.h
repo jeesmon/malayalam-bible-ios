@@ -13,17 +13,19 @@
 
 @class MalayalamBibleDetailViewController;
 
-@interface MalayalamBibleMasterViewController : UITableViewController {
+@interface MalayalamBibleMasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource > {
     NSMutableDictionary *books;
     NSMutableArray *newTestament;
     NSMutableArray *oldTestament;
     
     BOOL isNeedReload;
+    UITableView *tableViewBooks;
 }
 
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (strong, nonatomic) Information *infoViewController;
 @property (strong, nonatomic) ChapterSelection *chapterSelectionController;
+@property (strong, nonatomic) UITableView *tableViewBooks;
 @property (nonatomic, assign) BOOL isNeedReload;
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray;
