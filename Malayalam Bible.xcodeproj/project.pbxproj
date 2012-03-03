@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0301A5661501FEF3008CBC76 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0301A5651501FEF2008CBC76 /* SearchViewController.m */; };
 		03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */; };
 		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
 		03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D3FFE814C02D8E004A8BE8 /* Settings.png */; };
@@ -49,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0301A5641501FEF2008CBC76 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		0301A5651501FEF2008CBC76 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
 		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
 		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				03D3FFF114C04096004A8BE8 /* SelectionController.m */,
 				03D3FFF414C053FB004A8BE8 /* MBConstants.h */,
 				03D3FFF514C053FC004A8BE8 /* MBConstants.m */,
+				0301A5641501FEF2008CBC76 /* SearchViewController.h */,
+				0301A5651501FEF2008CBC76 /* SearchViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */,
 				03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */,
 				03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */,
+				0301A5661501FEF3008CBC76 /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

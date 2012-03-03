@@ -12,6 +12,7 @@
 #import "Book.h"
 #import "BibleDao.h"
 #import "SettingsViewController.h"
+#import "SearchViewController.h"
 
 const NSString *bmBookSection = @"BookPathSection";
 const NSString *bmBookRow = @"BookPathRow";
@@ -28,6 +29,7 @@ const NSString *bmBookRow = @"BookPathRow";
 @synthesize infoViewController = _infoViewController;
 @synthesize chapterSelectionController = _chapterSelectionController;
 @synthesize isNeedReload = _isNeedReload;
+@synthesize tableViewBooks = _tableViewBooks;
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
     
@@ -63,13 +65,18 @@ const NSString *bmBookRow = @"BookPathRow";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = [BibleDao getTitleBooks];
+        
+        self.tableViewBooks = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        self.tableViewBooks.delegate = self;
+        self.tableViewBooks.dataSource = self;
+        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
             self.chapterSelectionController = [[ChapterSelection alloc] init];//WithNibName:@"ChapterSelection" bundle:nil
             self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
             //WithNibName:@"MalayalamBibleDetailViewController_iPhone" bundle:nil
         }else{
-            self.clearsSelectionOnViewWillAppear = NO;
+            //+20120302self.clearsSelectionOnViewWillAppear = NO;
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         [self loadData];
@@ -92,12 +99,18 @@ const NSString *bmBookRow = @"BookPathRow";
 {
     [super viewDidLoad];
     
+    self.tableViewBooks.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.tableViewBooks.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:self.tableViewBooks];
     
-    
-    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+    infoButton.frame = CGRectMake(self.view.frame.size.width - 30, self.view.frame.size.height-30, 20, 20);
+    infoButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
 	[infoButton addTarget:self action:@selector(showInfoView:) forControlEvents:UIControlEventTouchUpInside];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+	[self.view addSubview:infoButton];
     
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchVerses:)];
        
     
     UIButton* settingsButton = [[UIButton alloc] init];
@@ -147,7 +160,7 @@ const NSString *bmBookRow = @"BookPathRow";
         [self loadData];
         self.title = [BibleDao getTitleBooks];
         //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        [self.tableView reloadData];
+        [self.tableViewBooks reloadData];
         
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -322,6 +335,14 @@ const NSString *bmBookRow = @"BookPathRow";
 }
 
 #pragma mark @Selector methods
+
+- (void) searchVerses:(id)sender{
+    
+    SearchViewController *ctrlr = [[SearchViewController alloc] init];
+    [self.navigationController pushViewController:ctrlr animated:YES];
+
+}
+
 - (void) showInfoView:(id)sender
 {
     
@@ -336,7 +357,7 @@ const NSString *bmBookRow = @"BookPathRow";
 }
 
 
-#pragma mark --
+#pragma mark private methods
 
 - (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter{
     
