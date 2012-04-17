@@ -23,6 +23,7 @@
 @synthesize scrollViewBar, lblChapter;
 @synthesize selectedBook = _selectedBook;
 @synthesize detailViewController = _detailViewController;
+@synthesize delegate = _delegate;
 
 const CGFloat tagWidthOffset = 10.0f;
 
@@ -182,8 +183,15 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     UIButton *btn = (UIButton *)sender;
     
-      
-    [self openPageWithChapter:btn.tag];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        
+        [self.delegate dismissWithChapter:btn.tag];
+        
+    }else{
+        
+        [self openPageWithChapter:btn.tag];
+    }
+    
 }
 
 - (void) openPageWithChapter:(NSUInteger)chapter{
