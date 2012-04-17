@@ -480,7 +480,21 @@ __VA_ARGS__ \
    
     
     self.tableViewVerses.allowsSelection = NO;
-    self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;//+20120412
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    NSString *secondaryL = kLangNone;
+    if(dictPref !=nil ){
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
+    }
+    if([secondaryL isEqualToString:kLangNone]){
+       
+        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        
+        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
+    
+    
     //self.navigationController.navigationBar.tintColor = [UIColor blackColor];
         
     /* No Use
@@ -509,7 +523,10 @@ __VA_ARGS__ \
         //Adding observer to notify the language changes
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
     }
-   
+    if(!isFromSeachController){
+        NSLog(@"adding listenr");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
+    }
     //[self.tableView allowsMultipleSelection];
 }
 - (void)viewDidAppear:(BOOL)animated
@@ -809,7 +826,7 @@ IF_IOS5_OR_GREATER(
     if(countV == 0){
        
         
-    }else if(countV == 1 && secondaryL == kLangNone){
+    }else if(countV == 1 && [secondaryL isEqualToString:kLangNone]){
         
         NSIndexPath *path = [arraySelectedIndesPath objectAtIndex:0];
         [verseStr appendFormat:@" : %@\n", [[self.bVerses objectAtIndex:path.row] valueForKey:@"verse_text"]];
@@ -850,7 +867,7 @@ IF_IOS5_OR_GREATER(
     ChapterSelection *picker = [[ChapterSelection alloc] init];
     picker.selectedBook = self.selectedBook;
     [picker configureView];
-    //picker.delegate = self;
+    picker.delegate = self;
     
     if(self.popoverChapterController == nil){
         self.popoverChapterController = [[UIPopoverController alloc] initWithContentViewController:picker];
@@ -889,7 +906,7 @@ IF_IOS5_OR_GREATER(
         
         //return ? or mail entire chapter ?
         
-    }else if(countV == 1 && secondaryL == kLangNone){
+    }else if(countV == 1 && [secondaryL isEqualToString:kLangNone]){
         
         NSIndexPath *path = [arraySelectedIndesPath objectAtIndex:0];
         [emailBody appendFormat:@" : %@\n", [[self.bVerses objectAtIndex:path.row] valueForKey:@"verse_text"]];
@@ -950,7 +967,19 @@ IF_IOS5_OR_GREATER(
 - (void)refreshList:(NSNotification *)note
 {
 	
+    NSLog(@"refreshList detailsss");
     
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    NSString *secondaryL = kLangNone;
+    if(dictPref !=nil ){
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
+    }
+    if([secondaryL isEqualToString:kLangNone]){
+        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
 	//NSDictionary *dict = [note userInfo];
     
     BibleDao *bDao = [[BibleDao alloc] init];

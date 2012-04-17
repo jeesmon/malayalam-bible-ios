@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 #import "MalayalamBibleDetailViewController.h"
+#import "PopOverDelegate.h"
 
 @interface ChapterSelection : UIViewController {
+    
+    
     UIScrollView *scrollViewBar;
     UILabel *lblChapter;
 }
@@ -20,7 +23,10 @@
 
 @property (strong, nonatomic) Book *selectedBook;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
+@property (nonatomic, assign) id <PopOverDelegate> delegate;
 
 -(void) configureView;
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray;
+
+
 @end

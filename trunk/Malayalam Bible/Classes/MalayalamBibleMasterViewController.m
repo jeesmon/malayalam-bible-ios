@@ -122,7 +122,16 @@ const NSString *bmBookRow = @"BookPathRow";
     CGFloat htOfSearchbar = 45.0f;
     
     self.tableViewBooks.frame = CGRectMake(0, htOfSearchbar-1, self.view.frame.size.width, self.view.frame.size.height-htOfSearchbar-1);
-    self.tableViewBooks.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
+        
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        
+        self.tableViewBooks.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    }else{
+        
+        self.tableViewBooks.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+
+    }
+    
     
     [self.view addSubview:self.tableViewBooks];
     
