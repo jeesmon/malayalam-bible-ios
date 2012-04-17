@@ -11,6 +11,7 @@
 #import "MalayalamBibleMasterViewController.h"
 
 #import "MalayalamBibleDetailViewController.h"
+#import "MBConstants.h"
 
 @implementation MalayalamBibleAppDelegate
 
@@ -24,8 +25,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    
-    
+       
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -58,9 +58,14 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     
     
     // load the stored preference of the user's last location from a previous launch
-	self.savedLocation = [[[NSUserDefaults standardUserDefaults] objectForKey:kRestoreLocationKey] mutableCopy];
-	
+    NSUserDefaults *def  =[NSUserDefaults standardUserDefaults];
+	self.savedLocation = [[def objectForKey:kRestoreLocationKey] mutableCopy];
+    NSInteger fontSize = [def integerForKey:@"fontSize"];
     
+    if(fontSize > 0){
+        FONT_SIZE = fontSize;
+    }
+   
 	if (savedLocation == nil)
 	{
 		// user has not launched this app nor navigated to a particular level yet, start at level 1, with no selection
@@ -68,14 +73,14 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
             self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithCapacity:1],	// book selection 
                              [NSNumber numberWithInt:-1],	// .. 2nd level  the chapter idex
-                             [NSMutableDictionary dictionaryWithCapacity:1],
+                             [NSMutableDictionary dictionaryWithCapacity:1],// 3rd level - verse id
                              nil];
             
         }else{
             self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
                              [NSNumber numberWithInt:0],	// .. 2nd level , the chapter idex
-                             [NSMutableDictionary dictionaryWithCapacity:1],	
+                             [NSMutableDictionary dictionaryWithCapacity:1],// 3rd level - verse id	
                              nil];
             
         }
