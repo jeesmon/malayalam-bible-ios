@@ -37,6 +37,8 @@
 
     
     NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Languages", @"") ,@"title",NSLocalizedString(@"SelectLanguages", @""), @"subTitle", nil];
+    
+      
     arrayPrefs = [NSArray arrayWithObjects:dict1, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -103,19 +105,27 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    if(indexPath.row == 0){
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+        
+        // Configure the cell...
+        NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
+        cell.textLabel.text = [dict valueForKey:@"title"];
+        cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        return cell;
+
     }
+        
     
-    // Configure the cell...
-    NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
-    cell.textLabel.text = [dict valueForKey:@"title"];
-    cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];
+        
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    return cell;
 }
 
 /*

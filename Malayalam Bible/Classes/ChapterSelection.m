@@ -66,17 +66,23 @@ const CGFloat tagWidthOffset = 10.0f;
     self.view.backgroundColor = [UIColor whiteColor];
     [scrollViewBar setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
+    NSInteger yOffset = 15;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        
+        self.lblChapter = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 30)];
+        
+        lblChapter.text = [BibleDao getTitleChapterButton];
+        
+        lblChapter.textAlignment = UITextAlignmentCenter;
+        lblChapter.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        lblChapter.tag = 10;
+        [[scrollViewBar viewWithTag:10] removeFromSuperview];
+        [scrollViewBar addSubview:lblChapter];
+
+        yOffset = 50;
+    }
     
-    self.lblChapter = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 30)];
-    
-    lblChapter.text = [BibleDao getTitleChapterButton];
-    
-    lblChapter.textAlignment = UITextAlignmentCenter;
-    lblChapter.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    lblChapter.tag = 10;
-    [[scrollViewBar viewWithTag:10] removeFromSuperview];
-    [scrollViewBar addSubview:lblChapter];
-    
+        
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     //scrollViewBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
@@ -90,12 +96,17 @@ const CGFloat tagWidthOffset = 10.0f;
         width = 460;
     }
     
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        
+        width = 320;
+    }
+    
     NSInteger buttonWidth = 40;
     NSInteger buttonHeight = 40;
     NSInteger spacer = 10;
     NSInteger offsetStart = 16;//55;
     NSInteger xOffset = offsetStart;
-    NSInteger yOffset = 50;
+    
     for (int i=0; i<self.selectedBook.numOfChapters; i++) {
         NSString *number = [NSString stringWithFormat:@"%d", i+1];
         UIButton *tagButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -177,7 +188,7 @@ const CGFloat tagWidthOffset = 10.0f;
 
 - (void) openPageWithChapter:(NSUInteger)chapter{
     
-    
+    self.detailViewController.isActionClicked = NO;
     self.detailViewController.selectedBook = self.selectedBook;
     self.detailViewController.chapterId = chapter;
     [self.detailViewController configureView];

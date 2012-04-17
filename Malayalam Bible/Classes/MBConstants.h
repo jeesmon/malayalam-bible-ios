@@ -8,12 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+
+extern  NSUInteger FONT_SIZE;
+
+#define kFontMaxSize 24
+#define kFontMinSize 10
+
 extern  NSString * const kLangMalayalam;
 extern  NSString * const kLangEnglishASV;
 extern  NSString * const kLangEnglishKJV;
 extern  NSString * const kLangNone;
 
 extern  NSString * const kStorePreference;
+
+extern  NSString * const kBookAll;
+extern  NSString * const kBookNewTestament;
+extern  NSString * const kBookOldTestament;
+
+extern  NSString * const kFontName;
 
 @interface MBConstants : NSObject
 

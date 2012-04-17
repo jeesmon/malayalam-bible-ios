@@ -7,8 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0301A5661501FEF3008CBC76 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0301A5651501FEF2008CBC76 /* SearchViewController.m */; };
+		031456961522E9A100DF271D /* userdata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 031456951522E9A100DF271D /* userdata.sqlite */; };
+		0353EE6A1520A2D60038531B /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 0353EE691520A2D60038531B /* help.png */; };
+		035C1FB9151B2D2200491FB1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035C1FB8151B2D2200491FB1 /* WebViewController.m */; };
+		035C1FBC151B2D2D00491FB1 /* lipi.png in Resources */ = {isa = PBXBuildFile; fileRef = 035C1FBB151B2D2D00491FB1 /* lipi.png */; };
+		038A91B5152AE1C900F03607 /* zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B1152AE1C900F03607 /* zoom_in.png */; };
+		038A91B7152AE1C900F03607 /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B3152AE1C900F03607 /* zoom_out.png */; };
 		03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */; };
+		03BA84A9150214E80089ABCE /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84A8150214E80089ABCE /* SearchViewController.m */; };
+		03BA84C915022AAD0089ABCE /* lex.macro_mozhi_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */; };
+		03BA84CA15022AAD0089ABCE /* lex.mozhi_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */; };
+		03BA84CB15022AAD0089ABCE /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B815022AAD0089ABCE /* list.c */; };
+		03BA84CC15022AAD0089ABCE /* mal.tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84BC15022AAD0089ABCE /* mal.tab.c */; };
+		03BA84CD15022AAD0089ABCE /* mozhi_unicode_default.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84BF15022AAD0089ABCE /* mozhi_unicode_default.c */; };
+		03BA84CE15022AAD0089ABCE /* strlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C115022AAD0089ABCE /* strlist.c */; };
+		03BA84CF15022AAD0089ABCE /* strpair.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C315022AAD0089ABCE /* strpair.c */; };
+		03BA84D015022AAD0089ABCE /* strstruct.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C515022AAD0089ABCE /* strstruct.c */; };
+		03BA84D115022AAD0089ABCE /* txt2html.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C715022AAD0089ABCE /* txt2html.c */; };
+		03D1255915060FE70054CB0A /* VerseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1255815060FE70054CB0A /* VerseCell.m */; };
+		03D12570150645990054CB0A /* RachanaMac.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03D1256F150645990054CB0A /* RachanaMac.ttf */; };
 		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
 		03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D3FFE814C02D8E004A8BE8 /* Settings.png */; };
 		03D3FFEC14C030BE004A8BE8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */; };
@@ -50,9 +67,38 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0301A5641501FEF2008CBC76 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		0301A5651501FEF2008CBC76 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		031456951522E9A100DF271D /* userdata.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = userdata.sqlite; path = "Malayalam Bible/userdata.sqlite"; sourceTree = SOURCE_ROOT; };
+		0353EE691520A2D60038531B /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
+		035C1FB7151B2D2200491FB1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		035C1FB8151B2D2200491FB1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		035C1FBB151B2D2D00491FB1 /* lipi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lipi.png; sourceTree = "<group>"; };
+		038A91B1152AE1C900F03607 /* zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_in.png; sourceTree = "<group>"; };
+		038A91B3152AE1C900F03607 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
 		03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
+		03BA84A7150214E80089ABCE /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		03BA84A8150214E80089ABCE /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.macro_mozhi_unicode.c; sourceTree = "<group>"; };
+		03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.mozhi_unicode.c; sourceTree = "<group>"; };
+		03BA84B815022AAD0089ABCE /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
+		03BA84B915022AAD0089ABCE /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		03BA84BA15022AAD0089ABCE /* mal-decl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mal-decl.h"; sourceTree = "<group>"; };
+		03BA84BB15022AAD0089ABCE /* mal-type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mal-type.h"; sourceTree = "<group>"; };
+		03BA84BC15022AAD0089ABCE /* mal.tab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mal.tab.c; sourceTree = "<group>"; };
+		03BA84BD15022AAD0089ABCE /* mal.tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mal.tab.h; sourceTree = "<group>"; };
+		03BA84BE15022AAD0089ABCE /* mal_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mal_api.h; sourceTree = "<group>"; };
+		03BA84BF15022AAD0089ABCE /* mozhi_unicode_default.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mozhi_unicode_default.c; sourceTree = "<group>"; };
+		03BA84C015022AAD0089ABCE /* status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = status.h; sourceTree = "<group>"; };
+		03BA84C115022AAD0089ABCE /* strlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strlist.c; sourceTree = "<group>"; };
+		03BA84C215022AAD0089ABCE /* strlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strlist.h; sourceTree = "<group>"; };
+		03BA84C315022AAD0089ABCE /* strpair.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strpair.c; sourceTree = "<group>"; };
+		03BA84C415022AAD0089ABCE /* strpair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strpair.h; sourceTree = "<group>"; };
+		03BA84C515022AAD0089ABCE /* strstruct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strstruct.c; sourceTree = "<group>"; };
+		03BA84C615022AAD0089ABCE /* strstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strstruct.h; sourceTree = "<group>"; };
+		03BA84C715022AAD0089ABCE /* txt2html.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = txt2html.c; sourceTree = "<group>"; };
+		03BA84C815022AAD0089ABCE /* txt2html.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt2html.h; sourceTree = "<group>"; };
+		03D1255715060FE70054CB0A /* VerseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerseCell.h; sourceTree = "<group>"; };
+		03D1255815060FE70054CB0A /* VerseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerseCell.m; sourceTree = "<group>"; };
+		03D1256F150645990054CB0A /* RachanaMac.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RachanaMac.ttf; sourceTree = "<group>"; };
 		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
 		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
 		03D3FFE814C02D8E004A8BE8 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -127,6 +173,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03BA84B515022AAD0089ABCE /* varamozhi */ = {
+			isa = PBXGroup;
+			children = (
+				03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */,
+				03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */,
+				03BA84B815022AAD0089ABCE /* list.c */,
+				03BA84B915022AAD0089ABCE /* list.h */,
+				03BA84BA15022AAD0089ABCE /* mal-decl.h */,
+				03BA84BB15022AAD0089ABCE /* mal-type.h */,
+				03BA84BC15022AAD0089ABCE /* mal.tab.c */,
+				03BA84BD15022AAD0089ABCE /* mal.tab.h */,
+				03BA84BE15022AAD0089ABCE /* mal_api.h */,
+				03BA84BF15022AAD0089ABCE /* mozhi_unicode_default.c */,
+				03BA84C015022AAD0089ABCE /* status.h */,
+				03BA84C115022AAD0089ABCE /* strlist.c */,
+				03BA84C215022AAD0089ABCE /* strlist.h */,
+				03BA84C315022AAD0089ABCE /* strpair.c */,
+				03BA84C415022AAD0089ABCE /* strpair.h */,
+				03BA84C515022AAD0089ABCE /* strstruct.c */,
+				03BA84C615022AAD0089ABCE /* strstruct.h */,
+				03BA84C715022AAD0089ABCE /* txt2html.c */,
+				03BA84C815022AAD0089ABCE /* txt2html.h */,
+			);
+			path = varamozhi;
+			sourceTree = "<group>";
+		};
+		03D1256E150645990054CB0A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				03D1256F150645990054CB0A /* RachanaMac.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		0FFE50781450636E00BC85EE = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +239,7 @@
 		0FFE508D1450636E00BC85EE /* Malayalam Bible */ = {
 			isa = PBXGroup;
 			children = (
+				03BA84B515022AAD0089ABCE /* varamozhi */,
 				8FB58B5C14A246D0009226AE /* Classes */,
 				8FB58B6E14A246D0009226AE /* Images */,
 				8F7BD9A71499032B00205D28 /* Resources */,
@@ -192,6 +273,7 @@
 		8F7BD9A71499032B00205D28 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03D1256E150645990054CB0A /* Fonts */,
 				03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */,
 				8F7BD9AB1499045600205D28 /* Localizable.strings */,
 			);
@@ -209,6 +291,9 @@
 		8FB58B5C14A246D0009226AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				031456951522E9A100DF271D /* userdata.sqlite */,
+				035C1FB7151B2D2200491FB1 /* WebViewController.h */,
+				035C1FB8151B2D2200491FB1 /* WebViewController.m */,
 				8FB58B5D14A246D0009226AE /* Book.h */,
 				8FB58B5E14A246D0009226AE /* Book.m */,
 				8FB58B5F14A246D0009226AE /* ChapterPickerController.h */,
@@ -235,8 +320,10 @@
 				03D3FFF114C04096004A8BE8 /* SelectionController.m */,
 				03D3FFF414C053FB004A8BE8 /* MBConstants.h */,
 				03D3FFF514C053FC004A8BE8 /* MBConstants.m */,
-				0301A5641501FEF2008CBC76 /* SearchViewController.h */,
-				0301A5651501FEF2008CBC76 /* SearchViewController.m */,
+				03BA84A7150214E80089ABCE /* SearchViewController.h */,
+				03BA84A8150214E80089ABCE /* SearchViewController.m */,
+				03D1255715060FE70054CB0A /* VerseCell.h */,
+				03D1255815060FE70054CB0A /* VerseCell.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -244,6 +331,10 @@
 		8FB58B6E14A246D0009226AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				038A91B1152AE1C900F03607 /* zoom_in.png */,
+				038A91B3152AE1C900F03607 /* zoom_out.png */,
+				0353EE691520A2D60038531B /* help.png */,
+				035C1FBB151B2D2D00491FB1 /* lipi.png */,
 				0F84913614F2E8940057ABE6 /* Gear.png */,
 				0F84913714F2E8940057ABE6 /* Gear@2x.png */,
 				03D3FFE814C02D8E004A8BE8 /* Settings.png */,
@@ -282,7 +373,7 @@
 		0FFE507A1450636E00BC85EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 0FFE507D1450636E00BC85EE /* Build configuration list for PBXProject "Malayalam Bible" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -325,6 +416,12 @@
 				03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */,
 				0F84913814F2E8940057ABE6 /* Gear.png in Resources */,
 				0F84913914F2E8940057ABE6 /* Gear@2x.png in Resources */,
+				03D12570150645990054CB0A /* RachanaMac.ttf in Resources */,
+				035C1FBC151B2D2D00491FB1 /* lipi.png in Resources */,
+				0353EE6A1520A2D60038531B /* help.png in Resources */,
+				031456961522E9A100DF271D /* userdata.sqlite in Resources */,
+				038A91B5152AE1C900F03607 /* zoom_in.png in Resources */,
+				038A91B7152AE1C900F03607 /* zoom_out.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +447,18 @@
 				03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */,
 				03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */,
 				03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */,
-				0301A5661501FEF3008CBC76 /* SearchViewController.m in Sources */,
+				03BA84A9150214E80089ABCE /* SearchViewController.m in Sources */,
+				03BA84C915022AAD0089ABCE /* lex.macro_mozhi_unicode.c in Sources */,
+				03BA84CA15022AAD0089ABCE /* lex.mozhi_unicode.c in Sources */,
+				03BA84CB15022AAD0089ABCE /* list.c in Sources */,
+				03BA84CC15022AAD0089ABCE /* mal.tab.c in Sources */,
+				03BA84CD15022AAD0089ABCE /* mozhi_unicode_default.c in Sources */,
+				03BA84CE15022AAD0089ABCE /* strlist.c in Sources */,
+				03BA84CF15022AAD0089ABCE /* strpair.c in Sources */,
+				03BA84D015022AAD0089ABCE /* strstruct.c in Sources */,
+				03BA84D115022AAD0089ABCE /* txt2html.c in Sources */,
+				03D1255915060FE70054CB0A /* VerseCell.m in Sources */,
+				035C1FB9151B2D2200491FB1 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +503,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -418,6 +527,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -439,14 +549,15 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jeesmon Jacob (28LDT98ZTB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
 				COMPRESS_PNG_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5829BB20-DEAA-4BB3-8384-03A5E6330566";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "84BD3AC7-548E-485C-8451-B7C1BCACF503";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -460,14 +571,15 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeesmon Jacob";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
 				COMPRESS_PNG_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3A36305A-5539-4F19-A618-754064D37128";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "84BD3AC7-548E-485C-8451-B7C1BCACF503";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -18,5 +18,6 @@
 + (NSString *)getTitleNewTestament;
 + (NSString *)getTitleChapter;
 + (NSString *)getTitleChapterButton;
+- (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSString *)scope;
 
 @end

@@ -11,6 +11,9 @@
 #import "Book.h"
 #import "MBConstants.h"
 
+
+const CGFloat Line_Height = 1.2;
+
 @implementation BibleDao
 
 
@@ -129,6 +132,192 @@
     return [NSDictionary dictionaryWithObjectsAndKeys:books, @"books", oldTestament, @"oldTestament", newTestament, @"newTestament", nil];
 }
 
+- (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSString *)scope{
+    
+    NSMutableArray *arrayVerses = [[NSMutableArray alloc] initWithCapacity:1];
+    
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+      
+    NSString *primaryL = kLangMalayalam;
+    NSString *secondaryL = kLangNone;
+    
+    if(dictPref !=nil ){
+        
+        primaryL = [dictPref valueForKey:@"primaryLanguage"];
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
+    }
+    
+    NSString *scopeStr = @"";
+    if([scope isEqualToString:kBookNewTestament]){
+        
+        scopeStr = @"books.book_id >= 40 and";
+        
+    }else if([scope isEqualToString:kBookOldTestament]){
+        
+        scopeStr = @"books.book_id < 40 and";
+    }
+    
+    NSMutableString *querS = nil;
+    NSString *orderBy = @"";
+    if([primaryL isEqualToString:kLangMalayalam]){
+        
+        querS = [NSMutableString stringWithFormat:@"SELECT MalayalamShortName, chapter_id, verse_id, verse_text, books.book_id, books.num_chptr FROM verses,books where %@ books.book_id = verses.book_id and verse_text ", scopeStr];
+        orderBy = @" order by verses.book_id, verses.chapter_id, verses.verse_id";
+        
+    }else if([primaryL isEqualToString:kLangEnglishASV]){
+        
+        querS = [NSMutableString stringWithFormat:@"SELECT EnglishShortName, chapter_id, verse_id, verse_text, books.book_id, books.num_chptr FROM verses_asv,books where %@ books.book_id = verses_asv.book_id and verse_text ", scopeStr];
+        orderBy = @" order by verses_asv.book_id, verses_asv.chapter_id, verses_asv.verse_id";
+        
+    }else{
+        
+        querS = [NSMutableString stringWithFormat:@"SELECT EnglishShortName, chapter_id, verse_id, verse_text, books.book_id, books.num_chptr FROM verses_kjv,books where %@ books.book_id = verses_kjv.book_id and verse_text ", scopeStr];
+        orderBy = @" order by verses_kjv.book_id, verses_kjv.chapter_id, verses_kjv.verse_id";
+    }
+    [querS appendString:@"like '%"];
+    [querS appendString:searchText];
+    [querS appendString:@"%'"];
+    
+    [querS appendString:orderBy];
+        
+   
+    
+   
+        
+    //(@"querS = %@", querS);
+    
+    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    const char *dbpath = [pathname UTF8String];
+    sqlite3 *bibleDB;
+    
+    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+        
+        sqlite3_stmt *statement;
+        
+        
+        
+        const char *queryStmt = [querS UTF8String];
+        if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
+            
+            
+            NSString *preheaderTitle = nil;
+            NSString *headerTitle = nil;
+            
+            NSMutableArray *arraySection = [[NSMutableArray alloc] init];
+            
+            while(sqlite3_step(statement) == SQLITE_ROW) {
+                
+                NSMutableString *str = [NSMutableString string];
+                
+                const char *bookname = (const char *) sqlite3_column_text(statement, 0);
+                const char *chapter = (const char *) sqlite3_column_text(statement, 1);
+                const char *rowId = (const char *) sqlite3_column_text(statement, 2);
+                const char *verse = (const char *) sqlite3_column_text(statement, 3);
+                int bookid =  sqlite3_column_int(statement, 4);
+                int numofchapter =  sqlite3_column_int(statement, 5);
+                
+                headerTitle = [NSString stringWithUTF8String:bookname];
+                if(preheaderTitle == nil){
+                    
+                    preheaderTitle = headerTitle;
+                }
+                NSString *strChapter = (chapter != NULL) ? [NSString stringWithUTF8String:chapter] : @"1";
+                if(chapter){
+                    [str appendString:strChapter];
+                }
+                
+                NSString *strRowId = (rowId != NULL) ? [NSString stringWithUTF8String:rowId] : @"1";
+                if(rowId){
+                    [str appendFormat:@":%@ ",strRowId];
+                }
+                NSString *origVerse = @"";
+                if(verse){
+                    
+                    NSMutableString *versse = [NSMutableString stringWithUTF8String:verse];
+                    origVerse = [NSString stringWithFormat:@"%@%@", str,versse];
+                     
+                    NSRange rangeS;
+                    if([primaryL isEqualToString:kLangMalayalam]){
+                        
+                        rangeS = [versse rangeOfString:searchText];
+                        
+                    }else{
+                        
+                        rangeS = [versse rangeOfString:[searchText copy] options:NSCaseInsensitiveSearch];
+                    }
+                    
+                    if(rangeS.length > 0){
+                       
+                        [versse replaceCharactersInRange:rangeS withString:[NSString stringWithFormat:@"<span style=\"BACKGROUND-COLOR: yellow\">%@</span>", searchText]];
+                    }                    
+                    
+                    
+                    [str appendString:versse];
+                }
+                
+                
+                Book *bookDetails = [[Book alloc] init];
+                //book.alphaCode = alphaCode;
+                bookDetails.bookId = bookid;
+                //book.englishName = englishName;
+                bookDetails.numOfChapters = numofchapter;
+                bookDetails.shortName = headerTitle;
+                //book.longName = longName;
+                
+                                
+                NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, str];
+                
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:origVerse, @"verse_text",htmlContent, @"verse_html",bookDetails, @"book_details",strChapter, @"chapter",strRowId, @"verse_id",  nil];
+                
+                if(![headerTitle isEqualToString:preheaderTitle]){
+                    
+                    NSMutableDictionary *row = [[NSMutableDictionary alloc] init];
+                    [row setValue:preheaderTitle 
+                           forKey:@"headerTitle"];
+                    [row setValue:[NSArray arrayWithArray:arraySection] forKey:@"rowValues"]; 
+                    
+                    [arrayVerses addObject:row];
+                    
+                    
+                    arraySection = [[NSMutableArray alloc] init];
+                    [arraySection addObject:dict];
+                    preheaderTitle = headerTitle;
+                    
+                }else{
+                    
+                    [arraySection addObject:dict];
+                }
+            }//end while each row
+            sqlite3_finalize(statement);
+            
+            
+            if([arraySection count] > 0){
+                
+               
+                
+                NSMutableDictionary *row = [[NSMutableDictionary alloc] init];
+                [row setValue:headerTitle 
+                       forKey:@"headerTitle"];
+                [row setValue:[NSArray arrayWithArray:arraySection] forKey:@"rowValues"]; 
+                
+                [arrayVerses addObject:row];                
+                
+            }
+            
+        }else{
+            
+            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+        }
+
+    }
+    sqlite3_close(bibleDB);
+    
+    return arrayVerses;
+}
+
 - (NSMutableArray *) getChapter:(int)bookId:(int)chapterId
 {
     
@@ -228,10 +417,22 @@
                 else {
                     verseWithId = verse;
                 }
+                
+                
+                
+                
                 if(queryStmt2 != nil){
-                    [dict setObject:verseWithId forKey:[NSNumber numberWithInt:verseId]];
+                    
+                    NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text", nil];
+                    [dict setObject:dictVerse forKey:[NSNumber numberWithInt:verseId]];
+                    
                 }else{
-                    [verses addObject:verseWithId];
+                    
+                    //NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@; background-color:black;}</style></head><body><div style=\"line-height:%fem;color:white;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, verseWithId];
+                    NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, verseWithId];
+                    
+                    NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
+                    [verses addObject:dictVerse];
                 }
                 
                 
@@ -261,12 +462,31 @@
                         verseWithId = verse;
                     }
                     
-                    NSString *primaryVerse = [dict objectForKey:[NSNumber numberWithInt:verseId]];
+                    NSDictionary *dictVersePrim = [dict objectForKey:[NSNumber numberWithInt:verseId]];
                     
-                    if(primaryVerse == nil){
-                        [verses addObject:[NSString stringWithFormat:@"%@", verseWithId]];
+                    
+                    
+                    
+                    if(dictVersePrim == nil){
+                                               
+                        
+                        NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;color:blue;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, verseWithId];
+                        
+                        NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
+                        
+                        [verses addObject:dictVerse];
+                        
                     }else{
-                        [verses addObject:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId]];
+                        
+                        NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
+                        //<Font color=\"blue\">//</Font>
+                        NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<br><div style=\"color:blue;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, primaryVerse, verseWithId];
+                        
+                        //NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:1.4em;\"><table><tr><td>%@</td><td  width=\"50%\"><div style=\"color:blue;\">%@</td></tr></table></div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], primaryVerse, verseWithId];
+                        
+                        NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId], @"verse_text",htmlContent, @"verse_html",  nil];
+                        
+                        [verses addObject:dictVerse];
                     }
                     
                     //removing the verses from dict
@@ -285,17 +505,31 @@
         
         sqlite3_close(bibleDB);
         
-       //just a try to include additional verses from primary lang if exist
+       //to include additional verses from primary lang if exist
         
         NSEnumerator *enumm = [dict keyEnumerator];
         NSString *key = [enumm nextObject];
         while(key){
             
+            
+            NSDictionary *dictVersePrim = [dict objectForKey:key];
+            
+            NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
+            
+            //(@"dictVersePrim value of html = %@", [dictVersePrim valueForKey:@"verse_html"]);
+            
+            NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, primaryVerse];
+            
+            NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text",htmlContent, @"verse_html",  nil];
+            
             if([key intValue] < [verses count]){
+                                
+                [verses insertObject:dictVerse atIndex:[key intValue]];
                 
-                [verses insertObject:[dict objectForKey:key] atIndex:[key intValue]];
             }else{
-                [verses addObject:[dict objectForKey:key]];
+                
+                
+                [verses addObject:dictVerse];
             }
             
             key = [enumm nextObject];
