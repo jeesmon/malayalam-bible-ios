@@ -524,7 +524,7 @@ __VA_ARGS__ \
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
     }
     if(!isFromSeachController){
-        NSLog(@"adding listenr");
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
     }
     //[self.tableView allowsMultipleSelection];
@@ -709,10 +709,10 @@ IF_IOS5_OR_GREATER(
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:nil];
         
     }
-    if(FONT_SIZE >= kFontMaxSize){
+    //if(FONT_SIZE >= kFontMaxSize){
         
         [self resetBottomToolbar];
-    }
+    //}
 }
 - (void) zoomoutBtnClicked:(id)sender{
     
@@ -728,10 +728,10 @@ IF_IOS5_OR_GREATER(
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:nil];        
     }
-    if(FONT_SIZE <= kFontMinSize){
+    //if(FONT_SIZE <= kFontMinSize){
         
         [self resetBottomToolbar];
-    }
+    //}
 }
 - (void) actionPerformed:(id)sender{
     
@@ -967,7 +967,6 @@ IF_IOS5_OR_GREATER(
 - (void)refreshList:(NSNotification *)note
 {
 	
-    NSLog(@"refreshList detailsss");
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     NSString *secondaryL = kLangNone;
