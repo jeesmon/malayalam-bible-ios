@@ -291,7 +291,7 @@ __VA_ARGS__ \
     if(self.isActionClicked){
         
         
-        static NSString *CellIdentifier = @"Cell";
+        NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%i", FONT_SIZE];
         
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
