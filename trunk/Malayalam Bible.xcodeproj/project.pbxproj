@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		031456961522E9A100DF271D /* userdata.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 031456951522E9A100DF271D /* userdata.sqlite */; };
 		0353EE6A1520A2D60038531B /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 0353EE691520A2D60038531B /* help.png */; };
 		035C1FB9151B2D2200491FB1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035C1FB8151B2D2200491FB1 /* WebViewController.m */; };
 		035C1FBC151B2D2D00491FB1 /* lipi.png in Resources */ = {isa = PBXBuildFile; fileRef = 035C1FBB151B2D2D00491FB1 /* lipi.png */; };
 		038A91B5152AE1C900F03607 /* zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B1152AE1C900F03607 /* zoom_in.png */; };
 		038A91B7152AE1C900F03607 /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B3152AE1C900F03607 /* zoom_out.png */; };
 		03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */; };
-		03BA84A9150214E80089ABCE /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84A8150214E80089ABCE /* SearchViewController.m */; };
 		03BA84C915022AAD0089ABCE /* lex.macro_mozhi_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */; };
 		03BA84CA15022AAD0089ABCE /* lex.mozhi_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */; };
 		03BA84CB15022AAD0089ABCE /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84B815022AAD0089ABCE /* list.c */; };
@@ -25,7 +23,6 @@
 		03BA84D015022AAD0089ABCE /* strstruct.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C515022AAD0089ABCE /* strstruct.c */; };
 		03BA84D115022AAD0089ABCE /* txt2html.c in Sources */ = {isa = PBXBuildFile; fileRef = 03BA84C715022AAD0089ABCE /* txt2html.c */; };
 		03D1255915060FE70054CB0A /* VerseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1255815060FE70054CB0A /* VerseCell.m */; };
-		03D12570150645990054CB0A /* RachanaMac.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03D1256F150645990054CB0A /* RachanaMac.ttf */; };
 		03D3FFE414BFF40A004A8BE8 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFE314BFF40A004A8BE8 /* BibleDao.m */; };
 		03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D3FFE814C02D8E004A8BE8 /* Settings.png */; };
 		03D3FFEC14C030BE004A8BE8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEB14C030BE004A8BE8 /* SettingsViewController.m */; };
@@ -67,7 +64,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		031456951522E9A100DF271D /* userdata.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = userdata.sqlite; path = "Malayalam Bible/userdata.sqlite"; sourceTree = SOURCE_ROOT; };
 		0353EE691520A2D60038531B /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
 		035C1FB7151B2D2200491FB1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		035C1FB8151B2D2200491FB1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
@@ -75,8 +71,6 @@
 		038A91B1152AE1C900F03607 /* zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_in.png; sourceTree = "<group>"; };
 		038A91B3152AE1C900F03607 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
 		03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
-		03BA84A7150214E80089ABCE /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		03BA84A8150214E80089ABCE /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.macro_mozhi_unicode.c; sourceTree = "<group>"; };
 		03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.mozhi_unicode.c; sourceTree = "<group>"; };
 		03BA84B815022AAD0089ABCE /* list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
@@ -98,7 +92,6 @@
 		03BA84C815022AAD0089ABCE /* txt2html.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt2html.h; sourceTree = "<group>"; };
 		03D1255715060FE70054CB0A /* VerseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerseCell.h; sourceTree = "<group>"; };
 		03D1255815060FE70054CB0A /* VerseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerseCell.m; sourceTree = "<group>"; };
-		03D1256F150645990054CB0A /* RachanaMac.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RachanaMac.ttf; sourceTree = "<group>"; };
 		03D3FFE214BFF40A004A8BE8 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
 		03D3FFE314BFF40A004A8BE8 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
 		03D3FFE814C02D8E004A8BE8 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -202,7 +195,6 @@
 		03D1256E150645990054CB0A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				03D1256F150645990054CB0A /* RachanaMac.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -291,7 +283,6 @@
 		8FB58B5C14A246D0009226AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				031456951522E9A100DF271D /* userdata.sqlite */,
 				035C1FB7151B2D2200491FB1 /* WebViewController.h */,
 				035C1FB8151B2D2200491FB1 /* WebViewController.m */,
 				8FB58B5D14A246D0009226AE /* Book.h */,
@@ -320,8 +311,6 @@
 				03D3FFF114C04096004A8BE8 /* SelectionController.m */,
 				03D3FFF414C053FB004A8BE8 /* MBConstants.h */,
 				03D3FFF514C053FC004A8BE8 /* MBConstants.m */,
-				03BA84A7150214E80089ABCE /* SearchViewController.h */,
-				03BA84A8150214E80089ABCE /* SearchViewController.m */,
 				03D1255715060FE70054CB0A /* VerseCell.h */,
 				03D1255815060FE70054CB0A /* VerseCell.m */,
 			);
@@ -416,10 +405,8 @@
 				03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */,
 				0F84913814F2E8940057ABE6 /* Gear.png in Resources */,
 				0F84913914F2E8940057ABE6 /* Gear@2x.png in Resources */,
-				03D12570150645990054CB0A /* RachanaMac.ttf in Resources */,
 				035C1FBC151B2D2D00491FB1 /* lipi.png in Resources */,
 				0353EE6A1520A2D60038531B /* help.png in Resources */,
-				031456961522E9A100DF271D /* userdata.sqlite in Resources */,
 				038A91B5152AE1C900F03607 /* zoom_in.png in Resources */,
 				038A91B7152AE1C900F03607 /* zoom_out.png in Resources */,
 			);
@@ -447,7 +434,6 @@
 				03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */,
 				03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */,
 				03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */,
-				03BA84A9150214E80089ABCE /* SearchViewController.m in Sources */,
 				03BA84C915022AAD0089ABCE /* lex.macro_mozhi_unicode.c in Sources */,
 				03BA84CA15022AAD0089ABCE /* lex.mozhi_unicode.c in Sources */,
 				03BA84CB15022AAD0089ABCE /* list.c in Sources */,
