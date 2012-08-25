@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033C2C3515C83FA600A77614 /* MEDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 033C2C3415C83FA600A77614 /* MEDropDown.m */; };
+		033C2C3D15C840A500A77614 /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 033C2C3A15C840A500A77614 /* contract.png */; };
+		033C2C3E15C840A500A77614 /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 033C2C3B15C840A500A77614 /* down-arrow.png */; };
+		033C2C3F15C840A500A77614 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 033C2C3C15C840A500A77614 /* expand.png */; };
 		0353EE6A1520A2D60038531B /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 0353EE691520A2D60038531B /* help.png */; };
 		035C1FB9151B2D2200491FB1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035C1FB8151B2D2200491FB1 /* WebViewController.m */; };
 		035C1FBC151B2D2D00491FB1 /* lipi.png in Resources */ = {isa = PBXBuildFile; fileRef = 035C1FBB151B2D2D00491FB1 /* lipi.png */; };
@@ -29,6 +33,9 @@
 		03D3FFEF14C036E9004A8BE8 /* LanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFEE14C036E8004A8BE8 /* LanguageViewController.m */; };
 		03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF114C04096004A8BE8 /* SelectionController.m */; };
 		03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF514C053FC004A8BE8 /* MBConstants.m */; };
+		03D44AAF15958DAE00961AD4 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D44AAE15958DAE00961AD4 /* SearchViewController.m */; };
+		03D44AC71595CEEC00961AD4 /* SelectableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D44AC61595CEEC00961AD4 /* SelectableCell.m */; };
+		03E0484315419CDC008DDB41 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E0484215419CDC008DDB41 /* UIDeviceHardware.m */; };
 		0F24AB9414803B130096403E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB9314803B130096403E /* Icon-72.png */; };
 		0F24AB96148040360096403E /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB95148040360096403E /* Default-Portrait.png */; };
 		0F24AB98148043D90096403E /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F24AB97148043D90096403E /* Default-Landscape.png */; };
@@ -48,8 +55,6 @@
 		0FFE50BB1450744400BC85EE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE50BA1450744400BC85EE /* libsqlite3.dylib */; };
 		8F7BD9AD1499045600205D28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F7BD9AB1499045600205D28 /* Localizable.strings */; };
 		8FB58B7414A246D0009226AE /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B5E14A246D0009226AE /* Book.m */; };
-		8FB58B7514A246D0009226AE /* ChapterPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6014A246D0009226AE /* ChapterPickerController.m */; };
-		8FB58B7614A246D0009226AE /* ChapterPopOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6214A246D0009226AE /* ChapterPopOverController.m */; };
 		8FB58B7714A246D0009226AE /* ChapterSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6414A246D0009226AE /* ChapterSelection.m */; };
 		8FB58B7814A246D0009226AE /* Information.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6614A246D0009226AE /* Information.m */; };
 		8FB58B7914A246D0009226AE /* MalayalamBibleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB58B6814A246D0009226AE /* MalayalamBibleDetailViewController.m */; };
@@ -64,12 +69,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033C2C3315C83FA600A77614 /* MEDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDropDown.h; sourceTree = "<group>"; };
+		033C2C3415C83FA600A77614 /* MEDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDropDown.m; sourceTree = "<group>"; };
+		033C2C3A15C840A500A77614 /* contract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contract.png; sourceTree = "<group>"; };
+		033C2C3B15C840A500A77614 /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down-arrow.png"; sourceTree = "<group>"; };
+		033C2C3C15C840A500A77614 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
 		0353EE691520A2D60038531B /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
 		035C1FB7151B2D2200491FB1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		035C1FB8151B2D2200491FB1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		035C1FBB151B2D2D00491FB1 /* lipi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lipi.png; sourceTree = "<group>"; };
 		038A91B1152AE1C900F03607 /* zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_in.png; sourceTree = "<group>"; };
 		038A91B3152AE1C900F03607 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
+		03AF1FC515A8437D001BA50D /* MBProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProtocol.h; sourceTree = "<group>"; };
 		03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "malayalam-bible.db"; sourceTree = "<group>"; };
 		03BA84B615022AAD0089ABCE /* lex.macro_mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.macro_mozhi_unicode.c; sourceTree = "<group>"; };
 		03BA84B715022AAD0089ABCE /* lex.mozhi_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lex.mozhi_unicode.c; sourceTree = "<group>"; };
@@ -103,6 +114,12 @@
 		03D3FFF114C04096004A8BE8 /* SelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionController.m; sourceTree = "<group>"; };
 		03D3FFF414C053FB004A8BE8 /* MBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBConstants.h; sourceTree = "<group>"; };
 		03D3FFF514C053FC004A8BE8 /* MBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConstants.m; sourceTree = "<group>"; };
+		03D44AAD15958DAE00961AD4 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		03D44AAE15958DAE00961AD4 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		03D44AC51595CEEC00961AD4 /* SelectableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableCell.h; sourceTree = "<group>"; };
+		03D44AC61595CEEC00961AD4 /* SelectableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableCell.m; sourceTree = "<group>"; };
+		03E0484115419CDC008DDB41 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
+		03E0484215419CDC008DDB41 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
 		0F24AB9314803B130096403E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		0F24AB95148040360096403E /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		0F24AB97148043D90096403E /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
@@ -127,10 +144,6 @@
 		8F7BD9AC1499045600205D28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FB58B5D14A246D0009226AE /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		8FB58B5E14A246D0009226AE /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		8FB58B5F14A246D0009226AE /* ChapterPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterPickerController.h; sourceTree = "<group>"; };
-		8FB58B6014A246D0009226AE /* ChapterPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterPickerController.m; sourceTree = "<group>"; };
-		8FB58B6114A246D0009226AE /* ChapterPopOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterPopOverController.h; sourceTree = "<group>"; };
-		8FB58B6214A246D0009226AE /* ChapterPopOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterPopOverController.m; sourceTree = "<group>"; };
 		8FB58B6314A246D0009226AE /* ChapterSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterSelection.h; sourceTree = "<group>"; };
 		8FB58B6414A246D0009226AE /* ChapterSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterSelection.m; sourceTree = "<group>"; };
 		8FB58B6514A246D0009226AE /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
@@ -283,14 +296,16 @@
 		8FB58B5C14A246D0009226AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				033C2C3315C83FA600A77614 /* MEDropDown.h */,
+				033C2C3415C83FA600A77614 /* MEDropDown.m */,
+				03D44AAD15958DAE00961AD4 /* SearchViewController.h */,
+				03D44AAE15958DAE00961AD4 /* SearchViewController.m */,
+				03E0484115419CDC008DDB41 /* UIDeviceHardware.h */,
+				03E0484215419CDC008DDB41 /* UIDeviceHardware.m */,
 				035C1FB7151B2D2200491FB1 /* WebViewController.h */,
 				035C1FB8151B2D2200491FB1 /* WebViewController.m */,
 				8FB58B5D14A246D0009226AE /* Book.h */,
 				8FB58B5E14A246D0009226AE /* Book.m */,
-				8FB58B5F14A246D0009226AE /* ChapterPickerController.h */,
-				8FB58B6014A246D0009226AE /* ChapterPickerController.m */,
-				8FB58B6114A246D0009226AE /* ChapterPopOverController.h */,
-				8FB58B6214A246D0009226AE /* ChapterPopOverController.m */,
 				8FB58B6314A246D0009226AE /* ChapterSelection.h */,
 				8FB58B6414A246D0009226AE /* ChapterSelection.m */,
 				8FB58B6514A246D0009226AE /* Information.h */,
@@ -313,6 +328,9 @@
 				03D3FFF514C053FC004A8BE8 /* MBConstants.m */,
 				03D1255715060FE70054CB0A /* VerseCell.h */,
 				03D1255815060FE70054CB0A /* VerseCell.m */,
+				03D44AC51595CEEC00961AD4 /* SelectableCell.h */,
+				03D44AC61595CEEC00961AD4 /* SelectableCell.m */,
+				03AF1FC515A8437D001BA50D /* MBProtocol.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -320,6 +338,9 @@
 		8FB58B6E14A246D0009226AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				033C2C3A15C840A500A77614 /* contract.png */,
+				033C2C3B15C840A500A77614 /* down-arrow.png */,
+				033C2C3C15C840A500A77614 /* expand.png */,
 				038A91B1152AE1C900F03607 /* zoom_in.png */,
 				038A91B3152AE1C900F03607 /* zoom_out.png */,
 				0353EE691520A2D60038531B /* help.png */,
@@ -409,6 +430,9 @@
 				0353EE6A1520A2D60038531B /* help.png in Resources */,
 				038A91B5152AE1C900F03607 /* zoom_in.png in Resources */,
 				038A91B7152AE1C900F03607 /* zoom_out.png in Resources */,
+				033C2C3D15C840A500A77614 /* contract.png in Resources */,
+				033C2C3E15C840A500A77614 /* down-arrow.png in Resources */,
+				033C2C3F15C840A500A77614 /* expand.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +446,6 @@
 				0FFE50941450636E00BC85EE /* main.m in Sources */,
 				0FFE50981450636E00BC85EE /* MalayalamBibleAppDelegate.m in Sources */,
 				8FB58B7414A246D0009226AE /* Book.m in Sources */,
-				8FB58B7514A246D0009226AE /* ChapterPickerController.m in Sources */,
-				8FB58B7614A246D0009226AE /* ChapterPopOverController.m in Sources */,
 				8FB58B7714A246D0009226AE /* ChapterSelection.m in Sources */,
 				8FB58B7814A246D0009226AE /* Information.m in Sources */,
 				8FB58B7914A246D0009226AE /* MalayalamBibleDetailViewController.m in Sources */,
@@ -445,6 +467,10 @@
 				03BA84D115022AAD0089ABCE /* txt2html.c in Sources */,
 				03D1255915060FE70054CB0A /* VerseCell.m in Sources */,
 				035C1FB9151B2D2200491FB1 /* WebViewController.m in Sources */,
+				03E0484315419CDC008DDB41 /* UIDeviceHardware.m in Sources */,
+				03D44AAF15958DAE00961AD4 /* SearchViewController.m in Sources */,
+				03D44AC71595CEEC00961AD4 /* SelectableCell.m in Sources */,
+				033C2C3515C83FA600A77614 /* MEDropDown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,8 +16,10 @@
     
     UIScrollView *scrollViewBar;
     UILabel *lblChapter;
+    
 }
 
+@property (nonatomic, assign) BOOL fromMaster;
 @property (nonatomic, retain) UIScrollView *scrollViewBar;
 @property (nonatomic, retain) UILabel *lblChapter;
 
@@ -25,7 +27,7 @@
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (nonatomic, assign) id <PopOverDelegate> delegate;
 
--(void) configureView;
+-(void) configureView:(BOOL)isFromMaster;
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray;
 
 

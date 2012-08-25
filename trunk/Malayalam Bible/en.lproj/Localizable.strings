@@ -11,6 +11,7 @@
 "copy"          = "Copy";
 "MailFooter"    = "Shared via Malayalam Bible for iOS";
 
+"AppInfo"       = "Information";
 "Languages"     = "Languages";
 "SelectLanguages"   = "Select Languages";
 
@@ -21,3 +22,15 @@
 "english_asv"   = "English ASV";
 "english_kjv"   = "English KJV";
 "none"          = "None";
+
+
+"bookname_primarylanguage" = "പുസ്തകങ്ങൾ";
+"bookname_English"      = "Books";
+"oldbook_primarylanguage"   = "പഴയനിയമം";
+"oldbook_English"   =   "Old Testament";
+"newbook_primarylanguage"   =   "പുതിയനിയമം";
+"newbook_english"       =   "New Testament";
+"chapter_primarylanguage"   = "അദ്ധ്യായം";
+"chapter_english"       =   "Chapter";
+"chapters_primarylanguage"      = "അദ്ധ്യായങ്ങൾ";
+"chapters_english"      = "Chapters";

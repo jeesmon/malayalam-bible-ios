@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "LanguageViewController.h"
+#import "Information.h"
 
 
 @implementation SettingsViewController
@@ -84,45 +85,60 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 
-    return @"Preferences";
+    if(section == 0){
+        return @"Preferences";
+    }
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
     // Return the number of rows in the section.
-    return [arrayPrefs count];
+    if(section == 0){
+        return [arrayPrefs count];
+        
+    }
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
-    if(indexPath.row == 0){
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    if(indexPath.section == 0){
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        }
+        
         
         // Configure the cell...
         NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
         cell.textLabel.text = [dict valueForKey:@"title"];
         cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        return cell;
+        
+        
+
+    }else{
+        
+        cell.textLabel.text = NSLocalizedString(@"AppInfo", @"");
+        cell.detailTextLabel.text = @"";
 
     }
         
-    
+    return cell;
         
     
     
@@ -172,11 +188,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    
-     LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+    if(indexPath.section == 0){
+        LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
+        // ...
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:detailViewController animated:YES];
+    }else{
+        
+        Information *infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
+        infoViewController.title = @"Information";
+        [self.navigationController pushViewController:infoViewController animated:YES];
+    }
+     
      
 }
 

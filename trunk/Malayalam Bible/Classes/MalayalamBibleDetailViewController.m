@@ -12,6 +12,13 @@
 #import "BibleDao.h"
 #import "MBConstants.h"
 #import "VerseCell.h"
+#import "MalayalamBibleMasterViewController.h"
+#import "SettingsViewController.h"
+#import "UIDeviceHardware.h"
+#import "SearchViewController.h"
+//#import "SelectableCell.h"
+
+//#import "MEDropDown.h"
 
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
 #define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 675.000000
@@ -48,6 +55,7 @@ __VA_ARGS__ \
 @synthesize isActionClicked = _isActionClicked;
 @synthesize isFromSeachController = _isFromSeachController;
 @synthesize bVerses = _bVerses;
+@synthesize bottomToolBar = _bottomToolBar;
 //@synthesize tableWebViewVerses = _tableWebViewVerses;
 
 #pragma mark - Managing the detail item
@@ -61,7 +69,32 @@ __VA_ARGS__ \
         if (self.chapterId < 1 || self.chapterId > self.selectedBook.numOfChapters) {
             self.chapterId = 1;
         }
-        self.title = [NSString stringWithFormat:@"%@ - %i" ,[self.selectedBook shortName], self.chapterId];
+        //self.title = [NSString stringWithFormat:@"%@ - %i" ,[self.selectedBook shortName], self.chapterId];
+        UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+        //lblTitle.font = [UIFont boldSystemFontOfSize:8];
+        lblTitle.minimumFontSize = 8.0;
+        lblTitle.text = [NSString stringWithFormat:@"%@ - %i" ,[self.selectedBook shortName], self.chapterId];
+        lblTitle.textAlignment = UITextAlignmentCenter;
+        lblTitle.numberOfLines  = 1;
+        lblTitle.backgroundColor = [UIColor clearColor];
+        lblTitle.textColor = [UIColor whiteColor];
+        lblTitle.font = [UIFont boldSystemFontOfSize:17.0];
+        lblTitle.adjustsFontSizeToFitWidth = YES;
+        
+        //UIView *viewTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+        //viewTitle.backgroundColor = [UIColor redColor];
+        /*MEDropDown *referenceBtn = [MEDropDown buttonWithType:UIButtonTypeCustom];
+        [referenceBtn drawWithFrame:CGRectMake(0, 0, 120, 40) andImage:[UIImage imageNamed:@"down-arrow.png"]];
+        [referenceBtn setborderWithColor:[UIColor blackColor]];
+        
+        //[referenceBtn addTarget:self action:@selector(showListBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [referenceBtn setTitle:[self.selectedBook shortName] forState:UIControlStateNormal];
+        [referenceBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0]];
+        [referenceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        */
+         //[viewTitle addSubview:lblTitle];
+        
+        self.navigationItem.titleView = lblTitle;
         // save off this level's selection to our AppDelegate
         MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
@@ -288,9 +321,28 @@ __VA_ARGS__ \
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(self.isActionClicked){
+    
+    
+    /*NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%i", FONT_SIZE];
+    
+    
+    SelectableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[SelectableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier AndCallBack:self];
         
+    }
+    
+     
+    NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
+    cell.verseDict = dictVerse;
+    cell.lblVerse1.tag = indexPath.row;
+    cell.lblVerse2.tag = indexPath.row;
+    
+    return cell;
+    */
+   if(self.isActionClicked){
         
+       
         NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%i", FONT_SIZE];
         
         
@@ -341,25 +393,26 @@ __VA_ARGS__ \
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    IF_IOS5_OR_GREATER(
+    //IF_IOS5_OR_GREATER(
     return 44.0;
-                       )
-    return 0.0;
+    //                   )
+   // return 0.0;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
-    IF_IOS5_OR_GREATER(
-    UIView *fview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewVerses.frame.size.width, 44)];
+    //IF_IOS5_OR_GREATER(
+    UIView *fview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewVerses.frame.size.width, 45)];
     [fview setBackgroundColor:[UIColor clearColor]];
     return  fview;
-    )
-    return nil;
+    //)
+    //return nil;
 }
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
-/* No use after implement tablewebview
+/*
+//No use after implement tablewebview
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
     return (action == @selector(copy:));
@@ -374,7 +427,7 @@ __VA_ARGS__ \
         NSMutableString *copiedVerse = [[NSMutableString alloc] init ];
         [copiedVerse appendFormat:@"%@", self.selectedBook.shortName];
         [copiedVerse appendFormat:@" %i", self.chapterId];
-        
+                
         
         NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
         NSString *secondaryL = kLangNone;
@@ -382,7 +435,7 @@ __VA_ARGS__ \
             secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
         }
         
-        NSDictionary *dictVerse = [verses objectAtIndex:indexPath.row];
+        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
         
         if(secondaryL == kLangNone) {
             [copiedVerse appendFormat:@":%@\n", [dictVerse valueForKey:@"verse_text"]];
@@ -411,19 +464,21 @@ __VA_ARGS__ \
         return labelSize.height + 10;
         
     }else{
-        
+      
         NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
         
         NSString *verseStr = [dictVerse valueForKey:@"verse_text"];
+        NSString *verseStr2 = [dictVerse valueForKey:@"verse_text2"];
         
         UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
         
-        CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280
+        CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280 - 40
         
         CGSize labelSize = [verseStr sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
         
+        CGSize labelSize2 = [verseStr2 sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
               
-        return labelSize.height + 10 ;
+        return labelSize.height + labelSize2.height + 15 ;//+ 10
     }
 }
 
@@ -459,9 +514,18 @@ __VA_ARGS__ \
     self.tableViewVerses.delegate = self;
     self.tableViewVerses.dataSource = self;
     
+    
+    self.bottomToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-45, self.view.frame.size.width, 46)];
+    self.bottomToolBar.barStyle =  UIBarStyleBlack;
+    self.bottomToolBar.translucent = YES;
+    self.bottomToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin;
+    
+    [self.view addSubview:self.bottomToolBar];
+    
+    
     [self.view addSubview:self.tableViewVerses];
     
-    
+    [self.view bringSubviewToFront:self.bottomToolBar];
 
     
    
@@ -472,8 +536,8 @@ __VA_ARGS__ \
     [super viewDidLoad];
    
     IF_IOS5_OR_GREATER(
-                       self.navigationController.toolbarHidden = NO;
-                       self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
+                       //self.navigationController.toolbarHidden = NO;
+                       //self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
                        
                        )
 
@@ -494,7 +558,7 @@ __VA_ARGS__ \
         self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
     
-    
+    //self.tableViewVerses.backgroundColor = [UIColor grayColor];
     //self.navigationController.navigationBar.tintColor = [UIColor blackColor];
         
     /* No Use
@@ -517,6 +581,16 @@ __VA_ARGS__ \
     
 	// Do any additional setup after loading the view, typically from a nib.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+        
+        //+20120508
+        UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:[BibleDao getTitleBooks] style:UIBarButtonItemStyleBordered target:self action:@selector(openBooks)];
+       
+        [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+        
+        UIBarButtonItem *barButtonItemR = [[UIBarButtonItem alloc] initWithTitle:[BibleDao getTitleChapter] style:UIBarButtonItemStyleBordered target:self action:@selector(openChapters)];
+        
+        [self.navigationItem setRightBarButtonItem:barButtonItemR animated:YES];
+        
         [self configureView];
     }else{
         
@@ -528,6 +602,8 @@ __VA_ARGS__ \
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
     }
     //[self.tableView allowsMultipleSelection];
+    
+    [self resetBottomToolbar];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -535,8 +611,8 @@ __VA_ARGS__ \
 if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 IF_IOS5_OR_GREATER(
                    
-                   self.navigationController.toolbarHidden = NO;
-                   self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
+                   //self.navigationController.toolbarHidden = NO;
+                   //self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;               
                    
                    )
 }
@@ -598,7 +674,7 @@ IF_IOS5_OR_GREATER(
         --rowid;
     }
     
-    
+    /*
     if(rowid < [self.bVerses count]){
         
         
@@ -609,7 +685,7 @@ IF_IOS5_OR_GREATER(
         [self.tableViewVerses scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.bVerses count] -1) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         
         [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
-    }
+    }*/
 }
 - (void) resetBottomToolbar{
     
@@ -617,8 +693,7 @@ IF_IOS5_OR_GREATER(
     
     
     UIBarButtonItem *action = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionPerformed:)];
-    
-    
+        
    
     UIImage *imgin = [UIImage imageNamed:@"zoom_in.png"];
       
@@ -648,16 +723,11 @@ IF_IOS5_OR_GREATER(
     UIBarButtonItem *flex3 = [[UIBarButtonItem alloc]
                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                              target:nil action:nil];
-    UIBarButtonItem *flex4 = [[UIBarButtonItem alloc]
-                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+    UIBarButtonItem *flex4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                               target:nil action:nil];
     
     UIImage *imgNext = [UIImage imageNamed:@"next.png"];
-    
-   
-   
-   
-    
+        
        
     UIBarButtonItem *barbtnNext = [[UIBarButtonItem alloc] initWithImage:imgNext style:UIBarButtonItemStylePlain target:self action:@selector(nextPrevious:)];
      barbtnNext.tag = 1;
@@ -677,23 +747,89 @@ IF_IOS5_OR_GREATER(
     if(self.chapterId >= self.selectedBook.numOfChapters) {
         [barbtnNext setEnabled:NO];
     }
+   // if(![UIDeviceHardware isIpad]){
+        
+        UIImage *imgSettings = [UIImage imageNamed:@"Gear.png"] ;
+        UIBarButtonItem *btnSettings = [[UIBarButtonItem alloc] initWithImage:imgSettings style:UIBarButtonItemStylePlain target:self action:@selector(showPreferences:)];
+        
+        UIBarButtonItem *flex0 = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                  target:nil action:nil];
+
+        
+        [arrayOfTools addObject:btnSettings];
+        [arrayOfTools addObject:flex0];
+        
+            //}
     
     [arrayOfTools addObject:btnZoomouttt];
     [arrayOfTools addObject:flex1];
     [arrayOfTools addObject:btnZoomInnn];
-    [arrayOfTools addObject:flex2];
+    
+    IF_IOS5_OR_GREATER(//+20120825
+                       [arrayOfTools addObject:flex2];
     [arrayOfTools addObject:action];
+    )
+    UIBarButtonItem *flex00 = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               target:nil action:nil];
+
+    UIBarButtonItem *btnSearch = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                  target:self action:@selector(doSearch:)];
+    
+       [arrayOfTools addObject:flex00];
+    [arrayOfTools addObject:btnSearch];
+    
+
+    
     [arrayOfTools addObject:flex3];
     [arrayOfTools addObject:barbtnPrevious];
     [arrayOfTools addObject:flex4];
     [arrayOfTools addObject:barbtnNext];
     
     //self.toolBarBottom.items = arrayOfTools;    
-    self.toolbarItems = arrayOfTools;    
-
+    self.bottomToolBar.items = arrayOfTools;    
+    //[self.bottomToolBar sizeToFit];
 }
 
+#pragma mark MBProtocol delegate 
+
+- (void) setSelectedRow:(NSUInteger)roww IsPrimary:(BOOL)isPrimary{
+ 
+    NSMutableDictionary *dictVerse = [self.bVerses objectAtIndex:roww];
+    
+    if(isPrimary){
+        NSLog(@"selected pr");
+        [dictVerse setValue:@"YES" forKey:@"isSelectedPrimary"];
+    }else{
+        NSLog(@"selected no pr");
+        [dictVerse setValue:@"NO" forKey:@"isSelectedPrimary"];
+    }
+      
+    [self.tableViewVerses reloadData];
+}
+
+
 #pragma mark @selector methods
+- (void) showPreferences:(id)sender{
+    
+    SettingsViewController *ctrlr = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:ctrlr animated:YES];
+    
+    
+    //SearchViewController *ctrlr = [[SearchViewController alloc] init];
+    //ctrlr.detailViewController = self;
+    //[self.navigationController pushViewController:ctrlr animated:YES];
+}
+- (void) doSearch:(id)sender{
+    
+   
+    
+    SearchViewController *ctrlr = [[SearchViewController alloc] init];
+    ctrlr.detailViewController = self;
+    [self.navigationController pushViewController:ctrlr animated:YES];
+}
 - (void) zoominBtnClicked:(id)sender{
     
     if(FONT_SIZE < kFontMaxSize){
@@ -757,7 +893,7 @@ IF_IOS5_OR_GREATER(
     [arrayOfTools addObject:flex];
     [arrayOfTools addObject:cancel];
     
-    self.toolbarItems = arrayOfTools;
+    self.bottomToolBar.items = arrayOfTools;
     
     
     self.tableViewVerses.editing = YES;
@@ -862,11 +998,31 @@ IF_IOS5_OR_GREATER(
     [self.tableViewVerses reloadData];
 
 }
+
+- (void) openBooks{
+    
+    MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
+    UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    [self.navigationController presentModalViewController:temp animated:YES];
+    
+    
+
+}
+- (void) openChapters{
+    
+    ChapterSelection *picker = [[ChapterSelection alloc] init];
+    picker.selectedBook = self.selectedBook;
+    [picker configureView:NO];
+    
+    //picker.delegate = self;
+    UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:picker];
+    [self.navigationController presentModalViewController:temp animated:YES];
+}
 - (void)showChapters:(UIBarButtonItem *)barBtn{
     
     ChapterSelection *picker = [[ChapterSelection alloc] init];
     picker.selectedBook = self.selectedBook;
-    [picker configureView];
+    [picker configureView:NO];
     picker.delegate = self;
     
     if(self.popoverChapterController == nil){
