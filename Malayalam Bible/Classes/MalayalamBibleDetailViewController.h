@@ -11,11 +11,11 @@
 #import "Book.h"
 #import "PopOverDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
+#import "MBProtocol.h"
 
 
 
-
-@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate >// 
+@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol>// 
 {
     NSMutableArray *bVerses;
 
@@ -27,6 +27,7 @@
     
     BOOL isActionClicked;
     BOOL isFromSeachController;
+    UIToolbar *bottomToolBar;
 }
 
 @property (strong, nonatomic) NSMutableArray *bVerses;
@@ -38,6 +39,7 @@
 
 //@property(nonatomic, retain) UITableView *tableWebViewVerses;
 @property(nonatomic, retain) UITableView *tableViewVerses;
+@property(nonatomic, retain) UIToolbar *bottomToolBar;
 
 - (void)showAlert:(NSString *)message;
 

@@ -10,11 +10,14 @@
 
 #import "MalayalamBibleMasterViewController.h"
 
-#import "MalayalamBibleDetailViewController.h"
+#import "BibleDao.h"
 #import "MBConstants.h"
+
+
 
 @implementation MalayalamBibleAppDelegate
 
+@synthesize detailViewController = _detailViewController;
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
 @synthesize splitViewController = _splitViewController;
@@ -22,32 +25,69 @@
 
 NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain our restore location
 
+
+
+- (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
+    
+    
+    NSDictionary *dict = [selectionArray objectAtIndex:0];
+    
+    NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
+    NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
+    
+    NSLog(@"dict = %@", dict);
+    
+    BibleDao *bdao = [[BibleDao alloc] init];
+    Book *selBook = [bdao fetchBookWithSection:section Row:row];
+    
+    NSLog(@"[selectionArray objectAtIndex:1] = %@", [selectionArray objectAtIndex:1]);
+    
+    NSInteger chapterid = [[selectionArray objectAtIndex:1] intValue];
+    
+    NSLog(@"dict kk chapterid = %i", chapterid);
+	if (chapterid <= 0)
+	{
+        chapterid = 1;
+    }
+        self.detailViewController.isActionClicked = NO;
+        
+        self.detailViewController.selectedBook = selBook;
+        self.detailViewController.chapterId = chapterid;
+        [self.detailViewController configureView];
+
+    
+    
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
        
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
+    
+    
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         
-        MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
-        self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+        
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.detailViewController];
         self.window.rootViewController = self.navigationController;
         
     } else {
         
-        
-        MalayalamBibleDetailViewController *detailViewController = [[MalayalamBibleDetailViewController alloc] init];
-        
+                
         //MalayalamBibleDetailViewController *detailViewController = [[MalayalamBibleDetailViewController alloc] initWithNibName:@"MalayalamBibleDetailViewController_iPad" bundle:nil];
-        UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+        UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:self.detailViewController];
         
         MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
-        masterViewController.detailViewController = detailViewController;
+        masterViewController.detailViewController = self.detailViewController;
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         
         self.splitViewController = [[UISplitViewController alloc] init];
-        self.splitViewController.delegate = detailViewController;
+        self.splitViewController.delegate = self.detailViewController;
         self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
         
         self.window.rootViewController = self.splitViewController;
@@ -66,54 +106,80 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         FONT_SIZE = fontSize;
     }
    
-	if (savedLocation == nil)
+   NSLog(@"savedLocation = %@", savedLocation);
+    
+	if (savedLocation == nil || [savedLocation count] == 0)
 	{
 		// user has not launched this app nor navigated to a particular level yet, start at level 1, with no selection
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
+             NSLog(@"restore point make");
             self.savedLocation = [NSMutableArray arrayWithObjects:
-                             [NSMutableDictionary dictionaryWithCapacity:1],	// book selection 
-                             [NSNumber numberWithInt:-1],	// .. 2nd level  the chapter idex
+                             [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
+                             [NSNumber numberWithInt:1],	// .. 2nd level  the chapter idex
                              [NSMutableDictionary dictionaryWithCapacity:1],// 3rd level - verse id
                              nil];
             
         }else{
+            
+            
             self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
-                             [NSNumber numberWithInt:0],	// .. 2nd level , the chapter idex
+                             [NSNumber numberWithInt:1],	// .. 2nd level , the chapter idex
                              [NSMutableDictionary dictionaryWithCapacity:1],// 3rd level - verse id	
                              nil];
             
         }
     }
+    
+    
+    [self.window makeKeyAndVisible];
 	
     NSNumber *selection = [[savedLocation objectAtIndex:0] valueForKey:@"BookPathSection"];	// read the saved selection at level 1
     if (selection)
     {
+        NSLog(@"restore point %@", selection);
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
-            [(MalayalamBibleMasterViewController*)self.navigationController.topViewController restoreLevelWithSelectionArray:savedLocation];
+            
+            [self restoreLevelWithSelectionArray:savedLocation];
+            
         }else{
+            
             [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:savedLocation];
         }
         
     }
     else
     {    
+        NSLog(@"no restore point");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             
             self.savedLocation = [NSMutableArray arrayWithObjects:
                                   [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
-                                  [NSNumber numberWithInt:0],	// .. 2nd level , the chapter idex
+                                  [NSNumber numberWithInt:1],	// .. 2nd level , the chapter idex
                                   [NSMutableDictionary dictionaryWithCapacity:1],	
                                   nil];
             [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:self.savedLocation];
+        }else{
+            
+            
+            self.savedLocation = [NSMutableArray arrayWithObjects:
+                                  [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
+                                  [NSNumber numberWithInt:1],	// .. 2nd level , the chapter idex
+                                  [NSMutableDictionary dictionaryWithCapacity:1],// 3rd level - verse id	
+                                  nil];
+            
+             [self restoreLevelWithSelectionArray:savedLocation];
+            /*MalayalamBibleMasterViewController *masterViewController = [[MalayalamBibleMasterViewController alloc] init];
+            UINavigationController *temp = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+            [self.window.rootViewController presentModalViewController:temp animated:YES];*/
         }
         // no saved selection, so user was at level 1 the last time
     }
 	
     
-    [self.window makeKeyAndVisible];
+    
     
         
     // register our preference selection data to be archived

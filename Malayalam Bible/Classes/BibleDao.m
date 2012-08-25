@@ -8,7 +8,7 @@
 
 #import "BibleDao.h"
 #import "/usr/include/sqlite3.h"
-#import "Book.h"
+
 #import "MBConstants.h"
 
 
@@ -29,7 +29,7 @@ const CGFloat Line_Height = 1.2;
     
     NSString *querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
     
-    NSString *primaryL = kLangMalayalam;
+    NSString *primaryL = kLangPrimary;
     NSString *secondaryL = kLangNone;
     
     if(dictPref !=nil ){
@@ -88,7 +88,7 @@ const CGFloat Line_Height = 1.2;
                                       (const char *) sqlite3_column_text(statement, 5)];
                 
                 NSString *shortName = nil;
-                if([primaryL isEqualToString:kLangMalayalam]){
+                if([primaryL isEqualToString:kLangPrimary]){
                     
                     shortName = mallayalamName;
                     
@@ -97,7 +97,7 @@ const CGFloat Line_Height = 1.2;
                 }
                 
                 NSMutableString *displayValue = [NSMutableString stringWithString:shortName];
-                if([secondaryL isEqualToString:kLangMalayalam]){
+                if([secondaryL isEqualToString:kLangPrimary]){
                     
                     [displayValue appendFormat:@"\n%@", mallayalamName];                    
                 }else if([secondaryL isEqualToString:kLangEnglishKJV] || [secondaryL isEqualToString:kLangEnglishASV]){
@@ -131,6 +131,105 @@ const CGFloat Line_Height = 1.2;
     
     return [NSDictionary dictionaryWithObjectsAndKeys:books, @"books", oldTestament, @"oldTestament", newTestament, @"newTestament", nil];
 }
+- (Book *)fetchBookWithSection:(NSInteger)section Row:(NSInteger)row{
+    
+       
+    row++;
+    
+    int rowid = row;
+    if(section > 0){//+20120810
+        rowid = 39 + row;
+    }
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    NSString *querySQL = nil;
+    
+    NSString *primaryL = kLangPrimary;
+    NSString *secondaryL = kLangNone;
+    
+    if(dictPref !=nil ){
+        
+        primaryL = [dictPref valueForKey:@"primaryLanguage"];
+        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+        
+    }
+    if([primaryL isEqualToString:kLangPrimary]){
+        
+        querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books where rowid = ?";
+        
+    }else{
+        querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books where rowid = ?";
+    }
+
+    Book *book = [[Book alloc] init];
+    
+    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    const char *dbpath = [pathname UTF8String];
+    sqlite3 *bibleDB;
+    
+    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+        
+        sqlite3_stmt *statement;
+        
+        
+        
+        const char *queryStmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(bibleDB, queryStmt, -1, &statement, NULL) == SQLITE_OK){
+            
+            sqlite3_bind_int(statement, 1, rowid);
+            
+            while(sqlite3_step(statement) == SQLITE_ROW) {
+                
+                NSString *alphaCode = [[NSString alloc] initWithUTF8String:
+                                       (const char *) sqlite3_column_text(statement, 0)];
+                int bookId = sqlite3_column_int(statement, 1);
+                NSString *englishName = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+                int numOfChapters = sqlite3_column_int(statement, 3);
+                NSString *mallayalamName = [[NSString alloc] initWithUTF8String:
+                                            (const char *) sqlite3_column_text(statement, 4)];
+                NSString *longName = [[NSString alloc] initWithUTF8String:
+                                      (const char *) sqlite3_column_text(statement, 5)];
+                
+                NSString *shortName = nil;
+                if([primaryL isEqualToString:kLangPrimary]){
+                    
+                    shortName = mallayalamName;
+                    
+                }else{
+                    shortName = englishName;
+                }
+                
+                NSMutableString *displayValue = [NSMutableString stringWithString:shortName];
+                if([secondaryL isEqualToString:kLangPrimary]){
+                    
+                    [displayValue appendFormat:@"\n%@", mallayalamName];                    
+                }else if([secondaryL isEqualToString:kLangEnglishKJV] || [secondaryL isEqualToString:kLangEnglishASV]){
+                    [displayValue appendFormat:@"\n%@", englishName];                    
+                }
+                
+               
+                
+                
+                book.alphaCode = alphaCode;
+                book.bookId = bookId;
+                //book.englishName = englishName;
+                book.numOfChapters = numOfChapters;
+                book.shortName = shortName;
+                book.longName = longName;
+                
+                              
+            }
+            sqlite3_finalize(statement);
+        }else{
+            
+            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+        }
+    }
+    sqlite3_close(bibleDB);
+    
+    return book;
+}
 
 - (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSString *)scope{
     
@@ -140,7 +239,7 @@ const CGFloat Line_Height = 1.2;
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
       
-    NSString *primaryL = kLangMalayalam;
+    NSString *primaryL = kLangPrimary;
     NSString *secondaryL = kLangNone;
     
     if(dictPref !=nil ){
@@ -162,7 +261,7 @@ const CGFloat Line_Height = 1.2;
     
     NSMutableString *querS = nil;
     NSString *orderBy = @"";
-    if([primaryL isEqualToString:kLangMalayalam]){
+    if([primaryL isEqualToString:kLangPrimary]){
         
         querS = [NSMutableString stringWithFormat:@"SELECT MalayalamShortName, chapter_id, verse_id, verse_text, books.book_id, books.num_chptr FROM verses,books where %@ books.book_id = verses.book_id and verse_text ", scopeStr];
         orderBy = @" order by verses.book_id, verses.chapter_id, verses.verse_id";
@@ -240,7 +339,7 @@ const CGFloat Line_Height = 1.2;
                     origVerse = [NSString stringWithFormat:@"%@%@", str,versse];
                      
                     NSRange rangeS;
-                    if([primaryL isEqualToString:kLangMalayalam]){
+                    if([primaryL isEqualToString:kLangPrimary]){
                         
                         rangeS = [versse rangeOfString:searchText];
                         
@@ -331,7 +430,7 @@ const CGFloat Line_Height = 1.2;
     NSString *queryEnglisgKJV = [NSString stringWithFormat:@"SELECT verse_id, verse_text FROM verses_kjv where book_id = %d AND chapter_id = %d order by verse_id", bookId, chapterId];
     
     
-    NSString *primaryL = kLangMalayalam;
+    NSString *primaryL = kLangPrimary;
     NSString *secondaryL = kLangNone;
     
     if(dictPref !=nil ){
@@ -376,7 +475,7 @@ const CGFloat Line_Height = 1.2;
        
         NSString *queryStmt1 = nil;
         NSString *queryStmt2 = nil;
-        if([primaryL isEqualToString:kLangMalayalam]){
+        if([primaryL isEqualToString:kLangPrimary]){
             
             queryStmt1 = queryMalayalam;
             
@@ -387,7 +486,7 @@ const CGFloat Line_Height = 1.2;
         }else{
             queryStmt1 = queryEnglisgKJV;            
         }
-        if([secondaryL isEqualToString:kLangMalayalam]){
+        if([secondaryL isEqualToString:kLangPrimary]){
             
             queryStmt2 = queryMalayalam;
         }else if([secondaryL isEqualToString:kLangEnglishASV]){
@@ -423,16 +522,17 @@ const CGFloat Line_Height = 1.2;
                 
                 if(queryStmt2 != nil){
                     
-                    NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text", nil];
+                    NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text", nil];
                     [dict setObject:dictVerse forKey:[NSNumber numberWithInt:verseId]];
                     
                 }else{
                     
                     //NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@; background-color:black;}</style></head><body><div style=\"line-height:%fem;color:white;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, verseWithId];
-                    NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, verseWithId];
+                    NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body { font-family: \"%@\"; font-size: %@;}</style><body><div style=\"line-height:%fem;\">%@</div></body></head></html>",kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, verseWithId];
                     
-                    NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
+                    NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
                     [verses addObject:dictVerse];
+                    
                 }
                 
                 
@@ -462,7 +562,7 @@ const CGFloat Line_Height = 1.2;
                         verseWithId = verse;
                     }
                     
-                    NSDictionary *dictVersePrim = [dict objectForKey:[NSNumber numberWithInt:verseId]];
+                    NSMutableDictionary *dictVersePrim = [dict objectForKey:[NSNumber numberWithInt:verseId]];
                     
                     
                     
@@ -472,7 +572,7 @@ const CGFloat Line_Height = 1.2;
                         
                         NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;color:blue;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, verseWithId];
                         
-                        NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
+                        NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlContent, @"verse_html",  nil];
                         
                         [verses addObject:dictVerse];
                         
@@ -480,11 +580,13 @@ const CGFloat Line_Height = 1.2;
                         
                         NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
                         //<Font color=\"blue\">//</Font>
-                        NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<br><div style=\"color:blue;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, primaryVerse, verseWithId];
+                        NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@</div><div style=\"line-height:%fem;\"><br></div><div style=\"color:gray;line-height:%fem;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, primaryVerse, 0.3, Line_Height, verseWithId];
                         
                         //NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:1.4em;\"><table><tr><td>%@</td><td  width=\"50%\"><div style=\"color:blue;\">%@</td></tr></table></div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], primaryVerse, verseWithId];
                         
                         NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId], @"verse_text",htmlContent, @"verse_html",  nil];
+                        
+                        //NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse,@"verse_text", verseWithId, @"verse_text2",htmlContent, @"verse_html",  nil];
                         
                         [verses addObject:dictVerse];
                     }
@@ -520,7 +622,7 @@ const CGFloat Line_Height = 1.2;
             
             NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, primaryVerse];
             
-            NSDictionary *dictVerse = [NSDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text",htmlContent, @"verse_html",  nil];
+            NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text",htmlContent, @"verse_html",  nil];
             
             if([key intValue] < [verses count]){
                                 
@@ -546,12 +648,12 @@ const CGFloat Line_Height = 1.2;
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangPrimary isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
-        return @"പുസ്തകങ്ങൾ";
+        return NSLocalizedString(@"bookname_primarylanguage", @"");
         
     }         
-    return @"Books";
+    return NSLocalizedString(@"bookname_English", @"");//@"Books";
     
     
 }
@@ -560,36 +662,36 @@ const CGFloat Line_Height = 1.2;
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangPrimary isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
-        return @"പഴയനിയമം";
+        return NSLocalizedString(@"oldbook_primarylanguage", @"");
         
     }         
-    return @"Old Testament";
+    return NSLocalizedString(@"oldbook_English", @"");//@"Old Testament";
 }
 + (NSString *)getTitleNewTestament{
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangPrimary isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
-        return @"പുതിയനിയമം";
+        return NSLocalizedString(@"newbook_primarylanguage", @"");//@"പുതിയനിയമം";
         
     }         
-    return @"New Testament";
+    return NSLocalizedString(@"newbook_english", @"");//@"New Testament";
 }
 + (NSString *)getTitleChapter{
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangPrimary isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
-        return @"അദ്ധ്യായം";
+        return NSLocalizedString(@"chapter_primarylanguage", @"");//"അദ്ധ്യായം";
         
     }         
-    return @"Chapter";
+    return NSLocalizedString(@"chapter_english", @"");//@"Chapter";
 }
 + (NSString *)getTitleChapterButton{
     
@@ -597,14 +699,14 @@ const CGFloat Line_Height = 1.2;
     
     
     
-    if(dictPref ==nil || [kLangMalayalam isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
+    if(dictPref ==nil || [kLangPrimary isEqualToString:[dictPref valueForKey:@"primaryLanguage"]]){
         
        
-        return @"അദ്ധ്യായങ്ങൾ";
+        return NSLocalizedString(@"chapters_primarylanguage", @"");//@"അദ്ധ്യായങ്ങൾ";
         
     }   
     
-    return @"Chapters";
+    return @"chapters_english";
     
 }
 @end

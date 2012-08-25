@@ -24,7 +24,7 @@
 @synthesize selectedBook = _selectedBook;
 @synthesize detailViewController = _detailViewController;
 @synthesize delegate = _delegate;
-
+@synthesize fromMaster = _fromMaster;
 const CGFloat tagWidthOffset = 10.0f;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,7 +48,9 @@ const CGFloat tagWidthOffset = 10.0f;
 }
 
 #pragma mark - View lifecycle
--(void) configureView{
+-(void) configureView:(BOOL)isFromMaster{
+    
+    self.fromMaster = isFromMaster;
     
     self.title = self.selectedBook.shortName;
     
@@ -122,6 +124,7 @@ const CGFloat tagWidthOffset = 10.0f;
         tagButton.titleLabel.textColor = [UIColor blackColor];
         tagButton.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         
+               
         [tagButton setTitle:number forState:UIControlStateNormal];
         [tagButton setTitle:number forState:UIControlStateHighlighted];
         [tagButton setTitle:number forState:UIControlStateSelected];
@@ -147,22 +150,37 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     [super viewDidLoad];
     
-      
+    //self.fromMaster  = YES;
+    NSLog(@"jjjjj0");
+    
+    if(self.fromMaster){
+        
+        NSLog(@"jjjjj");
+        UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
+        temporaryBarButtonItem.title = [BibleDao getTitleChapterButton];//@"അദ്ധ്യായങ്ങൾ"
+        self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+        
+    }else{
+        
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            
+            
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMe:)];
+            
+        }
+    }
     
     
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
-    temporaryBarButtonItem.title = [BibleDao getTitleChapterButton];//@"അദ്ധ്യായങ്ങൾ"
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    [self configureView];
+    [self configureView:self.fromMaster];
     
 }
 - (void) viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
  
-    MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
+    //+20120809MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+	//[appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         
@@ -189,7 +207,16 @@ const CGFloat tagWidthOffset = 10.0f;
         
     }else{
         
-        [self openPageWithChapter:btn.tag];
+        //[self openPageWithChapter:btn.tag];
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        appDelegate.detailViewController.selectedBook = self.selectedBook;
+        appDelegate.detailViewController.chapterId = btn.tag;
+        [appDelegate.detailViewController configureView];
+        //[self.navigationController pushViewController:self.detailViewController animated:YES];
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+        
+        self.delegate = nil;
     }
     
 }
@@ -226,8 +253,14 @@ const CGFloat tagWidthOffset = 10.0f;
         }
     }
     
-    [self configureView];
+    [self configureView:self.fromMaster];
      
+}
+#pragma mark @selector methods
+//for iPhone only
+- (void) cancelMe:(id)sender{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    self.delegate = nil;
 }
  
 @end

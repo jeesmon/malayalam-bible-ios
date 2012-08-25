@@ -14,7 +14,10 @@ extern  NSUInteger FONT_SIZE;
 #define kFontMaxSize 24
 #define kFontMinSize 10
 
-extern  NSString * const kLangMalayalam;
+extern const NSString *bmBookSection;
+extern const NSString *bmBookRow;
+
+extern  NSString * const kLangPrimary;
 extern  NSString * const kLangEnglishASV;
 extern  NSString * const kLangEnglishKJV;
 extern  NSString * const kLangNone;

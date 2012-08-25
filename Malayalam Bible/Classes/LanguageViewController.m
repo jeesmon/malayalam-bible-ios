@@ -62,7 +62,7 @@
         
         
         dictPref = [[NSMutableDictionary alloc] init];
-        [dictPref setValue:kLangMalayalam forKey:@"primaryLanguage"];
+        [dictPref setValue:kLangPrimary forKey:@"primaryLanguage"];
         [dictPref setValue:kLangNone forKey:@"secondaryLanguage"];
         
        
@@ -192,7 +192,7 @@
     // Navigation logic may go here. Create and push another view controller.
     NSMutableArray *options = [[NSMutableArray alloc] initWithCapacity:4];
     
-    NSArray *arrayAllLangs = [NSArray arrayWithObjects:kLangNone, kLangMalayalam, kLangEnglishASV, kLangEnglishKJV, nil];
+    NSArray *arrayAllLangs = [NSArray arrayWithObjects:kLangNone, kLangPrimary, kLangEnglishASV, kLangEnglishKJV, nil];
     
     NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
     

@@ -8,6 +8,8 @@
 
 #import "VerseCell.h"
 #import "MBConstants.h"
+#import "UIDeviceHardware.h"
+
 
 @implementation VerseCell
 
@@ -20,8 +22,21 @@
         // Initialization code
         self.webView = [[UIWebView alloc] init];
         //self.webView.scalesPageToFit = YES;
-        self.webView.scrollView.scrollEnabled = NO;
-                
+        
+        
+        if([UIDeviceHardware isOS5Device]){
+            self.webView.scrollView.scrollEnabled = NO;
+        }else{
+            for (id subview in webView.subviews){ 
+                if ([[subview class] isSubclassOfClass: [UIScrollView class]]) { 
+                    UIScrollView *scrollVieww = (UIScrollView *)subview;
+                    scrollVieww.scrollEnabled = NO;
+                    break;
+                }
+            }
+
+        }
+                        
         [self.contentView addSubview:webView];
         
     }
@@ -57,7 +72,7 @@
     CGSize labelSize = [verseText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
    
         
-    [self.webView setFrame:CGRectMake(0, 0, cgSize.width, labelSize.height+10)];
+    [self.webView setFrame:CGRectMake(0, 0, cgSize.width, labelSize.height + 15)];
    
 }
 

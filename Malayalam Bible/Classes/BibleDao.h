@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Book.h"
 
 @interface BibleDao : NSObject
 
@@ -19,5 +20,5 @@
 + (NSString *)getTitleChapter;
 + (NSString *)getTitleChapterButton;
 - (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSString *)scope;
-
+- (Book *)fetchBookWithSection:(NSInteger)section Row:(NSInteger)row;
 @end
