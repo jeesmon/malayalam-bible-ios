@@ -5,14 +5,7 @@
 //  Created by Jeesmon Jacob on 10/20/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include "mal_api.h"
-#include "txt2html.h"
+
 
 #import "MalayalamBibleAppDelegate.h"
 #import "MalayalamBibleMasterViewController.h"
