@@ -10,6 +10,7 @@
 #import "/usr/include/sqlite3.h"
 
 #import "MBConstants.h"
+#import "ApplicationInfo.h"
 
 
 const CGFloat Line_Height = 1.2;
@@ -18,6 +19,16 @@ const CGFloat Line_Height = 1.2;
 
 
 //remove old table malayalam-bible.db
+
+-(NSString *)getdbpath{
+    
+    if([ApplicationInfo isMalayalamApp]){
+        return [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    }else{
+        return [[NSBundle mainBundle] pathForResource:@"kannada-bible" ofType:@"db" inDirectory:@"/"];
+    }
+    
+}
 
 - (NSDictionary *)fetchBookNames{
     
@@ -63,7 +74,7 @@ const CGFloat Line_Height = 1.2;
 	}
     
 	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {*/
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
     
@@ -164,7 +175,7 @@ const CGFloat Line_Height = 1.2;
 
     Book *book = [[Book alloc] init];
     
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
     
@@ -288,7 +299,7 @@ const CGFloat Line_Height = 1.2;
         
     //(@"querS = %@", querS);
     
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
     
@@ -464,7 +475,7 @@ const CGFloat Line_Height = 1.2;
 	}
     
 	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {*/
-    NSString *pathname = [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB;
     
