@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  Malayalam Bible
+
+  Created by Jijo Pulikkottil on 14/12/11.
+  Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
+*/
+
+"Cancel"        = "Cancel";
+"email"         = "Email";
+"copy"          = "Copy";
+"MailFooter"    = "Shared via Malayalam Bible for iOS";
+
+"AppInfo"       = "Information";
+"Languages"     = "Languages";
+"SelectLanguages"   = "Select Languages";
+
+"Primary"       = "Primary Language";
+"Secondary"     = "Secondary Language";
+
+"malayalam"  = "Malayalam";
+"english_asv"   = "English ASV";
+"english_kjv"   = "English KJV";
+"none"          = "None";
+
+
+"bookname_primarylanguage" = "ಪುಸ್ತಕಗಳು";
+"bookname_English"      = "Books";
+"oldbook_primarylanguage"   = "ಹಳೆಯ  ಒಡಂಬಡಿಕೆ";
+"oldbook_English"   =   "Old Testament";
+"newbook_primarylanguage"   =   " ಹೊಸ ಒಡಂಬಡಿಕೆ";
+"newbook_english"       =   "New Testament";
+"chapter_primarylanguage"   = "ಅಧ್ಯಾಯ";
+"chapter_english"       =   "Chapter";
+"chapters_primarylanguage"      = "ಅಧ್ಯಾಯಗಳು";
+"chapters_english"      = "Chapters";

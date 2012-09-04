@@ -1,0 +1,641 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03F384C715F5D598004CB237 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C615F5D598004CB237 /* UIKit.framework */; };
+		03F384C915F5D598004CB237 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C815F5D598004CB237 /* Foundation.framework */; };
+		03F384CB15F5D598004CB237 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384CA15F5D598004CB237 /* CoreGraphics.framework */; };
+		03F384D115F5D598004CB237 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03F384CF15F5D598004CB237 /* InfoPlist.strings */; };
+		03F384D315F5D598004CB237 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F384D215F5D598004CB237 /* main.m */; };
+		03F384DF15F5D598004CB237 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384DE15F5D598004CB237 /* SenTestingKit.framework */; };
+		03F384E015F5D598004CB237 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C615F5D598004CB237 /* UIKit.framework */; };
+		03F384E115F5D598004CB237 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C815F5D598004CB237 /* Foundation.framework */; };
+		03F384E915F5D598004CB237 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03F384E715F5D598004CB237 /* InfoPlist.strings */; };
+		03F384EC15F5D598004CB237 /* KannadaBibleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F384EB15F5D598004CB237 /* KannadaBibleTests.m */; };
+		03F3850515F5D8A0004CB237 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850315F5D8A0004CB237 /* Localizable.strings */; };
+		03F3851515F5D8B5004CB237 /* Chapters.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850915F5D8B5004CB237 /* Chapters.png */; };
+		03F3851615F5D8B5004CB237 /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850A15F5D8B5004CB237 /* Gear.png */; };
+		03F3851715F5D8B5004CB237 /* Gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850B15F5D8B5004CB237 /* Gear@2x.png */; };
+		03F3851815F5D8B5004CB237 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850C15F5D8B5004CB237 /* help.png */; };
+		03F3851915F5D8B5004CB237 /* lipi.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850D15F5D8B5004CB237 /* lipi.png */; };
+		03F3851A15F5D8B5004CB237 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850E15F5D8B5004CB237 /* next.png */; };
+		03F3851B15F5D8B5004CB237 /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3850F15F5D8B5004CB237 /* next@2x.png */; };
+		03F3851C15F5D8B5004CB237 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3851015F5D8B5004CB237 /* previous.png */; };
+		03F3851D15F5D8B5004CB237 /* previous@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3851115F5D8B5004CB237 /* previous@2x.png */; };
+		03F3851E15F5D8B5004CB237 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3851215F5D8B5004CB237 /* Settings.png */; };
+		03F3851F15F5D8B5004CB237 /* zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3851315F5D8B5004CB237 /* zoom_in.png */; };
+		03F3852015F5D8B5004CB237 /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F3851415F5D8B5004CB237 /* zoom_out.png */; };
+		03F3854415F5D8C0004CB237 /* BibleDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852315F5D8C0004CB237 /* BibleDao.m */; };
+		03F3854515F5D8C0004CB237 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852515F5D8C0004CB237 /* Book.m */; };
+		03F3854615F5D8C0004CB237 /* ChapterSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852715F5D8C0004CB237 /* ChapterSelection.m */; };
+		03F3854815F5D8C0004CB237 /* LanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852B15F5D8C0004CB237 /* LanguageViewController.m */; };
+		03F3854915F5D8C0004CB237 /* MalayalamBibleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852D15F5D8C0004CB237 /* MalayalamBibleDetailViewController.m */; };
+		03F3854A15F5D8C0004CB237 /* MalayalamBibleMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3852F15F5D8C0004CB237 /* MalayalamBibleMasterViewController.m */; };
+		03F3854B15F5D8C0004CB237 /* MBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853115F5D8C0004CB237 /* MBConstants.m */; };
+		03F3854D15F5D8C0004CB237 /* SelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853715F5D8C0004CB237 /* SelectionController.m */; };
+		03F3854E15F5D8C0004CB237 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853915F5D8C0004CB237 /* SettingsViewController.m */; };
+		03F3854F15F5D8C0004CB237 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853B15F5D8C0004CB237 /* UIDeviceHardware.m */; };
+		03F3855015F5D8C0004CB237 /* UIToolbarCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853D15F5D8C0004CB237 /* UIToolbarCustom.m */; };
+		03F3855115F5D8C0004CB237 /* UserDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3853F15F5D8C0004CB237 /* UserDao.m */; };
+		03F3855215F5D8C0004CB237 /* VerseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3854115F5D8C0004CB237 /* VerseCell.m */; };
+		03F3855315F5D8C0004CB237 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3854315F5D8C0004CB237 /* WebViewController.m */; };
+		03F3855615F5D8DB004CB237 /* MalayalamBibleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3855515F5D8DB004CB237 /* MalayalamBibleAppDelegate.m */; };
+		03F3855A15F5D982004CB237 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3855915F5D982004CB237 /* SearchViewController.m */; };
+		03F3855E15F5DB29004CB237 /* Information.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3855D15F5DB29004CB237 /* Information.m */; };
+		03F3856015F5DB7C004CB237 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3855F15F5DB7C004CB237 /* libsqlite3.dylib */; };
+		03F3856215F5DB92004CB237 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F3856115F5DB92004CB237 /* MessageUI.framework */; };
+		03F3856C15F5DCE3004CB237 /* ApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3856B15F5DCE3004CB237 /* ApplicationInfo.m */; };
+		03F3857E15F5E188004CB237 /* kannada-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03F3857D15F5E188004CB237 /* kannada-bible.db */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03F384E215F5D598004CB237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03F384B915F5D598004CB237 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03F384C115F5D598004CB237;
+			remoteInfo = KannadaBible;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03F384C215F5D598004CB237 /* KannadaBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KannadaBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F384C615F5D598004CB237 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		03F384C815F5D598004CB237 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		03F384CA15F5D598004CB237 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		03F384CE15F5D598004CB237 /* KannadaBible-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KannadaBible-Info.plist"; sourceTree = "<group>"; };
+		03F384D015F5D598004CB237 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		03F384D215F5D598004CB237 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		03F384D415F5D598004CB237 /* KannadaBible-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KannadaBible-Prefix.pch"; sourceTree = "<group>"; };
+		03F384DD15F5D598004CB237 /* KannadaBibleTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KannadaBibleTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F384DE15F5D598004CB237 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		03F384E615F5D598004CB237 /* KannadaBibleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KannadaBibleTests-Info.plist"; sourceTree = "<group>"; };
+		03F384E815F5D598004CB237 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		03F384EA15F5D598004CB237 /* KannadaBibleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KannadaBibleTests.h; sourceTree = "<group>"; };
+		03F384EB15F5D598004CB237 /* KannadaBibleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KannadaBibleTests.m; sourceTree = "<group>"; };
+		03F3850415F5D8A0004CB237 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03F3850915F5D8B5004CB237 /* Chapters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chapters.png; sourceTree = "<group>"; };
+		03F3850A15F5D8B5004CB237 /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gear.png; sourceTree = "<group>"; };
+		03F3850B15F5D8B5004CB237 /* Gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gear@2x.png"; sourceTree = "<group>"; };
+		03F3850C15F5D8B5004CB237 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
+		03F3850D15F5D8B5004CB237 /* lipi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lipi.png; sourceTree = "<group>"; };
+		03F3850E15F5D8B5004CB237 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		03F3850F15F5D8B5004CB237 /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "next@2x.png"; sourceTree = "<group>"; };
+		03F3851015F5D8B5004CB237 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
+		03F3851115F5D8B5004CB237 /* previous@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous@2x.png"; sourceTree = "<group>"; };
+		03F3851215F5D8B5004CB237 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		03F3851315F5D8B5004CB237 /* zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_in.png; sourceTree = "<group>"; };
+		03F3851415F5D8B5004CB237 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
+		03F3852215F5D8C0004CB237 /* BibleDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleDao.h; sourceTree = "<group>"; };
+		03F3852315F5D8C0004CB237 /* BibleDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleDao.m; sourceTree = "<group>"; };
+		03F3852415F5D8C0004CB237 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		03F3852515F5D8C0004CB237 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		03F3852615F5D8C0004CB237 /* ChapterSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterSelection.h; sourceTree = "<group>"; };
+		03F3852715F5D8C0004CB237 /* ChapterSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterSelection.m; sourceTree = "<group>"; };
+		03F3852A15F5D8C0004CB237 /* LanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageViewController.h; sourceTree = "<group>"; };
+		03F3852B15F5D8C0004CB237 /* LanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageViewController.m; sourceTree = "<group>"; };
+		03F3852C15F5D8C0004CB237 /* MalayalamBibleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalayalamBibleDetailViewController.h; sourceTree = "<group>"; };
+		03F3852D15F5D8C0004CB237 /* MalayalamBibleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalayalamBibleDetailViewController.m; sourceTree = "<group>"; };
+		03F3852E15F5D8C0004CB237 /* MalayalamBibleMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalayalamBibleMasterViewController.h; sourceTree = "<group>"; };
+		03F3852F15F5D8C0004CB237 /* MalayalamBibleMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalayalamBibleMasterViewController.m; sourceTree = "<group>"; };
+		03F3853015F5D8C0004CB237 /* MBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBConstants.h; sourceTree = "<group>"; };
+		03F3853115F5D8C0004CB237 /* MBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConstants.m; sourceTree = "<group>"; };
+		03F3853215F5D8C0004CB237 /* MBProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProtocol.h; sourceTree = "<group>"; };
+		03F3853315F5D8C0004CB237 /* PopOverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopOverDelegate.h; sourceTree = "<group>"; };
+		03F3853615F5D8C0004CB237 /* SelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionController.h; sourceTree = "<group>"; };
+		03F3853715F5D8C0004CB237 /* SelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionController.m; sourceTree = "<group>"; };
+		03F3853815F5D8C0004CB237 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		03F3853915F5D8C0004CB237 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		03F3853A15F5D8C0004CB237 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
+		03F3853B15F5D8C0004CB237 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
+		03F3853C15F5D8C0004CB237 /* UIToolbarCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIToolbarCustom.h; sourceTree = "<group>"; };
+		03F3853D15F5D8C0004CB237 /* UIToolbarCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIToolbarCustom.m; sourceTree = "<group>"; };
+		03F3853E15F5D8C0004CB237 /* UserDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDao.h; sourceTree = "<group>"; };
+		03F3853F15F5D8C0004CB237 /* UserDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDao.m; sourceTree = "<group>"; };
+		03F3854015F5D8C0004CB237 /* VerseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerseCell.h; sourceTree = "<group>"; };
+		03F3854115F5D8C0004CB237 /* VerseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerseCell.m; sourceTree = "<group>"; };
+		03F3854215F5D8C0004CB237 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		03F3854315F5D8C0004CB237 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		03F3855415F5D8DB004CB237 /* MalayalamBibleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MalayalamBibleAppDelegate.h; sourceTree = "<group>"; };
+		03F3855515F5D8DB004CB237 /* MalayalamBibleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MalayalamBibleAppDelegate.m; sourceTree = "<group>"; };
+		03F3855815F5D982004CB237 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		03F3855915F5D982004CB237 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		03F3855C15F5DB29004CB237 /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
+		03F3855D15F5DB29004CB237 /* Information.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Information.m; sourceTree = "<group>"; };
+		03F3855F15F5DB7C004CB237 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		03F3856115F5DB92004CB237 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		03F3856A15F5DCE3004CB237 /* ApplicationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationInfo.h; sourceTree = "<group>"; };
+		03F3856B15F5DCE3004CB237 /* ApplicationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationInfo.m; sourceTree = "<group>"; };
+		03F3857D15F5E188004CB237 /* kannada-bible.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kannada-bible.db"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03F384BF15F5D598004CB237 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F3856215F5DB92004CB237 /* MessageUI.framework in Frameworks */,
+				03F3856015F5DB7C004CB237 /* libsqlite3.dylib in Frameworks */,
+				03F384C715F5D598004CB237 /* UIKit.framework in Frameworks */,
+				03F384C915F5D598004CB237 /* Foundation.framework in Frameworks */,
+				03F384CB15F5D598004CB237 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F384D915F5D598004CB237 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F384DF15F5D598004CB237 /* SenTestingKit.framework in Frameworks */,
+				03F384E015F5D598004CB237 /* UIKit.framework in Frameworks */,
+				03F384E115F5D598004CB237 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03F384B715F5D598004CB237 = {
+			isa = PBXGroup;
+			children = (
+				03F3856115F5DB92004CB237 /* MessageUI.framework */,
+				03F384CC15F5D598004CB237 /* KannadaBible */,
+				03F384E415F5D598004CB237 /* KannadaBibleTests */,
+				03F384C515F5D598004CB237 /* Frameworks */,
+				03F384C315F5D598004CB237 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		03F384C315F5D598004CB237 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03F384C215F5D598004CB237 /* KannadaBible.app */,
+				03F384DD15F5D598004CB237 /* KannadaBibleTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03F384C515F5D598004CB237 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03F3855F15F5DB7C004CB237 /* libsqlite3.dylib */,
+				03F384C615F5D598004CB237 /* UIKit.framework */,
+				03F384C815F5D598004CB237 /* Foundation.framework */,
+				03F384CA15F5D598004CB237 /* CoreGraphics.framework */,
+				03F384DE15F5D598004CB237 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		03F384CC15F5D598004CB237 /* KannadaBible */ = {
+			isa = PBXGroup;
+			children = (
+				03F3855715F5D982004CB237 /* kannada */,
+				03F3855415F5D8DB004CB237 /* MalayalamBibleAppDelegate.h */,
+				03F3855515F5D8DB004CB237 /* MalayalamBibleAppDelegate.m */,
+				03F3852115F5D8C0004CB237 /* Classes */,
+				03F3850815F5D8B5004CB237 /* Images */,
+				03F3850115F5D88C004CB237 /* Resources */,
+				03F384CD15F5D598004CB237 /* Supporting Files */,
+			);
+			path = KannadaBible;
+			sourceTree = "<group>";
+		};
+		03F384CD15F5D598004CB237 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				03F384CE15F5D598004CB237 /* KannadaBible-Info.plist */,
+				03F384CF15F5D598004CB237 /* InfoPlist.strings */,
+				03F384D215F5D598004CB237 /* main.m */,
+				03F384D415F5D598004CB237 /* KannadaBible-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		03F384E415F5D598004CB237 /* KannadaBibleTests */ = {
+			isa = PBXGroup;
+			children = (
+				03F384EA15F5D598004CB237 /* KannadaBibleTests.h */,
+				03F384EB15F5D598004CB237 /* KannadaBibleTests.m */,
+				03F384E515F5D598004CB237 /* Supporting Files */,
+			);
+			path = KannadaBibleTests;
+			sourceTree = "<group>";
+		};
+		03F384E515F5D598004CB237 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				03F384E615F5D598004CB237 /* KannadaBibleTests-Info.plist */,
+				03F384E715F5D598004CB237 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		03F3850115F5D88C004CB237 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				03F3857D15F5E188004CB237 /* kannada-bible.db */,
+				03F3850315F5D8A0004CB237 /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		03F3850815F5D8B5004CB237 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				03F3850915F5D8B5004CB237 /* Chapters.png */,
+				03F3850A15F5D8B5004CB237 /* Gear.png */,
+				03F3850B15F5D8B5004CB237 /* Gear@2x.png */,
+				03F3850C15F5D8B5004CB237 /* help.png */,
+				03F3850D15F5D8B5004CB237 /* lipi.png */,
+				03F3850E15F5D8B5004CB237 /* next.png */,
+				03F3850F15F5D8B5004CB237 /* next@2x.png */,
+				03F3851015F5D8B5004CB237 /* previous.png */,
+				03F3851115F5D8B5004CB237 /* previous@2x.png */,
+				03F3851215F5D8B5004CB237 /* Settings.png */,
+				03F3851315F5D8B5004CB237 /* zoom_in.png */,
+				03F3851415F5D8B5004CB237 /* zoom_out.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		03F3852115F5D8C0004CB237 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				03F3852215F5D8C0004CB237 /* BibleDao.h */,
+				03F3852315F5D8C0004CB237 /* BibleDao.m */,
+				03F3852415F5D8C0004CB237 /* Book.h */,
+				03F3852515F5D8C0004CB237 /* Book.m */,
+				03F3852615F5D8C0004CB237 /* ChapterSelection.h */,
+				03F3852715F5D8C0004CB237 /* ChapterSelection.m */,
+				03F3852A15F5D8C0004CB237 /* LanguageViewController.h */,
+				03F3852B15F5D8C0004CB237 /* LanguageViewController.m */,
+				03F3852C15F5D8C0004CB237 /* MalayalamBibleDetailViewController.h */,
+				03F3852D15F5D8C0004CB237 /* MalayalamBibleDetailViewController.m */,
+				03F3852E15F5D8C0004CB237 /* MalayalamBibleMasterViewController.h */,
+				03F3852F15F5D8C0004CB237 /* MalayalamBibleMasterViewController.m */,
+				03F3853015F5D8C0004CB237 /* MBConstants.h */,
+				03F3853115F5D8C0004CB237 /* MBConstants.m */,
+				03F3853215F5D8C0004CB237 /* MBProtocol.h */,
+				03F3853315F5D8C0004CB237 /* PopOverDelegate.h */,
+				03F3853615F5D8C0004CB237 /* SelectionController.h */,
+				03F3853715F5D8C0004CB237 /* SelectionController.m */,
+				03F3853815F5D8C0004CB237 /* SettingsViewController.h */,
+				03F3853915F5D8C0004CB237 /* SettingsViewController.m */,
+				03F3853A15F5D8C0004CB237 /* UIDeviceHardware.h */,
+				03F3853B15F5D8C0004CB237 /* UIDeviceHardware.m */,
+				03F3853C15F5D8C0004CB237 /* UIToolbarCustom.h */,
+				03F3853D15F5D8C0004CB237 /* UIToolbarCustom.m */,
+				03F3853E15F5D8C0004CB237 /* UserDao.h */,
+				03F3853F15F5D8C0004CB237 /* UserDao.m */,
+				03F3854015F5D8C0004CB237 /* VerseCell.h */,
+				03F3854115F5D8C0004CB237 /* VerseCell.m */,
+				03F3854215F5D8C0004CB237 /* WebViewController.h */,
+				03F3854315F5D8C0004CB237 /* WebViewController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		03F3855715F5D982004CB237 /* kannada */ = {
+			isa = PBXGroup;
+			children = (
+				03F3855C15F5DB29004CB237 /* Information.h */,
+				03F3855D15F5DB29004CB237 /* Information.m */,
+				03F3855815F5D982004CB237 /* SearchViewController.h */,
+				03F3855915F5D982004CB237 /* SearchViewController.m */,
+				03F3856A15F5DCE3004CB237 /* ApplicationInfo.h */,
+				03F3856B15F5DCE3004CB237 /* ApplicationInfo.m */,
+			);
+			path = kannada;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		03F384C115F5D598004CB237 /* KannadaBible */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03F384EF15F5D598004CB237 /* Build configuration list for PBXNativeTarget "KannadaBible" */;
+			buildPhases = (
+				03F384BE15F5D598004CB237 /* Sources */,
+				03F384BF15F5D598004CB237 /* Frameworks */,
+				03F384C015F5D598004CB237 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KannadaBible;
+			productName = KannadaBible;
+			productReference = 03F384C215F5D598004CB237 /* KannadaBible.app */;
+			productType = "com.apple.product-type.application";
+		};
+		03F384DC15F5D598004CB237 /* KannadaBibleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03F384F215F5D598004CB237 /* Build configuration list for PBXNativeTarget "KannadaBibleTests" */;
+			buildPhases = (
+				03F384D815F5D598004CB237 /* Sources */,
+				03F384D915F5D598004CB237 /* Frameworks */,
+				03F384DA15F5D598004CB237 /* Resources */,
+				03F384DB15F5D598004CB237 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03F384E315F5D598004CB237 /* PBXTargetDependency */,
+			);
+			name = KannadaBibleTests;
+			productName = KannadaBibleTests;
+			productReference = 03F384DD15F5D598004CB237 /* KannadaBibleTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		03F384B915F5D598004CB237 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = KB;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 03F384BC15F5D598004CB237 /* Build configuration list for PBXProject "KannadaBible" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 03F384B715F5D598004CB237;
+			productRefGroup = 03F384C315F5D598004CB237 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				03F384C115F5D598004CB237 /* KannadaBible */,
+				03F384DC15F5D598004CB237 /* KannadaBibleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03F384C015F5D598004CB237 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F384D115F5D598004CB237 /* InfoPlist.strings in Resources */,
+				03F3850515F5D8A0004CB237 /* Localizable.strings in Resources */,
+				03F3851515F5D8B5004CB237 /* Chapters.png in Resources */,
+				03F3851615F5D8B5004CB237 /* Gear.png in Resources */,
+				03F3851715F5D8B5004CB237 /* Gear@2x.png in Resources */,
+				03F3851815F5D8B5004CB237 /* help.png in Resources */,
+				03F3851915F5D8B5004CB237 /* lipi.png in Resources */,
+				03F3851A15F5D8B5004CB237 /* next.png in Resources */,
+				03F3851B15F5D8B5004CB237 /* next@2x.png in Resources */,
+				03F3851C15F5D8B5004CB237 /* previous.png in Resources */,
+				03F3851D15F5D8B5004CB237 /* previous@2x.png in Resources */,
+				03F3851E15F5D8B5004CB237 /* Settings.png in Resources */,
+				03F3851F15F5D8B5004CB237 /* zoom_in.png in Resources */,
+				03F3852015F5D8B5004CB237 /* zoom_out.png in Resources */,
+				03F3857E15F5E188004CB237 /* kannada-bible.db in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F384DA15F5D598004CB237 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F384E915F5D598004CB237 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03F384DB15F5D598004CB237 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03F384BE15F5D598004CB237 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F384D315F5D598004CB237 /* main.m in Sources */,
+				03F3854415F5D8C0004CB237 /* BibleDao.m in Sources */,
+				03F3854515F5D8C0004CB237 /* Book.m in Sources */,
+				03F3854615F5D8C0004CB237 /* ChapterSelection.m in Sources */,
+				03F3854815F5D8C0004CB237 /* LanguageViewController.m in Sources */,
+				03F3854915F5D8C0004CB237 /* MalayalamBibleDetailViewController.m in Sources */,
+				03F3854A15F5D8C0004CB237 /* MalayalamBibleMasterViewController.m in Sources */,
+				03F3854B15F5D8C0004CB237 /* MBConstants.m in Sources */,
+				03F3854D15F5D8C0004CB237 /* SelectionController.m in Sources */,
+				03F3854E15F5D8C0004CB237 /* SettingsViewController.m in Sources */,
+				03F3854F15F5D8C0004CB237 /* UIDeviceHardware.m in Sources */,
+				03F3855015F5D8C0004CB237 /* UIToolbarCustom.m in Sources */,
+				03F3855115F5D8C0004CB237 /* UserDao.m in Sources */,
+				03F3855215F5D8C0004CB237 /* VerseCell.m in Sources */,
+				03F3855315F5D8C0004CB237 /* WebViewController.m in Sources */,
+				03F3855615F5D8DB004CB237 /* MalayalamBibleAppDelegate.m in Sources */,
+				03F3855A15F5D982004CB237 /* SearchViewController.m in Sources */,
+				03F3855E15F5DB29004CB237 /* Information.m in Sources */,
+				03F3856C15F5DCE3004CB237 /* ApplicationInfo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F384D815F5D598004CB237 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F384EC15F5D598004CB237 /* KannadaBibleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03F384E315F5D598004CB237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03F384C115F5D598004CB237 /* KannadaBible */;
+			targetProxy = 03F384E215F5D598004CB237 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		03F384CF15F5D598004CB237 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03F384D015F5D598004CB237 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		03F384E715F5D598004CB237 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03F384E815F5D598004CB237 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		03F3850315F5D8A0004CB237 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03F3850415F5D8A0004CB237 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03F384ED15F5D598004CB237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		03F384EE15F5D598004CB237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		03F384F015F5D598004CB237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KannadaBible/KannadaBible-Prefix.pch";
+				INFOPLIST_FILE = "KannadaBible/KannadaBible-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		03F384F115F5D598004CB237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KannadaBible/KannadaBible-Prefix.pch";
+				INFOPLIST_FILE = "KannadaBible/KannadaBible-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		03F384F315F5D598004CB237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KannadaBible.app/KannadaBible";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KannadaBible/KannadaBible-Prefix.pch";
+				INFOPLIST_FILE = "KannadaBibleTests/KannadaBibleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		03F384F415F5D598004CB237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KannadaBible.app/KannadaBible";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "KannadaBible/KannadaBible-Prefix.pch";
+				INFOPLIST_FILE = "KannadaBibleTests/KannadaBibleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03F384BC15F5D598004CB237 /* Build configuration list for PBXProject "KannadaBible" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03F384ED15F5D598004CB237 /* Debug */,
+				03F384EE15F5D598004CB237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03F384EF15F5D598004CB237 /* Build configuration list for PBXNativeTarget "KannadaBible" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03F384F015F5D598004CB237 /* Debug */,
+				03F384F115F5D598004CB237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03F384F215F5D598004CB237 /* Build configuration list for PBXNativeTarget "KannadaBibleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03F384F315F5D598004CB237 /* Debug */,
+				03F384F415F5D598004CB237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 03F384B915F5D598004CB237 /* Project object */;
+}
