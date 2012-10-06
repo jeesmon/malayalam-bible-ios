@@ -7,7 +7,7 @@
 //
 
 #import "BibleDao.h"
-#import "/usr/include/sqlite3.h"
+#import "sqlite3.h"
 
 #import "MBConstants.h"
 #import "ApplicationInfo.h"
