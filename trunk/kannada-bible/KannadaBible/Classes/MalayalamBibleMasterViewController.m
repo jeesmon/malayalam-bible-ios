@@ -409,7 +409,7 @@
 {
     
     self.infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
-    self.infoViewController.title = @"Information";
+    self.infoViewController.title = @"About";
     [self.navigationController pushViewController:self.infoViewController animated:YES];
 }
 - (void) showPreferences:(id)sender{

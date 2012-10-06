@@ -141,7 +141,7 @@ const CGFloat tagWidthOffset = 10.0f;
         
     }
           
-    [scrollViewBar setContentSize:CGSizeMake(width, yOffset+50)];
+    [scrollViewBar setContentSize:CGSizeMake(width, yOffset+150)];
     
     
     [self.view addSubview:scrollViewBar];

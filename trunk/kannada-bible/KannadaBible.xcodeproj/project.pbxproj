@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0341FC3516203AA800FB9D63 /* zoom_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0341FC3316203AA800FB9D63 /* zoom_in@2x.png */; };
+		0341FC3616203AA800FB9D63 /* zoom_out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0341FC3416203AA800FB9D63 /* zoom_out@2x.png */; };
 		03F384C715F5D598004CB237 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C615F5D598004CB237 /* UIKit.framework */; };
 		03F384C915F5D598004CB237 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384C815F5D598004CB237 /* Foundation.framework */; };
 		03F384CB15F5D598004CB237 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03F384CA15F5D598004CB237 /* CoreGraphics.framework */; };
@@ -64,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0341FC3316203AA800FB9D63 /* zoom_in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoom_in@2x.png"; sourceTree = "<group>"; };
+		0341FC3416203AA800FB9D63 /* zoom_out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoom_out@2x.png"; sourceTree = "<group>"; };
 		03F384C215F5D598004CB237 /* KannadaBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KannadaBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03F384C615F5D598004CB237 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		03F384C815F5D598004CB237 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -248,6 +252,8 @@
 		03F3850815F5D8B5004CB237 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0341FC3316203AA800FB9D63 /* zoom_in@2x.png */,
+				0341FC3416203AA800FB9D63 /* zoom_out@2x.png */,
 				03F3850915F5D8B5004CB237 /* Chapters.png */,
 				03F3850A15F5D8B5004CB237 /* Gear.png */,
 				03F3850B15F5D8B5004CB237 /* Gear@2x.png */,
@@ -400,6 +406,8 @@
 				03F3851F15F5D8B5004CB237 /* zoom_in.png in Resources */,
 				03F3852015F5D8B5004CB237 /* zoom_out.png in Resources */,
 				03F3857E15F5E188004CB237 /* kannada-bible.db in Resources */,
+				0341FC3516203AA800FB9D63 /* zoom_in@2x.png in Resources */,
+				0341FC3616203AA800FB9D63 /* zoom_out@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

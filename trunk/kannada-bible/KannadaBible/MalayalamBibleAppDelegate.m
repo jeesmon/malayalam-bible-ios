@@ -60,6 +60,11 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 }
 
 
+- (void)openVerseForiPadSavedLocation{
+    
+    [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:savedLocation];
+    
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     

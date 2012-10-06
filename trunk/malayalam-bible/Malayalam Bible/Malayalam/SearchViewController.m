@@ -278,11 +278,40 @@
         
     }else{
         
-                  
-            self.detailViewController.selectedBook = [dictVerse valueForKey:@"book_details"];
-            self.detailViewController.chapterId = [[dictVerse valueForKey:@"chapter"] intValue];
-            [self.detailViewController configureiPadView];
-       
+        
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        Book *selectBook = [dictVerse valueForKey:@"book_details"];
+        
+        /**set select book*** +20121006 **/
+        NSUInteger bookindex= selectBook.bookId;
+        NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
+        if(bookindex > 39){
+            
+            [dict setObject:[NSNumber numberWithInt:1] forKey:bmBookSection];
+            [dict setObject:[NSNumber numberWithInt:bookindex-40] forKey:bmBookRow];
+            
+            
+        }else{
+            
+            [dict setObject:[NSNumber numberWithInt:0] forKey:bmBookSection];
+            [dict setObject:[NSNumber numberWithInt:bookindex-1] forKey:bmBookRow];
+            
+            
+        }
+        
+        /*****/
+        
+        [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:[[dictVerse valueForKey:@"chapter"] intValue]]];
+        
+        
+        NSMutableDictionary *dictthird = [NSMutableDictionary dictionaryWithCapacity:1];
+               
+        NSNumber *verseid =  [NSNumber numberWithInt:[[dictVerse valueForKey:@"verse_id"] intValue]];
+        [dictthird setValue:verseid forKey:@"verse_id"];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [appDelegate openVerseForiPadSavedLocation];
     }
     
     

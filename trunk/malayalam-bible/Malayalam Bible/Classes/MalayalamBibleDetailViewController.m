@@ -97,6 +97,26 @@ __VA_ARGS__ \
         self.navigationItem.titleView = lblTitle;
         // save off this level's selection to our AppDelegate
         MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        /**set select book*** +20121006 **/
+        NSUInteger bookindex= self.selectedBook.bookId;
+        NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
+        if(bookindex > 39){
+            
+            [dict setObject:[NSNumber numberWithInt:1] forKey:bmBookSection];
+            [dict setObject:[NSNumber numberWithInt:bookindex-40] forKey:bmBookRow];
+            
+            
+        }else{
+            
+            [dict setObject:[NSNumber numberWithInt:0] forKey:bmBookSection];
+            [dict setObject:[NSNumber numberWithInt:bookindex-1] forKey:bmBookRow];
+            
+            
+        }
+        
+        /*****/
+        
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
         //[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];    
         
@@ -153,7 +173,7 @@ __VA_ARGS__ \
 
 
 #pragma mark User Swipe Handiling
-/** this is useless without animation 
+
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
     if(!self.tableViewVerses.isEditing){
@@ -161,8 +181,35 @@ __VA_ARGS__ \
         if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
             
             self.chapterId++;
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.3];
+            
+            CGRect frame1 =  self.tableViewVerses.frame;
+            
+            frame1.origin.x = 	frame1.size.width;
+            
+            self.tableViewVerses.frame = frame1;
+            
+            
+            [UIView commitAnimations];
+            
+            
         }else{
             self.chapterId--;
+            
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.3];
+            
+            CGRect frame1 =  self.tableViewVerses.frame;
+            
+            frame1.origin.x -= 	frame1.size.width;
+            
+            self.tableViewVerses.frame = frame1;
+            
+            
+            [UIView commitAnimations];
         }
         
         
@@ -172,10 +219,23 @@ __VA_ARGS__ \
         else {
             [self configureView];
         }
+        
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        CGRect frame2 =  self.tableViewVerses.frame;
+        
+        frame2.origin.x = 	0;
+        
+        self.tableViewVerses.frame = frame2;
+        [UIView commitAnimations];
+        
+        
     }
+
     
 }
-*/
+
 #pragma mark iPad Specific
 
 
@@ -550,21 +610,21 @@ __VA_ARGS__ \
         secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
         
     }
-    if([secondaryL isEqualToString:kLangNone]){
+    /*if([secondaryL isEqualToString:kLangNone]){
        
         self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
     }else{
-        
+      */
         self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    }
+    //}
     
     //self.tableViewVerses.backgroundColor = [UIColor grayColor];
     //self.navigationController.navigationBar.tintColor = [UIColor blackColor];
         
-    /* No Use
+    /* 
      UITableViewCellSeparatorStyleNone,
      UITableViewCellSeparatorStyleSingleLine,
-     UITableViewCellSeparatorStyleSingleLineEtched
+     UITableViewCellSeparatorStyleSingleLineEtched*/
     UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     recognizer.direction = UISwipeGestureRecognizerDirectionRight;
 	[self.view addGestureRecognizer:recognizer];
@@ -576,7 +636,7 @@ __VA_ARGS__ \
     
     
     [self.view addGestureRecognizer:swipeLeftRecognizer];
-    */
+    
     self.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
 	// Do any additional setup after loading the view, typically from a nib.
@@ -619,7 +679,7 @@ IF_IOS5_OR_GREATER(
     
     
     //scroll to selected verse from search or from saved point
-    [self scrollToVerseId];
+    //[self scrollToVerseId];
 }
 
   /*
@@ -674,7 +734,7 @@ IF_IOS5_OR_GREATER(
         --rowid;
     }
     
-    /*
+    
     if(rowid < [self.bVerses count]){
         
         
@@ -685,7 +745,7 @@ IF_IOS5_OR_GREATER(
         [self.tableViewVerses scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.bVerses count] -1) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         
         [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
-    }*/
+    }
 }
 - (void) resetBottomToolbar{
     
@@ -1130,11 +1190,11 @@ IF_IOS5_OR_GREATER(
         secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
         
     }
-    if([secondaryL isEqualToString:kLangNone]){
-        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }else{
-        self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    }
+    /*+20121006if([secondaryL isEqualToString:kLangNone]){
+     self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
+     }else{*/
+    self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    //}
 	//NSDictionary *dict = [note userInfo];
     
     BibleDao *bDao = [[BibleDao alloc] init];

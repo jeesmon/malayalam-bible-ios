@@ -196,7 +196,7 @@
     }else{
         
         Information *infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
-        infoViewController.title = @"Information";
+        infoViewController.title = @"About";
         [self.navigationController pushViewController:infoViewController animated:YES];
     }
      
