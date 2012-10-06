@@ -717,7 +717,7 @@ const CGFloat Line_Height = 1.2;
         
     }   
     
-    return @"chapters_english";
+    return NSLocalizedString(@"chapters_english", @"");
     
 }
 @end
