@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MalayalamBibleDetailViewController.h"
-
+#import "RootWindow.h"
 
 
 @interface MalayalamBibleAppDelegate : UIResponder <UIApplicationDelegate>{
@@ -18,7 +18,7 @@
     // [ dictionary bookPathSection and bookpathRow keys, NSNumber chapterIndex , dictionary scrollposition]   
 }
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) RootWindow *window;
 @property (nonatomic, retain) NSMutableArray *savedLocation;
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;

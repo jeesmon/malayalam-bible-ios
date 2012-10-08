@@ -68,7 +68,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 {
     
        
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[RootWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
     

@@ -28,6 +28,10 @@
     BOOL isActionClicked;
     BOOL isFromSeachController;
     UIToolbar *bottomToolBar;
+    
+    BOOL isFullScreen;
+    
+    
 }
 
 @property (strong, nonatomic) NSMutableArray *bVerses;
@@ -44,7 +48,7 @@
 - (void)showAlert:(NSString *)message;
 
 
-
+- (void) toggleFullScreen;
 - (void)configureiPadView;
 - (void)configureView;
 @end
