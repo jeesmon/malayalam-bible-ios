@@ -41,7 +41,7 @@ __VA_ARGS__ \
 - (void) resetBottomToolbar;
 -(void)displayComposerSheet:(NSArray *)arraySelectedIndesPath;
 - (void) scrollToVerseId;
-
+- (void) moveToNext:(BOOL)isNext;
 @end
 
 @implementation MalayalamBibleDetailViewController
@@ -173,63 +173,36 @@ __VA_ARGS__ \
 
 
 #pragma mark User Swipe Handiling
-
+- (void) toggleFullScreen:(UITapGestureRecognizer *)recognizer {
+ 
+    
+    NSLog(@"double tapped");
+    if(!self.tableViewVerses.isEditing){
+        
+        CGRect rectToolbar = self.bottomToolBar.frame;
+        rectToolbar.origin.y = self.view.frame.size.height;
+        self.bottomToolBar.frame = rectToolbar;
+        
+        self.navigationController.navigationBarHidden = YES;
+    }
+    
+}
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
 	
     if(!self.tableViewVerses.isEditing){
         
         if(recognizer.direction ==UISwipeGestureRecognizerDirectionLeft){
             
-            self.chapterId++;
             
-            [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:0.3];
-            
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
-            frame1.origin.x = 	frame1.size.width;
-            
-            self.tableViewVerses.frame = frame1;
-            
-            
-            [UIView commitAnimations];
-            
-            
+            [self moveToNext:YES];
+                                 
         }else{
-            self.chapterId--;
             
-            
-            [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:0.3];
-            
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
-            frame1.origin.x -= 	frame1.size.width;
-            
-            self.tableViewVerses.frame = frame1;
-            
-            
-            [UIView commitAnimations];
+            [self moveToNext:NO];
         }
         
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            [self configureiPadView];
-        }
-        else {
-            [self configureView];
-        }
-        
-        
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        CGRect frame2 =  self.tableViewVerses.frame;
-        
-        frame2.origin.x = 	0;
-        
-        self.tableViewVerses.frame = frame2;
-        [UIView commitAnimations];
-        
+                
         
     }
 
@@ -629,8 +602,6 @@ __VA_ARGS__ \
     recognizer.direction = UISwipeGestureRecognizerDirectionRight;
 	[self.view addGestureRecognizer:recognizer];
 	
-	
-    
     UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
 	swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     
@@ -642,6 +613,22 @@ __VA_ARGS__ \
 	// Do any additional setup after loading the view, typically from a nib.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
         
+        
+                
+        
+        
+        /*
+        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                              
+                                                              initWithTarget:self action:@selector(toggleFullScreen:)];
+        doubleTapGestureRecognizer.numberOfTapsRequired = 1;
+        //doubleTapGestureRecognizer.numberOfTouchesRequired = 1;
+        doubleTapGestureRecognizer.delaysTouchesBegan = YES;
+        doubleTapGestureRecognizer.cancelsTouchesInView = NO;
+        //tapGestureRecognizer.delegate = self;
+        
+        [self.view addGestureRecognizer:doubleTapGestureRecognizer];
+*/
         //+20120508
         UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:[BibleDao getTitleBooks] style:UIBarButtonItemStyleBordered target:self action:@selector(openBooks)];
        
@@ -722,6 +709,60 @@ IF_IOS5_OR_GREATER(
     [self.tableViewVerses reloadData];
 }
 #pragma mark private methods
+- (void) moveToNext:(BOOL)isNext{
+    
+    if(isNext){
+        self.chapterId++;
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        
+        CGRect frame1 =  self.tableViewVerses.frame;
+        
+        frame1.origin.x = 	frame1.size.width;
+        
+        self.tableViewVerses.frame = frame1;
+        
+        
+        [UIView commitAnimations];
+        
+    }else{
+        self.chapterId--;
+        
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        
+        CGRect frame1 =  self.tableViewVerses.frame;
+        
+        frame1.origin.x -= 	frame1.size.width;
+        
+        self.tableViewVerses.frame = frame1;
+        
+        
+        [UIView commitAnimations];
+        
+    }
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self configureiPadView];
+    }
+    else {
+        [self configureView];
+    }
+    
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    CGRect frame2 =  self.tableViewVerses.frame;
+    
+    frame2.origin.x = 	0;
+    
+    self.tableViewVerses.frame = frame2;
+    [UIView commitAnimations];
+    
+}
+
 - (void) scrollToVerseId{
     
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -969,19 +1010,21 @@ IF_IOS5_OR_GREATER(
     
     switch(((UIButton *)sender).tag) {
         case 0:
-            self.chapterId--;
+            //self.chapterId--;
+            [self moveToNext:NO];
             break;
         case 1:
-            self.chapterId++;
+            //self.chapterId++;
+            [self moveToNext:YES];
             break;
     }
-    
+    /*
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [self configureiPadView];
     }
     else {
         [self configureView];
-    }
+    }*/
 }
 
 - (void) emailVerses:(id)sender{
