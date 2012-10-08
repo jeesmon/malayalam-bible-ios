@@ -30,6 +30,7 @@
 		03D3FFF214C04098004A8BE8 /* SelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF114C04096004A8BE8 /* SelectionController.m */; };
 		03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF514C053FC004A8BE8 /* MBConstants.m */; };
 		03E0484315419CDC008DDB41 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E0484215419CDC008DDB41 /* UIDeviceHardware.m */; };
+		03E5174516231460005DBDDA /* RootWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E5174416231460005DBDDA /* RootWindow.m */; };
 		03F3856815F5DC60004CB237 /* Information.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3856515F5DC60004CB237 /* Information.m */; };
 		03F3856915F5DC60004CB237 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3856715F5DC60004CB237 /* SearchViewController.m */; };
 		03F3856F15F5DD49004CB237 /* ApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F3856E15F5DD49004CB237 /* ApplicationInfo.m */; };
@@ -110,6 +111,8 @@
 		03D3FFF514C053FC004A8BE8 /* MBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConstants.m; sourceTree = "<group>"; };
 		03E0484115419CDC008DDB41 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
 		03E0484215419CDC008DDB41 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
+		03E5174316231460005DBDDA /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootWindow.h; sourceTree = "<group>"; };
+		03E5174416231460005DBDDA /* RootWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootWindow.m; sourceTree = "<group>"; };
 		03F3856415F5DC60004CB237 /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
 		03F3856515F5DC60004CB237 /* Information.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Information.m; sourceTree = "<group>"; };
 		03F3856615F5DC60004CB237 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 				03D1255715060FE70054CB0A /* VerseCell.h */,
 				03D1255815060FE70054CB0A /* VerseCell.m */,
 				03AF1FC515A8437D001BA50D /* MBProtocol.h */,
+				03E5174316231460005DBDDA /* RootWindow.h */,
+				03E5174416231460005DBDDA /* RootWindow.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 				03F3856815F5DC60004CB237 /* Information.m in Sources */,
 				03F3856915F5DC60004CB237 /* SearchViewController.m in Sources */,
 				03F3856F15F5DD49004CB237 /* ApplicationInfo.m in Sources */,
+				03E5174516231460005DBDDA /* RootWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

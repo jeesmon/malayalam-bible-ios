@@ -173,17 +173,44 @@ __VA_ARGS__ \
 
 
 #pragma mark User Swipe Handiling
-- (void) toggleFullScreen:(UITapGestureRecognizer *)recognizer {
+- (void) toggleFullScreen {
  
     
     NSLog(@"double tapped");
     if(!self.tableViewVerses.isEditing){
         
-        CGRect rectToolbar = self.bottomToolBar.frame;
-        rectToolbar.origin.y = self.view.frame.size.height;
-        self.bottomToolBar.frame = rectToolbar;
         
-        self.navigationController.navigationBarHidden = YES;
+        [UIView beginAnimations:@"fullscreen" context:nil];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.5];
+                
+        
+        
+
+        if(isFullScreen){
+            
+            CGRect rectToolbar = self.bottomToolBar.frame;
+            rectToolbar.origin.y = self.view.frame.size.height-45;
+            self.bottomToolBar.frame = rectToolbar;
+            
+            self.navigationController.navigationBarHidden = NO;
+            
+        }else{
+            
+            CGRect rectToolbar = self.bottomToolBar.frame;
+            rectToolbar.origin.y = self.view.frame.size.height;
+            self.bottomToolBar.frame = rectToolbar;
+            
+            
+        }
+        isFullScreen = !isFullScreen;
+        
+        [self.navigationController setNavigationBarHidden:isFullScreen animated:YES];
+        
+        
+        [UIView commitAnimations];
+       
+        [self.tableViewVerses reloadData];
     }
     
 }
@@ -427,16 +454,27 @@ __VA_ARGS__ \
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     //IF_IOS5_OR_GREATER(
-    return 44.0;
+    if(isFullScreen){
+         NSLog(@"footer 0");
+        return 0.0;
+    }else{
+        NSLog(@"44");
+        return 44.0;
+    }
+    
     //                   )
    // return 0.0;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
     //IF_IOS5_OR_GREATER(
+    if(isFullScreen){
+        return nil;
+    }else{
     UIView *fview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewVerses.frame.size.width, 45)];
     [fview setBackgroundColor:[UIColor clearColor]];
     return  fview;
+    }
     //)
     //return nil;
 }
@@ -688,7 +726,7 @@ IF_IOS5_OR_GREATER(
  }
  
  - (void)viewDidDisappear:(BOOL)animated
- {
+ { 
  [super viewDidDisappear:animated];
  }
  */
@@ -1245,4 +1283,6 @@ IF_IOS5_OR_GREATER(
     [self.tableViewVerses reloadData];
     
 }
+
+
 @end
