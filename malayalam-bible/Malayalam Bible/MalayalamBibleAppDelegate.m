@@ -34,17 +34,14 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
     NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
-    
-    NSLog(@"dict = %@", dict);
-    
+   
     BibleDao *bdao = [[BibleDao alloc] init];
     Book *selBook = [bdao fetchBookWithSection:section Row:row];
     
-    NSLog(@"[selectionArray objectAtIndex:1] = %@", [selectionArray objectAtIndex:1]);
     
     NSInteger chapterid = [[selectionArray objectAtIndex:1] intValue];
     
-    NSLog(@"dict kk chapterid = %i", chapterid);
+   
 	if (chapterid <= 0)
 	{
         chapterid = 1;
@@ -110,13 +107,13 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         FONT_SIZE = fontSize;
     }
    
-   NSLog(@"savedLocation = %@", savedLocation);
+  
     
 	if (savedLocation == nil || [savedLocation count] == 0)
 	{
 		// user has not launched this app nor navigated to a particular level yet, start at level 1, with no selection
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
-             NSLog(@"restore point make");
+      
             self.savedLocation = [NSMutableArray arrayWithObjects:
                              [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
                              [NSNumber numberWithInt:1],	// .. 2nd level  the chapter idex

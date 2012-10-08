@@ -439,7 +439,7 @@
             
             if(selectedBook.numOfChapters > 1) {
                 
-                NSLog(@"open jjj");
+              
                 ChapterSelection *picker = [[ChapterSelection alloc] init];
                 picker.selectedBook = selectedBook;
                 [picker configureView:YES];
@@ -449,7 +449,7 @@
             }
             else {
                 
-                NSLog(@"dismiss and open");
+               
                 MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
                                
                 appDelegate.detailViewController.selectedBook = selectedBook;
