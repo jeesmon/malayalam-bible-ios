@@ -14,6 +14,8 @@
 "AppInfo"       = "About";
 "Languages"     = "Languages";
 "SelectLanguages"   = "Select Languages";
+"SearchHelp"    = "Search Help";
+"MozhiScheme"    = "Mozhi Scheme";
 
 "Primary"       = "Primary Language";
 "Secondary"     = "Secondary Language";

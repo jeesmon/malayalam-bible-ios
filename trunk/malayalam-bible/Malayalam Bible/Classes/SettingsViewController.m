@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "LanguageViewController.h"
 #import "Information.h"
+#import "WebViewController.h"
 
 
 @implementation SettingsViewController
@@ -95,7 +96,7 @@
 {
 
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -131,7 +132,12 @@
         
         
 
-    }else{
+    }
+    else if(indexPath.section == 1){
+        cell.textLabel.text = NSLocalizedString(@"SearchHelp", @"");
+        cell.detailTextLabel.text = NSLocalizedString(@"MozhiScheme", @"");;
+    }
+    else{
         
         cell.textLabel.text = NSLocalizedString(@"AppInfo", @"");
         cell.detailTextLabel.text = @"";
@@ -193,10 +199,17 @@
         // ...
         // Pass the selected object to the new view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
-    }else{
+    }
+    else if(indexPath.section == 1){
+        WebViewController *webViewCtrlr = [[WebViewController alloc] init];
+        webViewCtrlr.title = NSLocalizedString(@"SearchHelp", @"");
+        webViewCtrlr.requestURL = [[NSBundle mainBundle] pathForResource:@"lipi" ofType:@"png"];
+        [self.navigationController pushViewController:webViewCtrlr animated:YES];
+    }
+    else{
         
         Information *infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
-        infoViewController.title = @"About";
+        infoViewController.title = NSLocalizedString(@"AppInfo", @"");
         [self.navigationController pushViewController:infoViewController animated:YES];
     }
      
