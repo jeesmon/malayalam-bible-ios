@@ -176,7 +176,7 @@ __VA_ARGS__ \
 - (void) toggleFullScreen {
  
     
-    NSLog(@"double tapped");
+   
     if(!self.tableViewVerses.isEditing){
         
         
@@ -455,10 +455,10 @@ __VA_ARGS__ \
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     //IF_IOS5_OR_GREATER(
     if(isFullScreen){
-         NSLog(@"footer 0");
+        
         return 0.0;
     }else{
-        NSLog(@"44");
+      
         return 44.0;
     }
     
@@ -939,10 +939,10 @@ IF_IOS5_OR_GREATER(
     NSMutableDictionary *dictVerse = [self.bVerses objectAtIndex:roww];
     
     if(isPrimary){
-        NSLog(@"selected pr");
+     
         [dictVerse setValue:@"YES" forKey:@"isSelectedPrimary"];
     }else{
-        NSLog(@"selected no pr");
+     
         [dictVerse setValue:@"NO" forKey:@"isSelectedPrimary"];
     }
       

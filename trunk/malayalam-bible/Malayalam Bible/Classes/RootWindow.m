@@ -132,20 +132,20 @@
             if ( [touch tapCount] == 2) {
                 
                 if(bibleEvent) {
-                    NSLog(@"toggle");
+                  
                     [appDelegate.detailViewController toggleFullScreen];
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationBibleToggleFullscreen" object:nil];
+					//[[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationBibleToggleFullscreen" object:nil];
 				}
             }
             
-			if (!movement && ([[event allTouches] count] == 2) && [touch tapCount] == 2) {
+			/*if (!movement && ([[event allTouches] count] == 2)) {
 				//DLog(@"toggle-fullscreen-tap");
 				
 				if(bibleEvent) {
-                    NSLog(@"toggle");
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationBibleToggleFullscreen" object:nil];
+                  
+					//[[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationBibleToggleFullscreen" object:nil];
 				}
-			}
+			}*/
 			
 			CGPoint currentTouchPosition = [touch locationInView:self];
 			if(interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {

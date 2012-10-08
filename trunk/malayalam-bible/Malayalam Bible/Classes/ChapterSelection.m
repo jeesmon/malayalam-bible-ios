@@ -150,12 +150,10 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     [super viewDidLoad];
     
-    //self.fromMaster  = YES;
-    NSLog(@"jjjjj0");
-    
+       
     if(self.fromMaster){
         
-        NSLog(@"jjjjj");
+       
         UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];   
         temporaryBarButtonItem.title = [BibleDao getTitleChapterButton];//@"അദ്ധ്യായങ്ങൾ"
         self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
