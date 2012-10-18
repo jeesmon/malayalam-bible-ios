@@ -54,15 +54,18 @@
     
     [super layoutSubviews];
     
-    CGFloat adjustWidth = 40.0;
+    CGFloat adjustWidth = 20.0;
+    CGRect contentRect = self.contentView.bounds;
+    CGSize cgSize = contentRect.size;
+    
     if(self.isSearchResult){
         adjustWidth = 27.0;
     }
     
-    CGRect contentRect = self.contentView.bounds;
+    
 	
     
-    CGSize cgSize = contentRect.size;
+    
     
    
 
@@ -72,7 +75,7 @@
     CGSize labelSize = [verseText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
    
         
-    [self.webView setFrame:CGRectMake(0, 0, cgSize.width, labelSize.height + 15)];
+    [self.webView setFrame:CGRectMake(0, 0, cgSize.width+10, labelSize.height+15)];
    
 }
 

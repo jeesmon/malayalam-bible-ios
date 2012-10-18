@@ -15,7 +15,7 @@ extern  NSUInteger FONT_SIZE;
 #define kFontMinSize 10
 
 extern const NSString *bmBookSection;
-extern const NSString *bmBookRow;
+//extern const NSString *bmBookRow;
 
 extern  NSString * const kLangPrimary;
 extern  NSString * const kLangEnglishASV;

@@ -286,7 +286,9 @@
         /**set select book*** +20121006 **/
         NSUInteger bookindex= selectBook.bookId;
         NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
-        if(bookindex > 39){
+        
+        [dict setObject:[NSNumber numberWithInt:bookindex] forKey:bmBookSection];//+20121017
+        /*if(bookindex > 39){
             
             [dict setObject:[NSNumber numberWithInt:1] forKey:bmBookSection];
             [dict setObject:[NSNumber numberWithInt:bookindex-40] forKey:bmBookRow];
@@ -300,7 +302,7 @@
             
         }
         
-        /*****/
+        */
         
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:[[dictVerse valueForKey:@"chapter"] intValue]]];
         

@@ -25,7 +25,7 @@
 
 @interface MalayalamBibleMasterViewController(Private)
 
-- (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter;
+- (void) selectBook:(Book *)selectedBook AndChapter:(int)chapter;
 - (void) loadData;
 /***Search Controller **/
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
@@ -40,6 +40,7 @@
 //@synthesize chapterSelectionController = _chapterSelectionController;
 @synthesize isNeedReload = _isNeedReload;
 @synthesize tableViewBooks = _tableViewBooks;
+@synthesize indexArray = _indexArray;
 
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
@@ -48,15 +49,10 @@
     NSDictionary *dict = [selectionArray objectAtIndex:0];
         
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
-    NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
-    NSString *selectedBookName;
+    NSUInteger row = 0;//[[dict objectForKey:bmBookRow] intValue];
+    Book *selectedBook = [books objectAtIndex:section];
     
-    if(section == 0) {
-        selectedBookName = [oldTestament objectAtIndex:row];
-    }
-    else {
-        selectedBookName = [newTestament objectAtIndex:row];
-    }
+        
     
     [self.tableViewBooks scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     [self.tableViewBooks selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -65,7 +61,7 @@
     
     int chapterId = [[appDelegate.savedLocation objectAtIndex:1] intValue];
     
-    [self selectBookWithName:selectedBookName AndChapter:chapterId];
+    [self selectBook:selectedBook AndChapter:chapterId];
     
     /*+20120727if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone){
         
@@ -210,7 +206,7 @@
     NSDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
     
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
-    NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
+    NSUInteger row = 0;//[[dict objectForKey:bmBookRow] intValue];+20121017
        
     [self.tableViewBooks scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     [self.tableViewBooks selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -239,24 +235,38 @@
 
 
 #pragma mark UItableDataSource
-
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    
+    
+    
+    return  self.indexArray;
+    
+}
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    
+    
+    return [self.indexArray indexOfObject:title];
+    
+}
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
    
-            return 2;
+    return [books count];
        
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
    
-        if (section == 0) {
+       /* if (section == 0) {
             return 39;
         }
         else {
             return 27;
         }
+        */
+    return 1;
     
     
 }
@@ -280,12 +290,12 @@
             if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
-            if(indexPath.section == 0) {
-                cell.textLabel.text = [oldTestament objectAtIndex:indexPath.row];
-            }
-            else {
-                cell.textLabel.text = [newTestament objectAtIndex:indexPath.row];
-            }
+    
+    
+    Book *selBook = [books objectAtIndex:indexPath.section];
+           
+    cell.textLabel.text = selBook.displayValue;
+    
         
         return cell;
     
@@ -298,20 +308,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-                
-        NSString *cellText;
-        if(indexPath.section == 0) {
-            cellText = [oldTestament objectAtIndex:indexPath.row];
-        }
-        else {
-            cellText = [newTestament objectAtIndex:indexPath.row];
-        }
+        Book *selBook = [books objectAtIndex:indexPath.section];        
+        NSString *cellText = selBook.displayValue;
+        
         
         UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
         CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
         CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
         
-        return labelSize.height + 10;
+        return labelSize.height + 15;
     
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -322,9 +327,11 @@
             if(section == 0) {
                 return [BibleDao getTitleOldTestament];
             }
-            else {
+            else if(section == 39) {//+20121017
                 return [BibleDao getTitleNewTestament];
                 
+            }else{
+                return nil;
             }
      
 }
@@ -373,21 +380,14 @@
     
     NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
     [dict setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
-    [dict setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
+    //[dict setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
     [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
 	[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];   
     
-    NSString *selectedBookName;
-    
-    if(indexPath.section == 0) {
-        selectedBookName = [oldTestament objectAtIndex:indexPath.row];
-    }
-    else {
-        selectedBookName = [newTestament objectAtIndex:indexPath.row];
-    }
+    Book *selBook = [books objectAtIndex:indexPath.section]; 
     
     
-    [self selectBookWithName:selectedBookName AndChapter:1];
+    [self selectBook:selBook AndChapter:1];
 
 }
 
@@ -427,13 +427,13 @@
 
 
 
-- (void) selectBookWithName:(NSString *)selectedBookName AndChapter:(int)chapter{
+- (void) selectBook:(Book *)selectedBook AndChapter:(int)chapter{
     
-    if(selectedBookName){
+    if(selectedBook){
         
         
         self.detailViewController.isActionClicked = NO;
-        Book *selectedBook = [books objectForKey:selectedBookName];
+        //Book *selectedBook = [books objectForKey:selectedBookName];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
@@ -476,8 +476,8 @@
     BibleDao *dao = [[BibleDao alloc] init];
     NSDictionary *dict = [dao fetchBookNames];
     books = [dict objectForKey:@"books"];
-    oldTestament = [dict objectForKey:@"oldTestament"];
-    newTestament = [dict objectForKey:@"newTestament"];
+    self.indexArray = [dict objectForKey:@"index"];
+    
                     
 }
 

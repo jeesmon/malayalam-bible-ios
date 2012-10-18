@@ -1,9 +1,9 @@
 //
 //  UIDeviceHardware.m
-//  MobileEdge
+//  
 //
 //  Created by jijo on 26/02/10.
-//  Copyright 2010 __iEnterprises__.  All rights reserved.  Maintained by __Notetech__.
+//  
 //
 
 #import "UIDeviceHardware.h"

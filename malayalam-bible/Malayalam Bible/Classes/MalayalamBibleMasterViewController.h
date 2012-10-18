@@ -14,17 +14,18 @@
 @class MalayalamBibleDetailViewController;
 
 @interface MalayalamBibleMasterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource > {
-    NSMutableDictionary *books;
+    NSMutableArray *books;
     NSMutableArray *newTestament;
     NSMutableArray *oldTestament;
     
     BOOL isNeedReload;
     UITableView *tableViewBooks;
-    
+    NSMutableArray *indexArray;
        
     
 }
 
+@property (strong, nonatomic) NSMutableArray *indexArray;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (strong, nonatomic) Information *infoViewController;
 //@property (strong, nonatomic) ChapterSelection *chapterSelectionController;

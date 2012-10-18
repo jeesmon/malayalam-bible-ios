@@ -56,6 +56,7 @@ __VA_ARGS__ \
 @synthesize isFromSeachController = _isFromSeachController;
 @synthesize bVerses = _bVerses;
 @synthesize bottomToolBar = _bottomToolBar;
+@synthesize bVersesIndexArray = _bVersesIndexArray;
 //@synthesize tableWebViewVerses = _tableWebViewVerses;
 
 #pragma mark - Managing the detail item
@@ -101,6 +102,8 @@ __VA_ARGS__ \
         /**set select book*** +20121006 **/
         NSUInteger bookindex= self.selectedBook.bookId;
         NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:0];
+        [dict setObject:[NSNumber numberWithInt:bookindex-1] forKey:bmBookSection];//+20121017
+        /*
         if(bookindex > 39){
             
             [dict setObject:[NSNumber numberWithInt:1] forKey:bmBookSection];
@@ -115,7 +118,7 @@ __VA_ARGS__ \
             
         }
         
-        /*****/
+        */
         
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
         //[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];    
@@ -363,19 +366,19 @@ __VA_ARGS__ \
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if(self.bVerses) {
+        
+        return [self.bVerses count];
+    }
+    else {
+        return 0;
+    }
     
-    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(self.bVerses) {
-        
-       return [self.bVerses count];
-    }
-    else {
-       return 0;
-    }
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -414,7 +417,7 @@ __VA_ARGS__ \
             cell.textLabel.font = [UIFont fontWithName:kFontName size:FONT_SIZE];
         }
         
-        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
+        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.section];
         cell.textLabel.text = [dictVerse valueForKey:@"verse_text"];
         
         return cell;
@@ -433,7 +436,7 @@ __VA_ARGS__ \
                                   
         }
        
-        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
+        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.section];
         
         NSString *versee = [dictVerse valueForKey:@"verse_html"];
                 
@@ -451,15 +454,39 @@ __VA_ARGS__ \
 
 #pragma  mark UITableViewDelegate
 
-
+//+20121017
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    
+    if(self.isActionClicked){
+        return nil;
+    }else{
+        
+        self.bVersesIndexArray = [NSMutableArray arrayWithCapacity:[self.bVerses count]];
+        for(NSUInteger i=1; i<=[self.bVerses count] ; i++){
+            
+            [self.bVersesIndexArray addObject:[NSString stringWithFormat:@"%i", i]];
+        }
+        return  self.bVersesIndexArray;
+    }
+}
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    
+   
+       return [self.bVersesIndexArray indexOfObject:title];
+    
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    //IF_IOS5_OR_GREATER(
+    
+        //IF_IOS5_OR_GREATER(
     if(isFullScreen){
         
         return 0.0;
     }else{
-      
-        return 44.0;
+        if(section == [self.bVerses count]-1){
+            return 44.0;
+        }else{
+            return 0.0;
+        }
     }
     
     //                   )
@@ -525,7 +552,7 @@ __VA_ARGS__ \
     
     if(self.isActionClicked){
         
-        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
+        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.section];
         NSString *cellText = [dictVerse valueForKey:@"verse_text"];
         
         UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
@@ -536,20 +563,20 @@ __VA_ARGS__ \
         
     }else{
       
-        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.row];
+        NSDictionary *dictVerse = [self.bVerses objectAtIndex:indexPath.section];
         
         NSString *verseStr = [dictVerse valueForKey:@"verse_text"];
         NSString *verseStr2 = [dictVerse valueForKey:@"verse_text2"];
         
         UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
         
-        CGSize constraintSize = CGSizeMake(self.view.frame.size.width-40, MAXFLOAT);//280 - 40
+        CGSize constraintSize = CGSizeMake(self.view.frame.size.width-60, MAXFLOAT);//+20121017 - 40
         
         CGSize labelSize = [verseStr sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
         
         CGSize labelSize2 = [verseStr2 sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
               
-        return labelSize.height + labelSize2.height + 15 ;//+ 10
+        return labelSize.height + labelSize2.height +15;//+20121017+ 15 ;//+ 10
     }
 }
 

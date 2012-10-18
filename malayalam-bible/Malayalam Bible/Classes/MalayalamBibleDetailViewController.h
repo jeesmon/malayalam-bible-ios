@@ -18,6 +18,8 @@
 @interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol>// 
 {
     NSMutableArray *bVerses;
+    
+    NSMutableArray *bVersesIndexArray;
 
     UIPopoverController *popoverChapterController;
     
@@ -35,6 +37,7 @@
 }
 
 @property (strong, nonatomic) NSMutableArray *bVerses;
+@property (strong, nonatomic) NSMutableArray *bVersesIndexArray;
 @property(nonatomic, assign) BOOL isActionClicked;
 @property(nonatomic, assign) BOOL isFromSeachController;
 @property (strong, nonatomic) Book *selectedBook;
