@@ -29,13 +29,12 @@ const CGFloat Line_Height = 1.2;
     }
     
 }
-
+//+20121017
 - (NSDictionary *)fetchBookNames{
     
-   NSMutableDictionary *books = [NSMutableDictionary dictionary];
-   NSMutableArray *oldTestament = [NSMutableArray array];
-   NSMutableArray *newTestament = [NSMutableArray array];
-    
+   NSMutableArray *books = [NSMutableArray array];
+    NSMutableArray *indexArrray = [NSMutableArray array];
+       
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
     NSString *querySQL = @"SELECT AlphaCode, book_id, EnglishShortName, num_chptr, MalayalamShortName, MalayalamLongName FROM books";
@@ -115,12 +114,12 @@ const CGFloat Line_Height = 1.2;
                     [displayValue appendFormat:@"\n%@", englishName];                    
                 }
                               
-                if(bookId > 39) {
+                /*if(bookId > 39) {
                     [newTestament addObject:displayValue];
                 }
                 else {
                     [oldTestament addObject:displayValue];
-                }
+                }*/
                 
                 Book *book = [[Book alloc] init];
                 book.alphaCode = alphaCode;
@@ -129,28 +128,39 @@ const CGFloat Line_Height = 1.2;
                 book.numOfChapters = numOfChapters;
                 book.shortName = shortName;
                 book.longName = longName;
+                book.displayValue = displayValue;
                 
-                [books setObject:book forKey:displayValue];                
+                
+                [books addObject:book];
+                
+                if([displayValue length] > 4){
+                    [indexArrray addObject:[displayValue substringToIndex:4]];
+                }else{
+                    [indexArrray addObject:[displayValue substringToIndex:[displayValue length]]];
+                }
+                
+                
+                
+                
             }
             sqlite3_finalize(statement);
         }else{
             
-            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+            NSLog(@"err: %s", sqlite3_errmsg(bibleDB));
         }
     }
     sqlite3_close(bibleDB);
     
-    return [NSDictionary dictionaryWithObjectsAndKeys:books, @"books", oldTestament, @"oldTestament", newTestament, @"newTestament", nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys:books, @"books", indexArrray, @"index", nil];
 }
+//+20121017
 - (Book *)fetchBookWithSection:(NSInteger)section Row:(NSInteger)row{
     
        
-    row++;
+   
     
-    int rowid = row;
-    if(section > 0){//+20120810
-        rowid = 39 + row;
-    }
+    int rowid = section+1;
+    
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
@@ -228,13 +238,13 @@ const CGFloat Line_Height = 1.2;
                 book.numOfChapters = numOfChapters;
                 book.shortName = shortName;
                 book.longName = longName;
-                
+                book.displayValue = displayValue;
                               
             }
             sqlite3_finalize(statement);
         }else{
             
-            NSLog(@"err: %@", sqlite3_errmsg(bibleDB));
+            NSLog(@"err: %s", sqlite3_errmsg(bibleDB));
         }
     }
     sqlite3_close(bibleDB);

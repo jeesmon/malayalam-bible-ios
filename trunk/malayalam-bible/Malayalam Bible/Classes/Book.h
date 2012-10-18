@@ -15,6 +15,7 @@
     int numOfChapters;
     NSString *shortName;
     NSString *longName;
+    NSString *displayValue;
 }
 
 @property(retain, readwrite) NSString *alphaCode;
@@ -23,5 +24,5 @@
 @property(assign, readwrite) int numOfChapters;
 @property(retain, readwrite) NSString *shortName;
 @property(retain, readwrite) NSString *longName;
-
+@property(retain, readwrite) NSString *displayValue;
 @end

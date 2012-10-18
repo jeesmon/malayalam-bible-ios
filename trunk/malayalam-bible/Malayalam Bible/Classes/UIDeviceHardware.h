@@ -1,9 +1,9 @@
 //
 //  UIDeviceHardware.h
-//  MobileEdge
+//  
 //
 //  Created by jijo on 26/02/10. This file/source is from Jason Goldberg
-//  Copyright 2010 __iEnterprises__.  All rights reserved.  Maintained by __Notetech__.
+//  
 //
 
 #import <Foundation/Foundation.h>

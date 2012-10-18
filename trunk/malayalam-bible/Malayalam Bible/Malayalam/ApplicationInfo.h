@@ -2,7 +2,7 @@
 //  ApplicationInfo.h
 //  KannadaBible
 //
-//  Created by notetech on 9/4/12.
+//  Created by jijo on 9/4/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 

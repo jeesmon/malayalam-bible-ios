@@ -16,5 +16,5 @@
 @synthesize numOfChapters = _numOfChapters;
 @synthesize shortName = _shortName;
 @synthesize longName = _longName;
-
+@synthesize displayValue = _displayValue;
 @end

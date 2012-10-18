@@ -33,7 +33,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     NSDictionary *dict = [selectionArray objectAtIndex:0];
     
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
-    NSUInteger row = [[dict objectForKey:bmBookRow] intValue];
+    NSUInteger row = 0;//[[dict objectForKey:bmBookRow] intValue];
    
     BibleDao *bdao = [[BibleDao alloc] init];
     Book *selBook = [bdao fetchBookWithSection:section Row:row];
@@ -138,7 +138,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     NSNumber *selection = [[savedLocation objectAtIndex:0] valueForKey:@"BookPathSection"];	// read the saved selection at level 1
     if (selection)
     {
-        NSLog(@"restore point %@", selection);
+        //(@"restore point %@", selection);
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
@@ -153,7 +153,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     }
     else
     {    
-        NSLog(@"no restore point");
+        //(@"no restore point");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             
             self.savedLocation = [NSMutableArray arrayWithObjects:

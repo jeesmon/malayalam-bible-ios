@@ -13,7 +13,7 @@
 NSUInteger FONT_SIZE = 17;
 
 const NSString *bmBookSection = @"BookPathSection";
-const NSString *bmBookRow = @"BookPathRow";
+//const NSString *bmBookRow = @"BookPathRow";
 
 NSString * const kLangPrimary = @"malayalam";
 NSString * const kLangEnglishASV = @"english_asv";
