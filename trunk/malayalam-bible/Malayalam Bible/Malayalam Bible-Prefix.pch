@@ -11,4 +11,22 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+
+
+#ifdef DEBUG
+
+
+#define MBLog(fmt, ...)  NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define MBLogAll(fmt, ...)  NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+#else
+
+#define MBLog(...)
+#define MBLogAll(fmt, ...)   NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+#endif
+
+//#define UIExtendedEdgeNone 1
+
 #endif

@@ -30,9 +30,9 @@
     
     [super loadView];
     
-    CGRect rect = self.view.frame;
-    [self.view setBackgroundColor:[UIColor whiteColor]];
     
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    CGRect rect = self.view.frame;
 	UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
 	webView.scalesPageToFit = YES;
 	webView.delegate = self;

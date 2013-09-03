@@ -16,10 +16,12 @@
     UIView *touchView;
     
     BOOL isSearchResult;
+    BOOL isUnderlined;
 }
 @property(nonatomic, assign) BOOL isSearchResult;
 @property(nonatomic, retain) UIView *touchView;
 @property(nonatomic, retain) UIWebView *webView;
 @property(nonatomic, retain) NSString *verseText;
+@property(nonatomic, assign) BOOL isUnderlined;
 
 @end

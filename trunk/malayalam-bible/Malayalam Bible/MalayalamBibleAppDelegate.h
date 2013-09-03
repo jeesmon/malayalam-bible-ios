@@ -24,6 +24,11 @@
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
 @property (strong, nonatomic) UISplitViewController *splitViewController;
 
-- (void)openVerseForiPadSavedLocation;
 
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
+
+- (void)openVerseForiPadSavedLocation;
+- (NSManagedObjectContext *)managedObjectContext;
 @end

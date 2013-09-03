@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0
 #define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32
 #endif
@@ -112,6 +114,14 @@ __VA_ARGS__ \
     NSString *osVersion = @"5.0";
     NSString *currOsVersion = [[UIDevice currentDevice] systemVersion];
     return [currOsVersion compare:osVersion options:NSNumericSearch] == NSOrderedAscending;*/
+}
++(BOOL) isOS7Device {
+    
+    return NO;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        return YES;
+    }
+    return NO;
 }
 +(BOOL)isSupportRotation:(UIInterfaceOrientation)interfaceOrientation{
     

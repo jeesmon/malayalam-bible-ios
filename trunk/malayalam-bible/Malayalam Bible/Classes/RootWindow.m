@@ -8,6 +8,8 @@
 
 #import "RootWindow.h"
 #import "MalayalamBibleAppDelegate.h"
+#import <objc/runtime.h>
+#import "MBConstants.h"
 
 @implementation RootWindow
 
@@ -35,23 +37,24 @@
     
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    NSArray *allTouches = [[event allTouches] allObjects];
+    //NSArray *allTouches = [[event allTouches] allObjects];
 	UITouch *touch = [[event allTouches] anyObject];
 	UIView *touchView = [touch view];
 	//UIDeviceOrientation interfaceOrientation = [[UIDevice currentDevice] orientation];
-	UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+	/*UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
 	if([UIApplication sharedApplication].statusBarHidden) {
 		interfaceOrientation = (UIInterfaceOrientation)[[UIDevice currentDevice] orientation];
-	}
-    
-    if (touchView && ([touchView isDescendantOfView:appDelegate.detailViewController.tableViewVerses])) {
-		bibleEvent = [touchView isDescendantOfView:appDelegate.detailViewController.tableViewVerses];
+	}*/
+    if(isDetailControllerVisible)
+    if (touchView && ([touchView isDescendantOfView:appDelegate.detailViewController.webViewVerses])) {
+        
+		bibleEvent = [touchView isDescendantOfView:appDelegate.detailViewController.webViewVerses];
         
         
         //
 		// touchesBegan
 		//
-		if (touch.phase==UITouchPhaseBegan) {
+		/*if (touch.phase==UITouchPhaseBegan) {
 			//touchAndHold = NO;
 			ignoreMovementEvents = NO;
 			movement = NO;
@@ -72,8 +75,9 @@
 				previousTouchPosition2 = startTouchPosition2;
 			}
 			//DLog(@"pos.x = %f && pos.y == %f", startTouchPosition1.x, startTouchPosition1.y);
+            [appDelegate.detailViewController toucheBegan:touch];
 		}
-        
+        */
 		//
 		// touchesMoved
 		//
@@ -84,23 +88,36 @@
             //				self.holdTimer = nil;
             //			}
 			//touchAndHold = NO;
-			movement = YES;
-			//DLog(@"--- UITouchPhaseMoved ---");
-			if(bibleEvent && !ignoreMovementEvents && ([[event allTouches] count] == 3)) {
-				CGPoint currentTouchPosition = [touch locationInView:self];
-				if(interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-					//switch x & y if in landscape mode
-					CGFloat dummyX = currentTouchPosition.x;
-					currentTouchPosition.x = currentTouchPosition.y;
-					currentTouchPosition.y = dummyX;
-				}
-				BOOL reverseSwipe = NO;
-				if(interfaceOrientation == UIInterfaceOrientationLandscapeRight || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-					reverseSwipe = YES;
-				}
-				
-			}
-			/*if ([[event allTouches] count] > 1) {
+            /*const char* className = class_getName([touch.view class]);
+            NSLog(@"yourObject is a: %s", className);
+            
+            if( 0 != strcmp("UIWebSelectionHandle", className)){
+                
+                movement = YES;
+                //DLog(@"--- UITouchPhaseMoved ---");
+                if(bibleEvent && !ignoreMovementEvents && ([[event allTouches] count] == 3)) {
+                    CGPoint currentTouchPosition = [touch locationInView:self];
+                    if(interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+                        //switch x & y if in landscape mode
+                        CGFloat dummyX = currentTouchPosition.x;
+                        currentTouchPosition.x = currentTouchPosition.y;
+                        currentTouchPosition.y = dummyX;
+                    }
+                    BOOL reverseSwipe = NO;
+                    if(interfaceOrientation == UIInterfaceOrientationLandscapeRight || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+                        reverseSwipe = YES;
+                    }
+                    
+                    
+                    
+                }
+                [appDelegate.detailViewController toucheMoved:touch];
+
+            }
+            */
+            
+            
+						/*if ([[event allTouches] count] > 1) {
              CGPoint currentTouchPosition1 = [[allTouches objectAtIndex:0] locationInView:self];
              CGPoint currentTouchPosition2 = [[allTouches objectAtIndex:1] locationInView:self];
              
@@ -147,7 +164,7 @@
 				}
 			}*/
 			
-			CGPoint currentTouchPosition = [touch locationInView:self];
+			/*CGPoint currentTouchPosition = [touch locationInView:self];
 			if(interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
 				//switch x & y if in landscape mode
 				CGFloat dummyX = currentTouchPosition.x;
@@ -161,6 +178,8 @@
 			
 			
 			startTouchPosition1 = CGPointMake(-1, -1);
+            
+            [appDelegate.detailViewController toucheEnded:touch];*/
 		}
     }
     }

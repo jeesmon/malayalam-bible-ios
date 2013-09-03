@@ -79,6 +79,7 @@
         self.tableViewBooks = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         self.tableViewBooks.delegate = self;
         self.tableViewBooks.dataSource = self;
+
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
@@ -109,6 +110,7 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     self.tableViewBooks.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
@@ -165,7 +167,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-        
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -179,7 +181,7 @@
         MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
         //+20120910[appDelegate.savedLocation replaceObjectAtIndex:0 withObject:[NSMutableDictionary dictionaryWithCapacity:2]]; 
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:0]];
-        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSMutableDictionary dictionary]];
     }
     if(self.isNeedReload){
         
@@ -276,13 +278,13 @@
 {
     
             
-        NSString *CellIdentifier = [NSString stringWithFormat:@"%@%i", @"Cell", FONT_SIZE];
-     
+        NSString *CellIdentifier = [NSString stringWithFormat:@"%@%f", @"Cell", FONT_SIZE];
+    
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.textLabel.font = [UIFont fontWithName:kFontName size:FONT_SIZE];
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
         cell.textLabel.numberOfLines = 2;
         // Configure the cell.
@@ -382,7 +384,7 @@
     [dict setObject:[NSNumber numberWithInt:indexPath.section] forKey:bmBookSection];
     //[dict setObject:[NSNumber numberWithInt:indexPath.row] forKey:bmBookRow];
     [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
-	[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];   
+	[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSMutableDictionary dictionary]];
     
     Book *selBook = [books objectAtIndex:indexPath.section]; 
     
@@ -464,7 +466,7 @@
             self.detailViewController.selectedBook = selectedBook;
             self.detailViewController.chapterId = chapter;
             
-            [self.detailViewController configureiPadView];
+            [self.detailViewController configureView];
         }
         
     }

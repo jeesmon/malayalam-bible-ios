@@ -6,6 +6,28 @@
   Copyright (c) 2011 jpulikkottil@gmail.com. All rights reserved.
 */
 
+
+
+"Notes"          = "Notes";
+"AddToBookmark"     = "Add To Bookmark";
+"add.bookmark"      = "Add Bookmark";
+"no.bookmarks"  = "No Bookmarks Added !";
+"no.notes"  = "No Notes Added !";
+
+"bookmark.group"    = "Group";
+"bookmark.verse"    = "Verse";
+"bookmark.description"  = "Description";
+
+"action.clearall"   = "off";
+"action.copy"   = "Copy";
+"action.bookmark"   = "Bookmark";
+"action.notes"  = "Notes";
+"action.mail"   = "Mail";
+"action.sms"    = "SMS";
+"action.facebook"   = "Facebook";
+"action.twitter"    = "Twitter";
+
+"done"          = "Done";
 "Cancel"        = "Cancel";
 "email"         = "Email";
 "copy"          = "Copy";

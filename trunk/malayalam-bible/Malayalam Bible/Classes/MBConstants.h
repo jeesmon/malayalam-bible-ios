@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 
-extern  NSUInteger FONT_SIZE;
+extern  CGFloat FONT_SIZE;
 
-#define kFontMaxSize 24
-#define kFontMinSize 10
+#define kFontMaxSize 25
+#define kFontMinSize 9
 
 extern const NSString *bmBookSection;
 //extern const NSString *bmBookRow;
@@ -29,6 +29,9 @@ extern  NSString * const kBookNewTestament;
 extern  NSString * const kBookOldTestament;
 
 extern  NSString * const kFontName;
+
+extern CGFloat statusBarHeight;
+extern BOOL isDetailControllerVisible;
 
 @interface MBConstants : NSObject
 

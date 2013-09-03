@@ -22,6 +22,7 @@
 @property (nonatomic, assign) BOOL fromMaster;
 @property (nonatomic, retain) UIScrollView *scrollViewBar;
 @property (nonatomic, retain) UILabel *lblChapter;
+@property (nonatomic, assign) NSInteger selectedChapter;
 
 @property (strong, nonatomic) Book *selectedBook;
 @property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
