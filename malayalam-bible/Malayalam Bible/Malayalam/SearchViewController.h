@@ -7,25 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MalayalamBibleDetailViewController.h"
+#import "Book.h"
+@class MalayalamBibleDetailViewController;
 
 
-@interface SearchViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate>{
+@interface SearchViewController : UIViewController <UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>{
  
 
-    UISearchDisplayController	*searchDisplayController;
+    UISearchBar	*searchBarr;
     UILabel *labelSearch;
     NSArray *arrayResults;
     NSString *primaryL;
     BOOL isFirstTime;
     UIActivityIndicatorView *activityView;
+    UITableView *tableViewSearch;
+    NSInteger scopeValue;
+ 
 }
+@property (nonatomic, assign) NSInteger scopeValue;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
-@property (strong, nonatomic) MalayalamBibleDetailViewController *detailViewController;
-@property (nonatomic, assign)  BOOL isFirstTime;
-@property (nonatomic, retain) UISearchDisplayController	*searchDisplayController;
+@property (nonatomic, assign) MalayalamBibleDetailViewController *detailViewController;
+@property (nonatomic, assign) BOOL isFirstTime;
+@property (nonatomic, retain) UISearchBar	*searchBarr;
 @property (nonatomic, retain) UILabel *labelSearch;
 @property (nonatomic, retain) NSArray *arrayResults;
 @property (nonatomic, retain) NSString *primaryL;
+@property (nonatomic, retain) UITableView *tableViewSearch;
+@property (strong, nonatomic) Book *selectedBook;
+
 
 @end

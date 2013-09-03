@@ -12,18 +12,25 @@
 #import "PopOverDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import "MBProtocol.h"
+#import "SearchViewController.h"
+#import "FPPopoverController.h"
+#import "CustomButton.h"
 
 
 
-@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol>// 
+
+@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol, UIWebViewDelegate, UIScrollViewDelegate, ButtonClickDelegate>//
 {
     NSMutableArray *bVerses;
     
     NSMutableArray *bVersesIndexArray;
 
     UIPopoverController *popoverChapterController;
+    UIPopoverController *popoverActionController;
     
     UITableView *tableViewVerses;
+    UITableView *tableViewVersesLeft;
+    UITableView *tableViewVersesRight;
     
     //UITableView *tableWebViewVerses;
     
@@ -32,9 +39,35 @@
     UIToolbar *bottomToolBar;
     
     BOOL isFullScreen;
+    BOOL isWebViewLoaded;
     
+    NSMutableArray *arrayToMookmark;
+    UIWebView *webViewVerses;
+    
+    UIWebView *versesLeft;
+    UIWebView *versesRight;
+    UIView *versesCurrent;
+    
+    CGPoint mSwipeStart;
+    FPPopoverController *popover;
+    
+    NSArray *bookMarkedObjs;
+    NSArray *colordObjs;
     
 }
+@property (strong, nonatomic) NSArray *bookMarkedObjs;
+@property (strong, nonatomic) NSArray *colordObjs;
+
+
+@property(nonatomic, assign) BOOL isWebViewLoaded;
+
+@property(nonatomic, strong) SearchViewController *searchController;
+@property (strong, nonatomic) UIWebView *webViewVerses;
+
+@property (strong, nonatomic) UIWebView *versesLeft;
+@property (strong, nonatomic) UIWebView *versesRight;
+@property (strong, nonatomic) UIView *versesCurrent;
+
 
 @property (strong, nonatomic) NSMutableArray *bVerses;
 @property (strong, nonatomic) NSMutableArray *bVersesIndexArray;
@@ -43,15 +76,31 @@
 @property (strong, nonatomic) Book *selectedBook;
 @property (assign, readwrite) int chapterId;
 @property(nonatomic, retain) UIPopoverController *popoverChapterController;
+@property(nonatomic, retain) UIPopoverController *popoverActionController;
 
-//@property(nonatomic, retain) UITableView *tableWebViewVerses;
+
 @property(nonatomic, retain) UITableView *tableViewVerses;
+@property(nonatomic, retain) UITableView *tableViewVersesLeft;
+@property(nonatomic, retain) UITableView *tableViewVersesRight;
 @property(nonatomic, retain) UIToolbar *bottomToolBar;
 
 - (void)showAlert:(NSString *)message;
 
 
 - (void) toggleFullScreen;
-- (void)configureiPadView;
+//- (void)configureiPadView;
 - (void)configureView;
+
+- (void)toucheBegan:(UITouch *)toucch;
+- (void)toucheMoved:(UITouch *)toucch;
+- (void)toucheEnded:(UITouch *)toucche;
+    
+    
 @end
+
+/*@interface UIImage (INResizeImageAllocator)
++ (UIImage*)imageWithImage:(UIImage*)image
+              scaledToSize:(CGSize)newSize;
+- (UIImage*)scaleImageToSize:(CGSize)newSize;
+@end
+*/

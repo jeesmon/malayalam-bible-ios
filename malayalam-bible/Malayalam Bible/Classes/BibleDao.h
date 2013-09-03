@@ -8,17 +8,29 @@
 
 #import <Foundation/Foundation.h>
 #import "Book.h"
+#import "Folders.h"
 
 @interface BibleDao : NSObject
 
 - (NSDictionary *)fetchBookNames;
-- (NSMutableArray *) getChapter:(int)bookId:(int)chapterId;
+- (NSDictionary *) getChapter:(int)bookId Chapter:(int)chapterId;
 
 + (NSString *)getTitleBooks;
 + (NSString *)getTitleOldTestament;
 + (NSString *)getTitleNewTestament;
 + (NSString *)getTitleChapter;
 + (NSString *)getTitleChapterButton;
-- (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSString *)scope;
+- (NSMutableArray *) getSerachResultWithText:(NSString *)searchText InScope:(NSInteger)scope AndBookId:(int)bookid;
 - (Book *)fetchBookWithSection:(NSInteger)section Row:(NSInteger)row;
+- (Book *)getBookUsingId:(NSInteger)bookid;
+
+
+- (Folders *) getDefaultFolder;
+- (Folders *) getDefaultFolderOfNotes;
+- (NSMutableArray *)getAllNotes;
+- (NSMutableArray *)getAllBookMarks;
+- (NSMutableArray *)getAllFolders;
+- (NSMutableArray *)getAllColordVersesOfBook:(NSInteger)bookiid ChapterId:(NSInteger)chpteriid;
+- (NSMutableArray *)getAllColordVersesOfColor:(NSString *)colorcode;
+
 @end

@@ -13,7 +13,7 @@
 
 @implementation VerseCell
 
-@synthesize webView, verseText, touchView, isSearchResult;
+@synthesize webView, verseText, touchView, isSearchResult, isUnderlined;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -62,20 +62,22 @@
         adjustWidth = 27.0;
     }
     
-    
-	
-    
-    
-    
-   
+     
 
 
     UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
     CGSize constraintSize = CGSizeMake(cgSize.width-adjustWidth, MAXFLOAT);//280
     CGSize labelSize = [verseText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
    
+    CGFloat adjustht = 0;
+    if(self.isUnderlined){
         
-    [self.webView setFrame:CGRectMake(0, 0, cgSize.width+10, labelSize.height+15)];
+        //adjustht = (labelSize.height /20)*2;
+    }
+    
+        
+    [self.webView setFrame:CGRectMake(0, 0, cgSize.width+10, labelSize.height+15+adjustht)];
+    //[self.webView setFrame:CGRectMake(0, 0, 0, 0)];
    
 }
 

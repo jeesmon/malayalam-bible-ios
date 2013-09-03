@@ -25,6 +25,7 @@
 @synthesize detailViewController = _detailViewController;
 @synthesize delegate = _delegate;
 @synthesize fromMaster = _fromMaster;
+@synthesize selectedChapter = _selectedChapter;
 const CGFloat tagWidthOffset = 10.0f;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -121,9 +122,18 @@ const CGFloat tagWidthOffset = 10.0f;
         
         tagButton.tag = i + 1;
         tagButton.frame = CGRectMake(xOffset, yOffset, buttonWidth, buttonHeight);
-        tagButton.titleLabel.textColor = [UIColor blackColor];
-        tagButton.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         
+        
+        if( self.selectedChapter ==  (i+1)){
+            tagButton.titleLabel.font = [UIFont boldSystemFontOfSize:FONT_SIZE+1];
+            tagButton.titleLabel.textColor = [UIColor darkTextColor];
+        }else{
+            tagButton.titleLabel.textColor = [UIColor darkGrayColor];
+            tagButton.titleLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
+        }
+        
+        
+       
                
         [tagButton setTitle:number forState:UIControlStateNormal];
         [tagButton setTitle:number forState:UIControlStateHighlighted];
@@ -150,6 +160,7 @@ const CGFloat tagWidthOffset = 10.0f;
 {
     [super viewDidLoad];
     
+     
        
     if(self.fromMaster){
         
@@ -173,10 +184,16 @@ const CGFloat tagWidthOffset = 10.0f;
     [self configureView:self.fromMaster];
     
 }
+- (void) viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+}
 - (void) viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
  
+   
     //+20120809MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
 	//[appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInteger:-1]];
     

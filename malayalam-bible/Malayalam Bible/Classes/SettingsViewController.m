@@ -7,10 +7,14 @@
 //
 
 #import "SettingsViewController.h"
-#import "LanguageViewController.h"
+//#import "LanguageViewController.h"
 #import "Information.h"
 #import "WebViewController.h"
+#import "MBConstants.h"
+#import "SelectionController.h"
+#import "FontSizeCell.h"
 
+#define FontSizeRow 2
 
 @implementation SettingsViewController
 
@@ -35,18 +39,49 @@
 
 - (void)viewDidLoad
 {
+    
+    self.title = @"Settings";
     [super viewDidLoad];
 
     
-    NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Languages", @"") ,@"title",NSLocalizedString(@"SelectLanguages", @""), @"subTitle", nil];
+    //NSDictionary *dictf = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Languages", @"") ,@"title",NSLocalizedString(@"SelectLanguages", @""), @"subTitle", nil];
     
       
-    arrayPrefs = [NSArray arrayWithObjects:dict1, nil];
+    //arrayPrefs = [NSArray arrayWithObjects:dictf, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    if(dictPref == nil){
+        
+        
+        dictPref = [[NSMutableDictionary alloc] init];
+        [dictPref setValue:kLangPrimary forKey:@"primaryLanguage"];
+        [dictPref setValue:kLangNone forKey:@"secondaryLanguage"];
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:kStorePreference];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    NSString *selectedPriLan = NSLocalizedString([dictPref valueForKey:@"primaryLanguage"], @"");;
+    NSString *selectedSecLan = NSLocalizedString([dictPref valueForKey:@"secondaryLanguage"], @"");
+    
+    
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Primary", @"") ,@"label",selectedPriLan, @"value",[dictPref valueForKey:@"primaryLanguage"], @"languageid", nil];
+    
+    
+    
+    NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Secondary", @"") ,@"label",selectedSecLan, @"value",[dictPref valueForKey:@"secondaryLanguage"], @"languageid", nil];
+    
+    arrayLangs = [NSArray arrayWithObjects:dict1,dict2, nil];
+
 }
 
 - (void)viewDidUnload
@@ -68,11 +103,17 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [[NSUserDefaults standardUserDefaults] setInteger:FONT_SIZE forKey:@"fontSize"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:nil];
+    
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    
     [super viewDidDisappear:animated];
 }
 
@@ -87,7 +128,13 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 
     if(section == 0){
-        return @"Preferences";
+        return @"Languages";
+    }else if(section == 1){
+        return @"Malayalam Typing";
+    }else if(section == 3){
+        return @"Info";
+    }else if(section == FontSizeRow){
+        return @"Text Size";
     }
     return nil;
 }
@@ -96,7 +143,7 @@
 {
 
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -104,32 +151,57 @@
 
     // Return the number of rows in the section.
     if(section == 0){
-        return [arrayPrefs count];
+        return [arrayLangs count];
         
     }
     return 1;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(indexPath.section == FontSizeRow){
+        return 72;
+        
+    }
+    return 44;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    
+    NSString *fontCell = @"";
+    if(indexPath.section == FontSizeRow) {
+        fontCell = @"YES";
+    }
+    
+    NSString *CellIdentifier = [NSString stringWithFormat:@"CEll%@", fontCell];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        if(indexPath.section == FontSizeRow) {
+            cell = [[FontSizeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }else{
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
     }
     
     if(indexPath.section == 0){
         
         
-        
+        /*
         // Configure the cell...
         NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
         cell.textLabel.text = [dict valueForKey:@"title"];
-        cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];
+        cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];*/
         
         
+        NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
+        cell.textLabel.text = [dict valueForKey:@"label"];
+        cell.detailTextLabel.text = [dict valueForKey:@"value"];
+        // Configure the cell...
         
 
     }
@@ -137,11 +209,13 @@
         cell.textLabel.text = NSLocalizedString(@"SearchHelp", @"");
         cell.detailTextLabel.text = NSLocalizedString(@"MozhiScheme", @"");;
     }
-    else{
+    else if(indexPath.section == 3){
         
         cell.textLabel.text = NSLocalizedString(@"AppInfo", @"");
         cell.detailTextLabel.text = @"";
 
+    }else{
+        
     }
         
     return cell;
@@ -195,18 +269,85 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     if(indexPath.section == 0){
-        LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
+        /*LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
         // ...
         // Pass the selected object to the new view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
+         */
+        // Navigation logic may go here. Create and push another view controller.
+        NSMutableArray *options = [[NSMutableArray alloc] initWithCapacity:4];
+        
+        NSArray *arrayAllLangs = [NSArray arrayWithObjects:kLangNone, kLangPrimary, kLangEnglishASV, kLangEnglishKJV, nil];
+        
+        NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
+        
+        
+        
+        if([[dict valueForKey:@"label"] isEqualToString:NSLocalizedString(@"Primary", @"")]){
+            
+            for(NSString *langId in arrayAllLangs){
+                
+                if(![langId isEqualToString:kLangNone]){
+                    
+                    NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(langId, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:langId] ? @"YES" : @"NO", @"isSelected", langId, @"languageid", nil];
+                    
+                    [options addObject:dict1];
+                }
+            }
+            
+            SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
+            detailViewController.optionType = 1;
+            // Pass the selected object to the new view controller.
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            
+        }else if([[dict valueForKey:@"label"] isEqualToString:NSLocalizedString(@"Secondary", @"")]){
+            
+            NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+            NSString *primaryL = [dictPref valueForKey:@"primaryLanguage"];
+            
+            
+            for(NSString *langId in arrayAllLangs){
+                
+                if(![langId isEqualToString:primaryL]){
+                    
+                    NSMutableDictionary *dict1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(langId, @""),@"display_value",[ [dict valueForKey:@"languageid"] isEqualToString:langId] ? @"YES" : @"NO", @"isSelected", langId, @"languageid", nil];
+                    
+                    [options addObject:dict1];
+                }
+            }
+            
+            
+            SelectionController *detailViewController = [[SelectionController alloc] initWithStyle:UITableViewStyleGrouped Options:options];
+            detailViewController.optionType = 2;
+            // Pass the selected object to the new view controller.
+            [self.navigationController pushViewController:detailViewController animated:YES];
+        }
+
     }
     else if(indexPath.section == 1){
         WebViewController *webViewCtrlr = [[WebViewController alloc] init];
         webViewCtrlr.title = NSLocalizedString(@"SearchHelp", @"");
         webViewCtrlr.requestURL = [[NSBundle mainBundle] pathForResource:@"lipi" ofType:@"png"];
         [self.navigationController pushViewController:webViewCtrlr animated:YES];
-    }
-    else{
+        /*
+        //https://github.com/yuvipanda/indic-typing-tool
+        WebViewController *webViewCtrlr = [[WebViewController alloc] init];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *basePath = [paths objectAtIndex:0];
+        NSString *path = [basePath stringByAppendingPathComponent:@"narayam"];
+        
+        
+        path = [path stringByAppendingPathComponent:@"libs"];
+        path = [path stringByAppendingPathComponent:@"jquery.ime"];
+        path = [path stringByAppendingPathComponent:@"examples"];
+        path = [path stringByAppendingPathComponent:@"index.html"];
+        
+        webViewCtrlr.requestURL = path;
+        [self.navigationController pushViewController:webViewCtrlr animated:YES];
+         */
+    }else if(indexPath.section == FontSizeRow) {
+    }else{
         
         Information *infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
         infoViewController.title = NSLocalizedString(@"AppInfo", @"");

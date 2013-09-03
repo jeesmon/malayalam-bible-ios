@@ -10,7 +10,7 @@
 
 @implementation MBConstants
 
-NSUInteger FONT_SIZE = 17;
+CGFloat FONT_SIZE = 17;
 
 const NSString *bmBookSection = @"BookPathSection";
 //const NSString *bmBookRow = @"BookPathRow";
@@ -28,5 +28,8 @@ NSString * const kBookNewTestament = @"New Testament";
 NSString * const kBookOldTestament = @"Old Testament";
 
 NSString * const kFontName = @"Helvetica";
+
+CGFloat statusBarHeight = 20;
+BOOL isDetailControllerVisible = YES;
 
 @end
