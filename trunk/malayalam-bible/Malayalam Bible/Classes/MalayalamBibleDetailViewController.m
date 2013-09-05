@@ -72,6 +72,7 @@ __VA_ARGS__ \
 - (void) moveToNext:(BOOL)isNext;
 - (void) loadSelections;
 - (void) removeColorsFromDB;
+-(void) presentMessageComposeViewController:(NSString *)text;//+20130905
 @end
 
 @implementation MalayalamBibleDetailViewController
@@ -1238,6 +1239,14 @@ IF_IOS5_OR_GREATER(
     
 }
 #pragma mark private methods
+//+20130905
+-(void) presentMessageComposeViewController:(NSString *)text{
+    id smsViewController = [[NSClassFromString(@"MFMessageComposeViewController") alloc] init];
+    [smsViewController setTitle:NSLocalizedString(@"MailFooter", @"footer message")];
+    [smsViewController setBody:NSLocalizedString(text,nil)];
+    [smsViewController setMessageComposeDelegate: (id)self];
+    [self presentModalViewController:smsViewController animated:YES];
+}
 - (NSString *)getSelectedVerseTitle{
     
     NSMutableArray *arrayVerseIds = [NSMutableArray arrayWithCapacity:[self.arrayToMookmark count]];
@@ -2482,6 +2491,48 @@ IF_IOS5_OR_GREATER(
             }
         }else if(actionTag == kActionSMS){
             
+            //+20130905
+            Class smsClass = (NSClassFromString(@"MFMessageComposeViewController"));
+            if(smsClass != nil)
+            {
+                if ([smsClass canSendText])
+                {
+                    
+                    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+                    NSString *secondaryL = kLangNone;
+                    if(dictPref !=nil ){
+                        secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+                    }
+                    
+                    
+                    NSMutableString *emailBody = [[NSMutableString alloc] init ];
+                    [emailBody appendFormat:@"%@", self.selectedBook.shortName];
+                    [emailBody appendFormat:@" %i", self.chapterId];
+                    
+                    NSUInteger countV = [self.arrayToMookmark count];
+                    
+                    if(countV == 0){
+                        
+                        //return ? or mail entire chapter ?
+                        
+                    }else if(countV == 1 && [secondaryL isEqualToString:kLangNone]){
+                        
+                        NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:0] intValue]];
+                        [emailBody appendFormat:@" : %@\n", [dict valueForKey:@"verse_text"]];
+                        
+                    }else{
+                        
+                        [emailBody appendFormat:@"\n"];
+                        for(NSUInteger i=0; i<countV ; i++ ){
+                            
+                            NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:i] intValue]];
+                            [emailBody appendFormat:@"%@\n", [dict valueForKey:@"verse_text"]];
+                        }
+                    }
+                    
+                    [self presentMessageComposeViewController:emailBody];
+                }
+            }
             
         }else if(actionTag == kActionBookmark){
             
@@ -3038,6 +3089,14 @@ IF_IOS5_OR_GREATER(
         [dict setValue:[NSNumber numberWithFloat:self.tableViewVerses.contentOffset.y] forKey:@"content_offset"];
     }
     
+    
+}
+
+//+20130905
+#pragma mark MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissModalViewControllerAnimated:NO];
     
 }
 @end

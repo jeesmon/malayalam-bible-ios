@@ -15,11 +15,11 @@
 #import "SearchViewController.h"
 #import "FPPopoverController.h"
 #import "CustomButton.h"
+#import <MessageUI/MFMessageComposeViewController.h>
 
 
 
-
-@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol, UIWebViewDelegate, UIScrollViewDelegate, ButtonClickDelegate>//
+@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol, UIWebViewDelegate, UIScrollViewDelegate, ButtonClickDelegate, MFMessageComposeViewControllerDelegate>//+20130905
 {
     NSMutableArray *bVerses;
     
