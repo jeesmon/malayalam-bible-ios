@@ -1667,8 +1667,7 @@ IF_IOS5_OR_GREATER(
     UIBarButtonItem *flex3 = [[UIBarButtonItem alloc]
                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                              target:nil action:nil];
-    UIBarButtonItem *flex4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                              target:nil action:nil];
+    //+20130905UIBarButtonItem *flex4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     
     
@@ -1746,7 +1745,7 @@ IF_IOS5_OR_GREATER(
                                   target:self action:@selector(doSearch:)];
     [arrayOfTools addObject:btnSearch];
 
-    [arrayOfTools addObject:flex4];
+    //+20130905[arrayOfTools addObject:flex4];
     
     //self.toolBarBottom.items = arrayOfTools;
     self.bottomToolBar.items = arrayOfTools;    
