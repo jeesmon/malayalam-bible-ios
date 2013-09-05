@@ -778,7 +778,7 @@ const CGFloat Line_Height = 1.2;
                     //[mString appendFormat:@"<a href=\"melt://chapterClicked:%i\">%i. </a><div id=\"%@\"><FONT id=\"%@\" %@>%@</FONT></div>", [verses count],verseId,divid,fontid, fontclass, verse];
                     //[mString appendFormat:@"<div id=\"%@\"><a href=\"melt://chapterClicked:%i\"><b>%i. </b></a><FONT id=\"%@\" %@>%@</FONT></div>", divid,[verses count],verseId,fontid, fontclass, verse];
                     
-                    [mString appendFormat:@"<div id=\"%@\"><a id=\"%@\" href=\"melt://chapterClicked:%i\">%i. </a><FONT id=\"%@\"  colorcode=\"\" bookmarkcolor=\"\" isselected=\"\" onClick=\"window.open('melt://verseClicked:%i')\">%@</FONT></div>", divid,noteid,[verses count],verseId,fontid, [verses count], verse];
+                    [mString appendFormat:@"<div id=\"%@\"><a id=\"%@\" href=\"melt://chapterClicked:%i\">%i. </a><FONT id=\"%@\"  colorcode=\"\" bookmarkcolor=\"\" isselected=\"\" onClick=\"window.open('melt://verseClicked:%i')\">%@</FONT></div><hr>", divid,noteid,[verses count],verseId,fontid, [verses count], verse];//+20130905 added <hr>
                     //Line_Height style=\"line-height:%fem;\"
                     
                     [verses addObject:dictVerse];
