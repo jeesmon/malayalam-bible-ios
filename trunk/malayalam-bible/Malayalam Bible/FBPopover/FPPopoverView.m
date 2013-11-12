@@ -9,6 +9,7 @@
 
 #import "FPPopoverView.h"
 #import "ARCMacros.h"
+#import "UIDeviceHardware.h"
 
 #define FP_POPOVER_ARROW_HEIGHT 20.0
 #define FP_POPOVER_ARROW_BASE 20.0
@@ -57,26 +58,50 @@
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = YES;
         
-        self.layer.shadowOpacity = 0.7;
-        self.layer.shadowRadius = 5;
-        self.layer.shadowOffset = CGSizeMake(-3, 3);
+        
 
         //to get working the animations
         self.contentMode = UIViewContentModeRedraw;
 
-        //3d border default is on
-        self.draw3dBorder = YES;
-        
-        //border
-        self.border = YES;
         
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:15];
         
-        self.tint = FPPopoverDefaultTint;
+        if([UIDeviceHardware isOS7Device]){
+            
+             _titleLabel.textColor = [UIColor blackColor];
+            
+            //self.layer.shadowOpacity = 0.7;
+            //self.layer.shadowRadius = 5;
+            //self.layer.shadowOffset = CGSizeMake(-3, 3);
+            
+            //3d border default is on
+            self.draw3dBorder = NO;
+            
+            //border
+            self.border = NO;
+            
+            self.tint = FPPopoverWhiteTint;
+            
+        }else{
+            
+            self.layer.shadowOpacity = 0.7;
+            self.layer.shadowRadius = 5;
+            self.layer.shadowOffset = CGSizeMake(-3, 3);
+            
+            //3d border default is on
+            self.draw3dBorder = YES;
+            
+            //border
+            self.border = YES;
+            
+            self.tint = FPPopoverDefaultTint;
+        }
+
+        
         
         [self addSubview:_titleLabel];
         [self setupViews];
@@ -128,7 +153,8 @@
     CGFloat ah = FP_POPOVER_ARROW_HEIGHT; //is the height of the triangle of the arrow
     CGFloat aw = FP_POPOVER_ARROW_BASE/2.0; //is the 1/2 of the base of the arrow
     CGFloat radius = FP_POPOVER_RADIUS;
-    CGFloat b = borderWidth;
+    CGFloat b = 0;//borderWidth;
+    
     
     //NO BORDER
     if(self.border == NO) {
@@ -266,6 +292,7 @@
 
 -(CGGradientRef)newGradient
 {
+    
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
     // make a gradient
@@ -362,9 +389,16 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();    
     CGContextSaveGState(ctx);
     
+    BOOL isos7 = NO;
+    if([UIDeviceHardware isOS7Device]){
+        isos7 = YES;
+    }
+    CGFloat widh = 2.0;
+    if(isos7){
+        widh = 0.5;
+    }
     //content fill
-    CGPathRef contentPath = [self newContentPathWithBorderWidth:2.0 arrowDirection:_arrowDirection];
-    
+    CGPathRef contentPath = [self newContentPathWithBorderWidth:widh arrowDirection:_arrowDirection];
     
     CGContextAddPath(ctx, contentPath);
     CGContextClip(ctx);
@@ -384,8 +418,16 @@
     }
 
 
+    if(isos7){
+        
+        //start = CGPointMake(0, 0);
+       // end = CGPointMake(0.0,20);
+        
+    }else{
+        CGContextDrawLinearGradient(ctx, gradient, start, end, 0);
+    }
     
-    CGContextDrawLinearGradient(ctx, gradient, start, end, 0);
+    
     
     CGGradientRelease(gradient);
     //fill the other part of path
@@ -410,29 +452,38 @@
         CGContextSetRGBFillColor(ctx, 1, 1, 1, 1.0);
     }
 
+    if(isos7){
+        CGContextFillRect(ctx, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
+    }else{
+        
+        
+        CGContextFillRect(ctx, CGRectMake(0, end.y, self.bounds.size.width, self.bounds.size.height-end.y));
+        //internal border
+        CGContextBeginPath(ctx);
+         CGContextAddPath(ctx, contentPath);
+         CGContextSetRGBStrokeColor(ctx, 0.7, 0.7, 0.7, 1.0);
+         CGContextSetLineWidth(ctx, 1);
+         CGContextSetLineCap(ctx,kCGLineCapRound);
+         CGContextSetLineJoin(ctx, kCGLineJoinRound);
+         CGContextStrokePath(ctx);
+         CGPathRelease(contentPath);
+         
+         //external border
+         CGPathRef externalBorderPath = [self newContentPathWithBorderWidth:1.0 arrowDirection:_arrowDirection];
+         CGContextBeginPath(ctx);
+         CGContextAddPath(ctx, externalBorderPath);
+         CGContextSetRGBStrokeColor(ctx, 0.4, 0.4, 0.4, 1.0);
+         CGContextSetLineWidth(ctx, 1);
+         CGContextSetLineCap(ctx,kCGLineCapRound);
+         CGContextSetLineJoin(ctx, kCGLineJoinRound);
+         CGContextStrokePath(ctx);
+         CGPathRelease(externalBorderPath);
+
+    }
     
-    CGContextFillRect(ctx, CGRectMake(0, end.y, self.bounds.size.width, self.bounds.size.height-end.y));
-    //internal border
-    CGContextBeginPath(ctx);
-    CGContextAddPath(ctx, contentPath);
-    CGContextSetRGBStrokeColor(ctx, 0.7, 0.7, 0.7, 1.0);
-    CGContextSetLineWidth(ctx, 1);
-    CGContextSetLineCap(ctx,kCGLineCapRound);
-    CGContextSetLineJoin(ctx, kCGLineJoinRound);
-    CGContextStrokePath(ctx);
-    CGPathRelease(contentPath);
-
-    //external border
-    CGPathRef externalBorderPath = [self newContentPathWithBorderWidth:1.0 arrowDirection:_arrowDirection];
-    CGContextBeginPath(ctx);
-    CGContextAddPath(ctx, externalBorderPath);
-    CGContextSetRGBStrokeColor(ctx, 0.4, 0.4, 0.4, 1.0);
-    CGContextSetLineWidth(ctx, 1);
-    CGContextSetLineCap(ctx,kCGLineCapRound);
-    CGContextSetLineJoin(ctx, kCGLineJoinRound);
-    CGContextStrokePath(ctx);
-    CGPathRelease(externalBorderPath);
-
+    
+    
+    
     //3D border of the content view
     if(self.draw3dBorder) {
         CGRect cvRect = _contentView.frame;
@@ -453,12 +504,18 @@
 {
     //content posizion and size
     CGRect contentRect = _contentView.frame;
+    
+    CGFloat incre = 0.0;
+    if([UIDeviceHardware isOS7Device]){
+        
+        incre = 5.0;
+    }
 	
     if(_arrowDirection == FPPopoverArrowDirectionUp)
     {
         contentRect.origin = CGPointMake(10, 60);  
         contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-70);
-        _titleLabel.frame = CGRectMake(10, 30, self.bounds.size.width-20, 20);    
+        _titleLabel.frame = CGRectMake(10, 30+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
 			contentRect.origin = CGPointMake(10, 30);
 			contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-40);
@@ -468,7 +525,7 @@
     {
         contentRect.origin = CGPointMake(10, 40);        
         contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-70);
-        _titleLabel.frame = CGRectMake(10, 10, self.bounds.size.width-20, 20);
+        _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
 			contentRect.origin = CGPointMake(10, 10); 
 			contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-40);
@@ -480,7 +537,7 @@
     {
         contentRect.origin = CGPointMake(10, 40);        
         contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);
-        _titleLabel.frame = CGRectMake(10, 10, self.bounds.size.width-20, 20);    
+        _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
 			 contentRect.origin = CGPointMake(10, 10);
 			contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-20);
@@ -491,7 +548,7 @@
     {
         contentRect.origin = CGPointMake(10 + FP_POPOVER_ARROW_HEIGHT, 40);        
         contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);
-        _titleLabel.frame = CGRectMake(10, 10, self.bounds.size.width-20, 20); 
+        _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
 			contentRect.origin = CGPointMake(10+ FP_POPOVER_ARROW_HEIGHT, 10);
 			contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-20);
@@ -502,7 +559,7 @@
     {
         contentRect.origin = CGPointMake(10, 40);
         contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-50);
-        _titleLabel.frame = CGRectMake(10, 10, self.bounds.size.width-20, 20);
+        _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
 			contentRect.origin = CGPointMake(10, 30);
 			contentRect.size = CGSizeMake(self.bounds.size.width-20, self.bounds.size.height-40);

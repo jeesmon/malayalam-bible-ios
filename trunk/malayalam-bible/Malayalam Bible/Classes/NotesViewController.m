@@ -100,8 +100,10 @@
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
+     if(self.arrayNotes.count == 0){
     return 300;
+     }
+    return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

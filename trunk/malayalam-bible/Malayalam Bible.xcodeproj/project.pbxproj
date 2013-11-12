@@ -48,6 +48,7 @@
 		037DB643164938FB004C0554 /* BookmarkAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 037DB642164938FB004C0554 /* BookmarkAddViewController.m */; };
 		038A91B5152AE1C900F03607 /* zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B1152AE1C900F03607 /* zoom_in.png */; };
 		038A91B7152AE1C900F03607 /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 038A91B3152AE1C900F03607 /* zoom_out.png */; };
+		03951C30182D148800529ABA /* VerseEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03951C2F182D148800529ABA /* VerseEditViewController.m */; };
 		039F5C89173297B100A58CCB /* left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F5C87173297B100A58CCB /* left-arrow.png */; };
 		039F5C8A173297B100A58CCB /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 039F5C88173297B100A58CCB /* right-arrow.png */; };
 		03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */ = {isa = PBXBuildFile; fileRef = 03B0245E14C53BEE00D40DE4 /* malayalam-bible.db */; };
@@ -117,6 +118,18 @@
 		8FD56BC317CF996A00B25023 /* FontSizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD56BC217CF996A00B25023 /* FontSizeCell.m */; };
 		8FE23FE617873D5E00066DD6 /* UIButtonGlossy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE23FE517873D5E00066DD6 /* UIButtonGlossy.m */; };
 		8FE6A050178B135E00D9E5A3 /* SeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6A04F178B135E00D9E5A3 /* SeparatorView.m */; };
+		8FF6341117FC5AAC006C8A1B /* ios7_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340517FC5AAC006C8A1B /* ios7_copy.png */; };
+		8FF6341217FC5AAC006C8A1B /* ios7_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340617FC5AAC006C8A1B /* ios7_copy@2x.png */; };
+		8FF6341317FC5AAC006C8A1B /* ios7_envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340717FC5AAC006C8A1B /* ios7_envelope.png */; };
+		8FF6341417FC5AAC006C8A1B /* ios7_envelope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340817FC5AAC006C8A1B /* ios7_envelope@2x.png */; };
+		8FF6341517FC5AAC006C8A1B /* ios7_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340917FC5AAC006C8A1B /* ios7_facebook.png */; };
+		8FF6341617FC5AAC006C8A1B /* ios7_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340A17FC5AAC006C8A1B /* ios7_facebook@2x.png */; };
+		8FF6341717FC5AAC006C8A1B /* ios7_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340B17FC5AAC006C8A1B /* ios7_mail.png */; };
+		8FF6341817FC5AAC006C8A1B /* ios7_mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340C17FC5AAC006C8A1B /* ios7_mail@2x.png */; };
+		8FF6341917FC5AAC006C8A1B /* ios7_readlater.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340D17FC5AAC006C8A1B /* ios7_readlater.png */; };
+		8FF6341A17FC5AAC006C8A1B /* ios7_readlater@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340E17FC5AAC006C8A1B /* ios7_readlater@2x.png */; };
+		8FF6341B17FC5AAC006C8A1B /* ios7_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6340F17FC5AAC006C8A1B /* ios7_twitter.png */; };
+		8FF6341C17FC5AAC006C8A1B /* ios7_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF6341017FC5AAC006C8A1B /* ios7_twitter@2x.png */; };
 		8FF7338617872F360015D281 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF7338117872F360015D281 /* FPPopoverController.m */; };
 		8FF7338717872F360015D281 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF7338317872F360015D281 /* FPPopoverView.m */; };
 		8FF7338817872F360015D281 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF7338517872F360015D281 /* FPTouchView.m */; };
@@ -176,6 +189,8 @@
 		037DB642164938FB004C0554 /* BookmarkAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkAddViewController.m; sourceTree = "<group>"; };
 		038A91B1152AE1C900F03607 /* zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_in.png; sourceTree = "<group>"; };
 		038A91B3152AE1C900F03607 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
+		03951C2E182D148800529ABA /* VerseEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerseEditViewController.h; sourceTree = "<group>"; };
+		03951C2F182D148800529ABA /* VerseEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerseEditViewController.m; sourceTree = "<group>"; };
 		039F5C87173297B100A58CCB /* left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left-arrow.png"; sourceTree = "<group>"; };
 		039F5C88173297B100A58CCB /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
 		03AF1FC515A8437D001BA50D /* MBProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProtocol.h; sourceTree = "<group>"; };
@@ -287,6 +302,18 @@
 		8FE23FE517873D5E00066DD6 /* UIButtonGlossy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIButtonGlossy.m; sourceTree = "<group>"; };
 		8FE6A04E178B135E00D9E5A3 /* SeparatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeparatorView.h; sourceTree = "<group>"; };
 		8FE6A04F178B135E00D9E5A3 /* SeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeparatorView.m; sourceTree = "<group>"; };
+		8FF6340517FC5AAC006C8A1B /* ios7_copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_copy.png; sourceTree = "<group>"; };
+		8FF6340617FC5AAC006C8A1B /* ios7_copy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_copy@2x.png"; sourceTree = "<group>"; };
+		8FF6340717FC5AAC006C8A1B /* ios7_envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_envelope.png; sourceTree = "<group>"; };
+		8FF6340817FC5AAC006C8A1B /* ios7_envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_envelope@2x.png"; sourceTree = "<group>"; };
+		8FF6340917FC5AAC006C8A1B /* ios7_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_facebook.png; sourceTree = "<group>"; };
+		8FF6340A17FC5AAC006C8A1B /* ios7_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_facebook@2x.png"; sourceTree = "<group>"; };
+		8FF6340B17FC5AAC006C8A1B /* ios7_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_mail.png; sourceTree = "<group>"; };
+		8FF6340C17FC5AAC006C8A1B /* ios7_mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_mail@2x.png"; sourceTree = "<group>"; };
+		8FF6340D17FC5AAC006C8A1B /* ios7_readlater.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_readlater.png; sourceTree = "<group>"; };
+		8FF6340E17FC5AAC006C8A1B /* ios7_readlater@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_readlater@2x.png"; sourceTree = "<group>"; };
+		8FF6340F17FC5AAC006C8A1B /* ios7_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios7_twitter.png; sourceTree = "<group>"; };
+		8FF6341017FC5AAC006C8A1B /* ios7_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_twitter@2x.png"; sourceTree = "<group>"; };
 		8FF7337F17872F360015D281 /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		8FF7338017872F360015D281 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		8FF7338117872F360015D281 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
@@ -294,8 +321,8 @@
 		8FF7338317872F360015D281 /* FPPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverView.m; sourceTree = "<group>"; };
 		8FF7338417872F360015D281 /* FPTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPTouchView.h; sourceTree = "<group>"; };
 		8FF7338517872F360015D281 /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
-		8FF7338917872FEE0015D281 /* ActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionViewController.h; path = ../Classes/ActionViewController.h; sourceTree = "<group>"; };
-		8FF7338A17872FEE0015D281 /* ActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionViewController.m; path = ../Classes/ActionViewController.m; sourceTree = "<group>"; };
+		8FF7338917872FEE0015D281 /* ActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
+		8FF7338A17872FEE0015D281 /* ActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
 		8FF7338B17872FEE0015D281 /* ActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionViewController.xib; path = ../Classes/ActionViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -366,6 +393,15 @@
 				03DA7A5D17C733E10067F9DA /* NotesViewController.m */,
 			);
 			name = Bookmarks/Notes;
+			sourceTree = "<group>";
+		};
+		03951C2D182D146900529ABA /* Easter Egg */ = {
+			isa = PBXGroup;
+			children = (
+				03951C2E182D148800529ABA /* VerseEditViewController.h */,
+				03951C2F182D148800529ABA /* VerseEditViewController.m */,
+			);
+			name = "Easter Egg";
 			sourceTree = "<group>";
 		};
 		03BA84B515022AAD0089ABCE /* varamozhi */ = {
@@ -515,6 +551,7 @@
 		8FB58B5C14A246D0009226AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				03951C2D182D146900529ABA /* Easter Egg */,
 				8FD56BC017CF988400B25023 /* CustomComponents */,
 				033CA20016F07E7F00519185 /* Bookmarks/Notes */,
 				0331EB741647C56A00D76D87 /* View Controllers */,
@@ -535,9 +572,19 @@
 		8FB58B6E14A246D0009226AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8FF6340517FC5AAC006C8A1B /* ios7_copy.png */,
+				8FF6340617FC5AAC006C8A1B /* ios7_copy@2x.png */,
+				8FF6340717FC5AAC006C8A1B /* ios7_envelope.png */,
+				8FF6340817FC5AAC006C8A1B /* ios7_envelope@2x.png */,
+				8FF6340917FC5AAC006C8A1B /* ios7_facebook.png */,
+				8FF6340A17FC5AAC006C8A1B /* ios7_facebook@2x.png */,
+				8FF6340B17FC5AAC006C8A1B /* ios7_mail.png */,
+				8FF6340C17FC5AAC006C8A1B /* ios7_mail@2x.png */,
+				8FF6340D17FC5AAC006C8A1B /* ios7_readlater.png */,
+				8FF6340E17FC5AAC006C8A1B /* ios7_readlater@2x.png */,
+				8FF6340F17FC5AAC006C8A1B /* ios7_twitter.png */,
+				8FF6341017FC5AAC006C8A1B /* ios7_twitter@2x.png */,
 				039F5C88173297B100A58CCB /* right-arrow.png */,
-				8FF7338917872FEE0015D281 /* ActionViewController.h */,
-				8FF7338A17872FEE0015D281 /* ActionViewController.m */,
 				8FF7338B17872FEE0015D281 /* ActionViewController.xib */,
 				0378D0641795A4BD00967604 /* facebook.png */,
 				0378D0651795A4BD00967604 /* facebook@2x.png */,
@@ -587,6 +634,8 @@
 		8FD56BC017CF988400B25023 /* CustomComponents */ = {
 			isa = PBXGroup;
 			children = (
+				8FF7338917872FEE0015D281 /* ActionViewController.h */,
+				8FF7338A17872FEE0015D281 /* ActionViewController.m */,
 				030EFE9617D62B9A003A70A9 /* CustomView.h */,
 				030EFE9717D62B9A003A70A9 /* CustomView.m */,
 				8FE6A04E178B135E00D9E5A3 /* SeparatorView.h */,
@@ -649,7 +698,7 @@
 		0FFE507A1450636E00BC85EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 0FFE507D1450636E00BC85EE /* Build configuration list for PBXProject "Malayalam Bible" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -682,12 +731,14 @@
 				0F24AB9414803B130096403E /* Icon-72.png in Resources */,
 				0F24AB96148040360096403E /* Default-Portrait.png in Resources */,
 				0F24AB98148043D90096403E /* Default-Landscape.png in Resources */,
+				8FF6341517FC5AAC006C8A1B /* ios7_facebook.png in Resources */,
 				8F7BD9AD1499045600205D28 /* Localizable.strings in Resources */,
 				8FB58B7C14A246D0009226AE /* Chapters.png in Resources */,
 				8FB58B7D14A246D0009226AE /* next.png in Resources */,
 				8FB58B7E14A246D0009226AE /* next@2x.png in Resources */,
 				8FB58B7F14A246D0009226AE /* previous.png in Resources */,
 				8FB58B8014A246D0009226AE /* previous@2x.png in Resources */,
+				8FF6341617FC5AAC006C8A1B /* ios7_facebook@2x.png in Resources */,
 				03D3FFE914C02D8E004A8BE8 /* Settings.png in Resources */,
 				03B0245F14C53BEE00D40DE4 /* malayalam-bible.db in Resources */,
 				0F84913814F2E8940057ABE6 /* Gear.png in Resources */,
@@ -698,6 +749,7 @@
 				038A91B7152AE1C900F03607 /* zoom_out.png in Resources */,
 				0F95DFE31613628700057211 /* Default-568h@2x.png in Resources */,
 				0F95DFE616136BE600057211 /* zoom_in@2x.png in Resources */,
+				8FF6341A17FC5AAC006C8A1B /* ios7_readlater@2x.png in Resources */,
 				0F95DFE716136BE600057211 /* zoom_out@2x.png in Resources */,
 				033A400716F19EB6009D6023 /* down-arrow.png in Resources */,
 				03041490172014430011D532 /* next-white.png in Resources */,
@@ -707,21 +759,30 @@
 				039F5C8A173297B100A58CCB /* right-arrow.png in Resources */,
 				03243B391733F176008CFB7F /* copy.png in Resources */,
 				03243B3A1733F176008CFB7F /* copy@2x.png in Resources */,
+				8FF6341117FC5AAC006C8A1B /* ios7_copy.png in Resources */,
 				03243B3B1733F176008CFB7F /* envelope.png in Resources */,
 				03243B3C1733F176008CFB7F /* envelope@2x.png in Resources */,
 				03243B3D1733F176008CFB7F /* info.png in Resources */,
 				03243B3E1733F176008CFB7F /* info@2x.png in Resources */,
+				8FF6341317FC5AAC006C8A1B /* ios7_envelope.png in Resources */,
+				8FF6341917FC5AAC006C8A1B /* ios7_readlater.png in Resources */,
 				03243B3F1733F176008CFB7F /* mail.png in Resources */,
 				03243B401733F176008CFB7F /* mail@2x.png in Resources */,
+				8FF6341217FC5AAC006C8A1B /* ios7_copy@2x.png in Resources */,
 				03243B411733F176008CFB7F /* more.png in Resources */,
+				8FF6341B17FC5AAC006C8A1B /* ios7_twitter.png in Resources */,
 				03243B421733F176008CFB7F /* more@2x.png in Resources */,
 				03243B431733F176008CFB7F /* question_mark.png in Resources */,
 				03243B441733F176008CFB7F /* question_mark@2x.png in Resources */,
+				8FF6341817FC5AAC006C8A1B /* ios7_mail@2x.png in Resources */,
 				03243B451733F176008CFB7F /* remove.png in Resources */,
+				8FF6341717FC5AAC006C8A1B /* ios7_mail.png in Resources */,
 				03243B461733F176008CFB7F /* remove@2x.png in Resources */,
+				8FF6341C17FC5AAC006C8A1B /* ios7_twitter@2x.png in Resources */,
 				03243B491733F414008CFB7F /* readlater.png in Resources */,
 				03243B4A1733F414008CFB7F /* readlater@2x.png in Resources */,
 				0316038817369FAE00ED3BE5 /* notes.png in Resources */,
+				8FF6341417FC5AAC006C8A1B /* ios7_envelope@2x.png in Resources */,
 				0316038917369FAE00ED3BE5 /* notes@2x.png in Resources */,
 				03DD68701738C4FE008A5FD7 /* Default.png in Resources */,
 				8FF7338D17872FEE0015D281 /* ActionViewController.xib in Resources */,
@@ -786,6 +847,7 @@
 				8FB6BFEA1798ED6A00A090AA /* Folders.m in Sources */,
 				8F64F89F17A034B0007794C4 /* CellSearch.m in Sources */,
 				031E6C3D17C4EA9100FB9E2C /* NotesAddViewController.m in Sources */,
+				03951C30182D148800529ABA /* VerseEditViewController.m in Sources */,
 				03DA7A5E17C733E10067F9DA /* NotesViewController.m in Sources */,
 				03205A6917CC78B200802605 /* Notes.m in Sources */,
 				03205A6C17CC8CC400802605 /* ColordVerses.m in Sources */,
@@ -820,13 +882,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -838,11 +901,15 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -853,9 +920,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -865,9 +933,12 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -883,26 +954,6 @@
 		0FFE50AE1450636E00BC85EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COMPRESS_PNG_FILES = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
-				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 armv7s";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		0FFE50AF1450636E00BC85EE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
 				COMPRESS_PNG_FILES = NO;
@@ -912,7 +963,26 @@
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6BAA2741-129B-4D3E-8AAC-C01189C16BD3";
+				PROVISIONING_PROFILE = "CC1B3E56-F74F-41B9-8BA1-15E492D932D8";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0FFE50AF1450636E00BC85EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
+				COMPRESS_PNG_FILES = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Malayalam Bible/Malayalam Bible-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CC1B3E56-F74F-41B9-8BA1-15E492D932D8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

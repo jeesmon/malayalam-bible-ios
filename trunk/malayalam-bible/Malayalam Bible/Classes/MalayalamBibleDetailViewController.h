@@ -17,9 +17,9 @@
 #import "CustomButton.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 
+@class TintedImageView;
 
-
-@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol, UIWebViewDelegate, UIScrollViewDelegate, ButtonClickDelegate, MFMessageComposeViewControllerDelegate>//+20130905
+@interface MalayalamBibleDetailViewController : UIViewController <UISplitViewControllerDelegate, PopOverDelegate, MFMailComposeViewControllerDelegate, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, MBProtocol, UIWebViewDelegate, UIScrollViewDelegate, ButtonClickDelegate, MFMessageComposeViewControllerDelegate, FPPopoverControllerDelegate, UIPopoverControllerDelegate>//+20130905
 {
     NSMutableArray *bVerses;
     
@@ -54,7 +54,19 @@
     NSArray *bookMarkedObjs;
     NSArray *colordObjs;
     
+    TintedImageView *imgArrowbooks;
+    TintedImageView *imgArrowChapter;
+    TintedImageView *imgArrowPrevious;
+    TintedImageView *imgArrowNext;
+    
+    
 }
+
+@property (strong, nonatomic) TintedImageView *imgArrowbooks;
+@property (strong, nonatomic) TintedImageView *imgArrowChapter;
+@property (strong, nonatomic) TintedImageView *imgArrowPrevious;
+@property (strong, nonatomic) TintedImageView *imgArrowNext;
+
 @property (strong, nonatomic) NSArray *bookMarkedObjs;
 @property (strong, nonatomic) NSArray *colordObjs;
 

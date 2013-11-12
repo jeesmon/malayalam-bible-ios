@@ -31,11 +31,73 @@ const CGFloat Line_Height = 1.2;
 -(NSString *)getdbpath{
     
     if([ApplicationInfo isMalayalamApp]){
-        return [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+        
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        if([def valueForKey:@"easteregg"]){
+            
+            BOOL success;
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *error;
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"malayalam-bible.db"];
+            
+            success = [fileManager fileExistsAtPath:dbPath];
+            
+            if (!success){
+                
+                // The writable database does not exist, so copy the default to the appropriate location.
+                NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"malayalam-bible.db"];
+                success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
+                if (!success) {
+                    NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+                }
+            }
+            return dbPath;
+            
+        }else{
+            
+            return [[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+        }
+        
+        
     }else{
         return [[NSBundle mainBundle] pathForResource:@"kannada-bible" ofType:@"db" inDirectory:@"/"];
     }
     
+}
+- (BOOL) executeQuery:(NSString *)sql{
+    
+    NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
+    const char *dbpath = [pathname UTF8String];
+    sqlite3 *bibleDB;
+    
+    
+    
+    //if (sqlite3_open_v2(dbpath, &bibleDB, SQLITE_OPEN_CREATE|SQLITE_OPEN_READWRITE, NULL) == SQLITE_OK){
+    if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
+        
+            
+            NSInteger retVal = sqlite3_exec(bibleDB, [sql UTF8String], NULL, NULL, NULL);
+        
+            if(retVal == SQLITE_DONE || retVal == SQLITE_OK){
+                
+                sqlite3_close(bibleDB);
+                return YES;
+            }else{
+                
+                MBLog(@"SQL error: %s\n", sqlite3_errmsg(bibleDB));
+            }
+        
+        
+    }else{
+        MBLog(@"SQL error: %s\n", sqlite3_errmsg(bibleDB));
+    }
+    
+    
+    
+    return NO;
 }
 //+20121017
 - (NSDictionary *)fetchBookNames{
@@ -587,40 +649,16 @@ const CGFloat Line_Height = 1.2;
         
     NSMutableArray *verses = [NSMutableArray array];
     
-    /*sqlite3 *bibleDB;
-    BOOL success;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"malayalam-english-bible.db"];
-	
     
-    success = [fileManager fileExistsAtPath:dbPath];
-	
-    if (!success){
-		
-		// The writable database does not exist, so copy the default to the appropriate location.
-		NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"malayalam-english-bible.db"];
-		success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
-		if (!success) {
-			NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
-		}
-	}
-    
-	if (sqlite3_open([dbPath UTF8String], &bibleDB) == SQLITE_OK) {*/
     NSString *pathname = [self getdbpath];//[[NSBundle mainBundle] pathForResource:@"malayalam-bible" ofType:@"db" inDirectory:@"/"];
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB = nil;
     
-    NSMutableString *functions = [NSMutableString stringWithString:@" var newClassName; var i; var isExist; var classes; function scrollToDivId(divid){   var ele = document.getElementById(divid); window.scrollTo(ele.offsetLeft,ele.offsetTop);} function getPosition(divid){ var ele = document.getElementById(divid); return ele.offsetTop; }"];//el.style.color=\"#FF0000\";
+    NSMutableString *functions = [NSMutableString stringWithString:@" var newClassName; var i; var isExist; var classes; function scrollToDivId(divid){   var ele = document.getElementById(divid); window.scrollTo(ele.offsetLeft,ele.offsetTop);} function scrollToTop(){ window.scrollTo(0,0);} function getPosition(divid){ var ele = document.getElementById(divid); return ele.offsetTop; }"];//el.style.color=\"#FF0000\";
     //el.style.fontWeight == 'bold' ? 'normal' : 'bold';
     
     NSString *selectionClass = @"lightgray";
     
-    //[functions appendFormat:@" function makeBold(noteid){var el = document.getElementById(noteid);el.style.fontWeight =  'bold'; } function makeNormal(noteid){var el = document.getElementById(noteid);el.style.fontWeight = 'normal';}  function toggleSelection(fontid) {  newClassName = \"\"; isExist = false; classes = document.getElementById(fontid).className.split(\" \");for(i = 0; i < classes.length; i++) {if(classes[i] == \"%@\") { isExist = true; break; }} if(isExist){ for(i = 0; i < classes.length; i++) { if(classes[i] != \"%@\") {newClassName += classes[i] + \" \";} } document.getElementById(fontid).className = newClassName;}else{if(classes.length == 0){document.getElementById(fontid).className = \"%@\";}else{ document.getElementById(fontid).className += (\" \"+%@);} } alert(document.getElementById(fontid).className)}", selectionClass, selectionClass, selectionClass, selectionClass];
-    
-    //[functions appendFormat:@" function makeBold(noteid){var el = document.getElementById(noteid);el.style.fontWeight =  'bold'; } function makeNormal(noteid){var el = document.getElementById(noteid);el.style.fontWeight = 'normal';}  function toggleSelection(fontid) {   var elem = document.getElementById(fontid); if(elem.className.length > 0){ if(elem.className == \"lightgray\"){ if(elem.jijol.length>0){elem.className = elem.jijol;}else{elem.className =\"\";} }else{elem.jijol=elem.className; elem.className = \"lightgray\";}  }else{elem.className = \"lightgray\";}  ;}"];
     
     [functions appendFormat:@" function makeBold(noteid){var el = document.getElementById(noteid);el.style.fontWeight =  'bold'; } function makeNormal(noteid){var el = document.getElementById(noteid);el.style.fontWeight = 'normal';}  function toggleSelection(fontid) {  var elem = document.getElementById(fontid); if(elem.isselected == \"yes\"){ if(elem.colorcode){elem.style.background = elem.colorcode; }else if(elem.bookmarkcolor){elem.style.background = elem.bookmarkcolor;}else{elem.style.background=\"\"; elem.isselected = \"no\"; } elem.isselected = undefined;}else{elem.isselected = \"yes\"; elem.style.background =\"%@\";} }", selectionClass];
     
@@ -631,19 +669,6 @@ const CGFloat Line_Height = 1.2;
     [functions appendFormat:@" function selectBMVerse(fontid, colorvalue){ var elem = document.getElementById(fontid); elem.className = \"underline\"; } "];
     [functions appendFormat:@" function deSelectVerse(fontid){ var elem = document.getElementById(fontid); elem.colorcode = undefined; elem.bookmarkcolor=undefined;elem.isselected = \"no\";elem.style.background = \"\";} "];
     
-    //[functions appendFormat:@" function selectVerse(fontid, colorclass){ document.getElementById(fontid).className += (\" \"+colorclass); } "];
-    
-    //[functions appendFormat:@" function selectBMVerse(fontid, colorvalue){ document.getElementById(fontid).className += (\" \"+color2); } "];
-    
-    
-    //[functions appendFormat:@" function selectVerse(fontid, colorclass){ document.getElementById(fontid).style.backgroundColor = colorclass; } "];
-    //[functions appendFormat:@" function selectVerse(fontid, colorclass){ var el = document.getElementById(fontid);el.style.backgroundColor=colorclass;  } "];
-    //[functions appendFormat:@" function selectVerse(fontid, colorclass){ $('#'+fontid).addClass(colorclass); } function testj(input){ var replacement = $narayam.transliterate( input, '', '' ); return replacement;  } function testj2(input){ return $.narayam.testj4();  }  function testj1(input){ return testj3();  }"];
-    //document.getElementById(fontid).className = colorclass;
-    
-    //NSString *jsssource = @"<script src=\"libs/jquery-1.8.3.min.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"libs/jquery.ime/src/jquery.ime.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"libs/jquery.ime/src/jquery.ime.preferences.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"libs/jquery.ime/src/jquery.ime.selector.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"libs/jquery.ime/src/jquery.ime.inputmethods.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"javascripts/main.js/bundled_js.js\" type=\"text/javascript\" language=\"javascript\"></script>"];
-    //NSString *jsssource = @"<script src=\"libs/jquery-1.8.3.min.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"resources/ext.narayam.core/ext.narayam.core.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"resources/ext.narayam.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"resources/ext.narayam.rules.ml-inscript.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"resources/ext.narayam.rules.ml.js\" type=\"text/javascript\" language=\"javascript\"></script><script src=\"resources/osk/ext.narayam.osk.js\" type=\"text/javascript\" language=\"javascript\"></script>";
-    //dashed #5b5b5b
     
     NSString *jsssource = @"<meta name=”viewport” content=”width=device-width” />";
     
@@ -652,26 +677,16 @@ const CGFloat Line_Height = 1.2;
     
     if(appColor == nil){
         if([UIDeviceHardware isOS7Device]){
-            //os7MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            //os7appColor = [self getHexStringForColor:appDelegate.window.tintColor];
+            MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
+            appColor = [self getHexStringForColor:appDelegate.window.tintColor];
         }else{
             appColor = @"#000000";
         }
         //[def setValue:color1 forKey:kStoreColor1];
         //[def synchronize];
     }
-    NSString *color1 = [MBUtils getHighlightColorof:kStoreColor1];//[def valueForKey:kStoreColor1];
     
-    NSString *color2 = [MBUtils getHighlightColorof:kStoreColor2];//[def valueForKey:kStoreColor2];
-    
-    NSString *color3 = [MBUtils getHighlightColorof:kStoreColor3];//[def valueForKey:kStoreColor3];
-    
-    NSString *color4 = [MBUtils getHighlightColorof:kStoreColor4];//[def valueForKey:kStoreColor4];
-    
-    NSString *color5 = [MBUtils getHighlightColorof:kStoreColor5];//[def valueForKey:kStoreColor5];
-    //NSMutableString *mString = [NSMutableString stringWithFormat:@"<html><head> %@ <script type=\"text/javascript\" language=\"JavaScript\"> %@ </script><style type=\"text/css\">html {-webkit-touch-callout: none;} .underline{border-bottom: 1px dashed %@;text-decoration: none;display:inline;background-color:transparent;} body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;color:#404040;} .yellow { background-color: yellow } .lightgray { background-color: lightgray } .nocolor { background-color:transparent; } .color1 { background-color: %@ }  .color2 { background-color: %@ } .color3 { background-color: %@ } .color4 { background-color: %@ } .color5 { background-color: %@ }</style><body>", jsssource, functions,appColor, kFontName, [NSNumber numberWithInt:FONT_SIZE], color1, color2, color3, color4, color5];
-    
-    NSMutableString *mString = [NSMutableString stringWithFormat:@"<html><head> %@ <script type=\"text/javascript\" language=\"JavaScript\"> %@ </script><style type=\"text/css\">html {-webkit-touch-callout: none;} .underline{border-bottom: 1px dashed %@;text-decoration: none;display:inline;background-color:transparent;} body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;color:#404040;} .yellow { background-color: yellow } .lightgray { background-color: lightgray } .nocolor { background-color:transparent; } </style><body>", jsssource, functions,appColor, kFontName, [NSNumber numberWithInt:FONT_SIZE]];
+    NSMutableString *mString = [NSMutableString stringWithFormat:@"<html><head> %@ <script type=\"text/javascript\" language=\"JavaScript\"> %@ </script><style type=\"text/css\">html {-webkit-touch-callout: none;} .underline{border-bottom: 1px dashed %@;text-decoration: none;display:inline;background-color:transparent;} div {word-wrap: break-all;} body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;color:#404040;} .yellow { background-color: yellow } .lightgray { background-color: lightgray } .nocolor { background-color:transparent; } </style><body>", jsssource, functions,appColor, kFontName, [NSNumber numberWithInt:FONT_SIZE]];
         
     
     if (sqlite3_open(dbpath, &bibleDB) == SQLITE_OK) {
@@ -681,15 +696,20 @@ const CGFloat Line_Height = 1.2;
        
         NSString *queryStmt1 = nil;
         NSString *queryStmt2 = nil;
+        
+        BOOL isEasteregg = NO;
         if([primaryL isEqualToString:kLangPrimary]){
             
             queryStmt1 = queryMalayalam;
+            
+            isEasteregg = ([def valueForKey:@"easteregg"]) ? YES : NO;
             
         }else if([primaryL isEqualToString:kLangEnglishASV]){
             
             queryStmt1 = queryEnglisgASV;
             
         }else{
+            
             queryStmt1 = queryEnglisgKJV;            
         }
         if([secondaryL isEqualToString:kLangPrimary]){
@@ -702,6 +722,9 @@ const CGFloat Line_Height = 1.2;
         }else{
             
         }
+        
+        
+        
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init ];
         
@@ -717,21 +740,6 @@ const CGFloat Line_Height = 1.2;
                 int verseId = sqlite3_column_int(statement1, 0);
                 
                 
-                NSString *vesrIDStr = [NSString stringWithFormat:@"%i", verseId];
-                
-                NSString *versenocolor = @"";
-                
-                /*if([arrayBMVerses containsObject:vesrIDStr]){
-                    
-                    BookMarks *bm = [dictBMVerses valueForKey:vesrIDStr];
-                    
-                    //bgcolor = [NSString stringWithFormat:@"background:%@;", bm.folder.folder_color];//@"background:#33FF99";
-                    //bgcolor = [NSString stringWithFormat:@"style=\"BACKGROUND-COLOR:%@\"", bm.folder.folder_color];//@"background:#33FF99";
-                    fontclass = @"class = \"yellow\"";
-                    NSLog(@"inside");
-                    versenocolor = @"background:#FFFFFF;color:#000000;";
-                    //@"text-decoration: underline;";
-                }*/
                 
                 NSString *verse = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement1, 1)];
                 
@@ -756,20 +764,15 @@ const CGFloat Line_Height = 1.2;
                     [dict setObject:dictVerse forKey:[NSNumber numberWithInt:verseId]];
                     
                 }else{
-                    //
-                    //NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@; background-color:black;}</style></head><body><div style=\"line-height:%fem;color:white;\">%@</div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE],Line_Height, verseWithId];
-                    /*NSString *htmlC = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body { font-family: \"%@\"; font-size: %@;}</style><body><div style=\"line-height:%fem;\"><a href=\"melt://showAlert:%i\">%i. </a>%@</div></body></head></html>",kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, verseId,verseId,  verse];*/
                     
-                   //NSString *htmlC = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;color:#FFFFFF}</style><body><div style=\"line-height:%fem;%@\"><a href=\"melt://chapterClicked:%i\"><FONT COLOR=\"#000000\">%i. </FONT></a>%@</div></body></head></html>",kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, versenocolor, verseId,verseId,  verse];
-                    NSString *htmlC = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;color:#FFFFFF}</style><body><div style=\"line-height:%fem;%@\">c %i.%@</div></body></head></html>",kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, versenocolor, verseId,  verse];
-                    //.underline{border-bottom: 1px dashed #999;text-decoration: none;}
-                    //display:inline;
                     
-                    //NSString *htmlC = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">html {-webkit-touch-callout: none;} .underline{border-bottom: 1px dashed #5b5b5b;text-decoration: none;display:inline;} body { font-family: \"%@\"; font-size: %@;} a {text-decoration:none;%@}</style><body><div style=\"line-height:%fem;\"><a href=\"melt://chapterClicked:%i\">%i. </a><FONT %@>%@</FONT></div></body></head></html>",kFontName, [NSNumber numberWithInt:FONT_SIZE],versenocolor,Line_Height,[verses count],verseId, fontclass, verse];
                     
-                    [htmlContent appendString:htmlC];
+                    NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text", [NSNumber numberWithInt:verseId], @"verseid", nil];
                     
-                    NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text",htmlC, @"verse_html", [NSNumber numberWithInt:verseId], @"verseid", nil];
+                    if(isEasteregg){
+                     
+                        [dictVerse setValue:verse forKey:@"versetoedit"];
+                    }
                     
                     NSString *divid = [NSString stringWithFormat:@"Verse-%i",verseId];
                     NSString *fontid = [NSString stringWithFormat:@"Font-%i",verseId];
@@ -879,11 +882,7 @@ const CGFloat Line_Height = 1.2;
             
             NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
             
-            //(@"dictVersePrim value of html = %@", [dictVersePrim valueForKey:@"verse_html"]);
-            
-            NSString *htmlContent = [NSString stringWithFormat:@"<html><head><style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style></head><body><div style=\"line-height:%fem;\">%@<div></body></html>", kFontName, [NSNumber numberWithInt:FONT_SIZE], Line_Height, primaryVerse];
-            
-            NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text",htmlContent, @"verse_html",  nil];
+            NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text", nil];
             
             if([key intValue] < [verses count]){
                                 
@@ -899,6 +898,7 @@ const CGFloat Line_Height = 1.2;
         }
     }
     
+   // mString = [NSMutableString stringWithFormat:@"<html><head><body>Hiii"];
     [mString appendFormat:@"</body></head></html>"];
     
     
@@ -1235,4 +1235,5 @@ const CGFloat Line_Height = 1.2;
     return [NSMutableArray arrayWithArray:array1];
     
 }
+
 @end

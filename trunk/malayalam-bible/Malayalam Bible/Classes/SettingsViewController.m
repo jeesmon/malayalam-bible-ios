@@ -20,9 +20,9 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -81,7 +81,44 @@
     NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Secondary", @"") ,@"label",selectedSecLan, @"value",[dictPref valueForKey:@"secondaryLanguage"], @"languageid", nil];
     
     arrayLangs = [NSArray arrayWithObjects:dict1,dict2, nil];
+    
+    
+    NSDictionary *sdict0 = [NSDictionary dictionaryWithObjectsAndKeys:@"Languages" ,@"header",@"0", @"sectionindex",arrayLangs, @"data", nil];
+    
+    
+    NSDictionary *dict11 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"SearchHelp", @"") ,@"label",NSLocalizedString(@"MozhiScheme", @""), @"value", nil];
+    
+    
+    NSDictionary *sdict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"Malayalam Typing" ,@"header",@"1", @"sectionindex",[NSArray arrayWithObjects:dict11, nil], @"data", nil];
 
+    NSDictionary *sdict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"Text Size" ,@"header",@"2", @"sectionindex", nil];
+
+    
+    NSDictionary *dict31 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"AppInfo", @"") ,@"label",@"", @"value", nil];
+
+    
+    NSDictionary *sdict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"Info" ,@"header",@"3", @"sectionindex", [NSArray arrayWithObjects:dict31, nil], @"data",nil];
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    if([def valueForKey:@"easteregg"]){
+        
+    }
+    
+    
+    arraySettings = [[NSMutableArray alloc] init];
+    
+    if(sdict0){
+        [arraySettings addObject:sdict0];
+    }
+    if(sdict1){
+        [arraySettings addObject:sdict1];
+    }
+    if(sdict2){
+        [arraySettings addObject:sdict2];
+    }
+    if(sdict3){
+        [arraySettings addObject:sdict3];
+    }
 }
 
 - (void)viewDidUnload
@@ -127,7 +164,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 
-    if(section == 0){
+    NSDictionary *dict = [arraySettings objectAtIndex:section];
+    return [dict valueForKey:@"header"];
+    /*if(section == 0){
         return @"Languages";
     }else if(section == 1){
         return @"Malayalam Typing";
@@ -136,29 +175,33 @@
     }else if(section == FontSizeRow){
         return @"Text Size";
     }
-    return nil;
+    return nil;*/
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 
     // Return the number of sections.
-    return 4;
+    return [arraySettings count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    // Return the number of rows in the section.
-    if(section == 0){
-        return [arrayLangs count];
-        
+    NSDictionary *dict = [arraySettings objectAtIndex:section];
+    NSArray *arry = [dict valueForKey:@"data"];
+    if(arry){
+        return [arry count];
     }
-    return 1;
+    else{
+        return 1;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if(indexPath.section == FontSizeRow){
+    NSDictionary *dict = [arraySettings objectAtIndex:indexPath.section];
+    NSInteger indexconst = [[dict valueForKey:@"sectionindex"] intValue];
+    if(indexconst == FontSizeRow){
         return 72;
         
     }
@@ -167,8 +210,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    
+    NSDictionary *dict = [arraySettings objectAtIndex:indexPath.section];
+    NSInteger indexconst = [[dict valueForKey:@"sectionindex"] intValue];
+    
     NSString *fontCell = @"";
-    if(indexPath.section == FontSizeRow) {
+    if(indexconst == FontSizeRow) {
         fontCell = @"YES";
     }
     
@@ -188,14 +235,18 @@
         
     }
     
+    NSArray *arry = [dict valueForKey:@"data"];
+    NSDictionary *dictData = [arry objectAtIndex:indexPath.row];
+    
+    if(dictData){
+        
+        cell.textLabel.text = [dictData valueForKey:@"label"];
+        cell.detailTextLabel.text = [dictData valueForKey:@"value"];
+    }
+    /*
     if(indexPath.section == 0){
         
         
-        /*
-        // Configure the cell...
-        NSDictionary *dict = [arrayPrefs objectAtIndex:indexPath.row];
-        cell.textLabel.text = [dict valueForKey:@"title"];
-        cell.detailTextLabel.text = [dict valueForKey:@"subTitle"];*/
         
         
         NSDictionary *dict = [arrayLangs objectAtIndex:indexPath.row];
@@ -217,6 +268,7 @@
     }else{
         
     }
+     */
         
     return cell;
         
@@ -267,8 +319,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSDictionary *dict = [arraySettings objectAtIndex:indexPath.section];
+    NSInteger indexconst = [[dict valueForKey:@"sectionindex"] intValue];
+    
     // Navigation logic may go here. Create and push another view controller.
-    if(indexPath.section == 0){
+    if(indexconst == 0){
         /*LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
         // ...
         // Pass the selected object to the new view controller.
@@ -324,7 +380,7 @@
         }
 
     }
-    else if(indexPath.section == 1){
+    else if(indexconst == 1){
         WebViewController *webViewCtrlr = [[WebViewController alloc] init];
         webViewCtrlr.title = NSLocalizedString(@"SearchHelp", @"");
         webViewCtrlr.requestURL = [[NSBundle mainBundle] pathForResource:@"lipi" ofType:@"png"];
@@ -346,8 +402,10 @@
         webViewCtrlr.requestURL = path;
         [self.navigationController pushViewController:webViewCtrlr animated:YES];
          */
-    }else if(indexPath.section == FontSizeRow) {
-    }else{
+    }else if(indexconst == FontSizeRow) {
+        
+        
+    }else if(indexconst == 3){
         
         Information *infoViewController = [[Information  alloc] initWithNibName:@"Information" bundle:nil];
         infoViewController.title = NSLocalizedString(@"AppInfo", @"");

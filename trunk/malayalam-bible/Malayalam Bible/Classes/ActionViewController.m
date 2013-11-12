@@ -49,36 +49,18 @@
 -(void)loadView{
 	
 	[super loadView];
-    if([UIDeviceHardware isIpad]){
-        
-        CGRect navBarFrame = CGRectMake(0, 0, kActionViewWidth+20, 45);
-        
-        UINavigationBar *aNavigationBar = [[UINavigationBar alloc]initWithFrame:navBarFrame];
-		
-		aNavigationBar.autoresizingMask =	UIViewAutoresizingFlexibleWidth;
-        
-        UINavigationItem *navigationItem = [[UINavigationItem alloc]
-											initWithTitle:self.titleiPad];
-	
-        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc]initWithTitle:@"cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissme:)];
-		
-		navigationItem.leftBarButtonItem = buttonItem;
-		[aNavigationBar pushNavigationItem:navigationItem animated:NO];
-		
-        [self.view addSubview:aNavigationBar];
-        
-        
-    }
+    
+    
+     
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.view = [[CustomView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
     
     CGFloat x = 10.0;
     CGFloat y= 10.0;
+    
     CGFloat colrbtnGap = 36;
     
     
@@ -87,8 +69,52 @@
         x = 15.0;
         y= 15.0;
         colrbtnGap = 43;
-
+        
     }
+    
+    if([UIDeviceHardware isOS7Device]){
+        
+        self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        SeparatorView *sview = [[SeparatorView alloc] initWithFrame:CGRectMake(0, 1, kActionViewWidth, 1)];
+        [sview setBackgroundColor:[UIColor blackColor]];
+        [self.view addSubview:sview];
+        
+        if([UIDeviceHardware isIpad]){
+            
+            
+            CGRect navBarFrame = CGRectMake(0, 0, kActionViewWidth+20, 45);
+            
+            UINavigationBar *aNavigationBar = [[UINavigationBar alloc]initWithFrame:navBarFrame];
+            
+            //aNavigationBar.autoresizingMask =	UIViewAutoresizingFlexibleWidth;
+            
+            UINavigationItem *navigationItem = [[UINavigationItem alloc]
+                                                initWithTitle:self.titleiPad];
+            
+            //UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc]initWithTitle:@"cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissme:)];
+            
+            //navigationItem.leftBarButtonItem = buttonItem;
+            [aNavigationBar pushNavigationItem:navigationItem animated:NO];
+            
+            [self.view addSubview:aNavigationBar];
+            
+            y += 45.0;
+        }
+        
+    }else{
+        self.view = [[CustomView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    }
+    
+    
+    
+    
+    
+    
+
+    
+    
+  
+    
     
     //CGFloat toolbarHt = 50.0;
     
@@ -152,7 +178,13 @@
     button2 = [UIButton buttonWithType:UIButtonTypeCustom];
     button2.tag = kActionClear;
     [button2 setFrame:CGRectMake(x, y, 27, 25)];
-    [button2 setTitle:NSLocalizedString(@"action.clearall", @"") forState:UIControlStateNormal];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    if([def valueForKey:@"easteregg"]){
+        [button2 setTitle:NSLocalizedString(@"E", @"") forState:UIControlStateNormal];
+    }else{
+        [button2 setTitle:NSLocalizedString(@"action.clearall", @"") forState:UIControlStateNormal];
+    }
+    
     [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button2 setBackgroundColor:[UIColor colorWithRed:(255.0/255.0) green:(255.0/255.0) blue:(255.0/255.0) alpha:1]];
     [button2 addTarget:btndelegate action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -178,21 +210,37 @@
     if([UIDeviceHardware isIpad]){
         
         gap = 60.0;
-        y += 60;
-        x = 20;
+        y += 50;
+        x = 30;
         
         btnwidth = 30.0;
         btnHeight = 35.0;
         
     }else{
         y += 50;
-        x = 10;
+        x = 20;
     }
     /**** Copy Button ****/
     
+    NSString *imgCopy = @"copy.png";
+    NSString *imgBM = @"readlater.png";
     
+    NSString *imgMail = @"mail.png";
+    NSString *imgSMS = @"envelope.png";
+    NSString *imgFB = @"facebook.png";
+    NSString *imgTw = @"twitter.png";
+    if([UIDeviceHardware isOS7Device]){
+        
+        imgCopy = @"ios7_copy.png";
+        imgBM = @"ios7_readlater.png";
+        
+        imgMail = @"ios7_mail.png";
+        imgSMS = @"ios7_envelope.png";
+        imgFB = @"ios7_facebook.png";
+        imgTw = @"ios7_twitter.png";
+    }
     
-    CustomButton *copyButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionCopy Title:NSLocalizedString(@"action.copy", @"") Image:[UIImage imageNamed:@"copy.png"]];
+    CustomButton *copyButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionCopy Title:NSLocalizedString(@"action.copy", @"") Image:[UIImage imageNamed:imgCopy]];
  
     copyButton.btndelegate = self.btndelegate;
     
@@ -204,7 +252,7 @@
       
        
      
-    CustomButton *bmButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionBookmark Title:NSLocalizedString(@"action.bookmark", @"") Image:[UIImage imageNamed:@"readlater.png"]];
+    CustomButton *bmButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionBookmark Title:NSLocalizedString(@"action.bookmark", @"") Image:[UIImage imageNamed:imgBM]];
     bmButton.btndelegate = self.btndelegate;
     
     
@@ -213,7 +261,7 @@
     [self.view addSubview:bmButton];
     x += gap;
     
-    
+    /*
     CustomButton *notess = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionNotes Title:NSLocalizedString(@"action.notes", @"") Image:[UIImage imageNamed:@"notes.png"]];
     notess.btndelegate = self.btndelegate;
     
@@ -223,13 +271,13 @@
    
     [self.view addSubview:notess];
     x += gap;
-
+     */
 
     
        
     /**** Mail Button **/
     
-    CustomButton *mailButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionMail Title:NSLocalizedString(@"action.mail", @"") Image:[UIImage imageNamed:@"mail.png"]];
+    CustomButton *mailButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionMail Title:NSLocalizedString(@"action.mail", @"") Image:[UIImage imageNamed:imgMail]];
     
     mailButton.btndelegate = self.btndelegate;
    
@@ -243,17 +291,17 @@
     if([UIDeviceHardware isIpad]){
         
         y+=55;
-        x = 45;
+        x = 70;
     }else{
         y+=45;
-        x = 30;
+        x = 55;//30
     }
 
     
    
     /**** SMS Button **/
     
-    CustomButton *smsButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionSMS Title:NSLocalizedString(@"action.sms", @"") Image:[UIImage imageNamed:@"envelope.png"]];
+    CustomButton *smsButton = [[CustomButton alloc] initWithFrame:CGRectZero Tag:kActionSMS Title:NSLocalizedString(@"action.sms", @"") Image:[UIImage imageNamed:imgSMS]];
     smsButton.btndelegate = self.btndelegate;
     
     smsButton.tag = kActionSMS;
@@ -262,33 +310,39 @@
     [self.view addSubview:smsButton];
     x += gap;
     
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
+    
         
-        CustomButton *fbButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionFB Title:NSLocalizedString(@"action.facebook", @"") Image:[UIImage imageNamed:@"facebook.png"]];
+        CustomButton *fbButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionFB Title:NSLocalizedString(@"action.facebook", @"") Image:[UIImage imageNamed:imgFB]];
         
         fbButton.btndelegate = self.btndelegate;
-      
+      if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
         fbButton.tag = kActionFB;
+      }else{
+          fbButton.alpha = .5;
+      }
         [fbButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         
         [self.view addSubview:fbButton];
         x += gap;
-    }
+   
     
     
     
     
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+    
         
-        CustomButton *twButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionTwitter Title:NSLocalizedString(@"action.twitter", @"") Image:[UIImage imageNamed:@"twitter.png"]];
+        CustomButton *twButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionTwitter Title:NSLocalizedString(@"action.twitter", @"") Image:[UIImage imageNamed:imgTw]];
         twButton.btndelegate = self.btndelegate;
-       
+       if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
         twButton.tag = kActionTwitter;
+       }else{
+           twButton.alpha = .5;
+       }
         [twButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         
         [self.view addSubview:twButton];
         
-    }
+    
     
     
         

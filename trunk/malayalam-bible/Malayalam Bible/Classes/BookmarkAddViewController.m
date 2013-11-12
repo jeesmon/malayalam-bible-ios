@@ -237,8 +237,8 @@
     
     if(indexPath.section == 2){
         
-        FolderSelectController *controller = [[FolderSelectController alloc] initWithStyle:UITableViewStyleGrouped Delegate:self];
-        [self.navigationController pushViewController:controller animated:YES];
+        //FolderSelectController *controller = [[FolderSelectController alloc] initWithStyle:UITableViewStyleGrouped Delegate:self];
+        //[self.navigationController pushViewController:controller animated:YES];
     }
 }
 #pragma mark UITextFieldDelegate
