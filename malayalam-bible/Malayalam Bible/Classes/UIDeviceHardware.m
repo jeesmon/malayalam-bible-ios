@@ -117,7 +117,7 @@ __VA_ARGS__ \
 }
 +(BOOL) isOS7Device {
     
-    return NO;
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         return YES;
     }

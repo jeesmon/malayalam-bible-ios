@@ -10,6 +10,8 @@
 
 @interface SettingsViewController : UITableViewController{
     
+    NSMutableArray *arraySettings;
+    
     NSArray *arrayLangs;
     
     NSArray *arrayPrefs;

@@ -11,8 +11,11 @@
 #import "Notes.h"
 
 @protocol MBProtocol <NSObject>
+
 @optional
+
 - (void) setBookMarkForIds:(BookMarks *)bookMark;;
 - (void) setSelectedRow:(NSUInteger)roww IsPrimary:(BOOL)isPrimary;
-- (void)addedNotes:(Notes *)note;
+- (void) addedNotes:(Notes *)note;
+
 @end

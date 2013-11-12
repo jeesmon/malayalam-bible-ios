@@ -28,6 +28,7 @@
 #import "ColordVerses.h"
 #import "NotesAddViewController.h"
 #import  "TintedImageView.h"
+#import "VerseEditViewController.h"
 
 
 
@@ -72,11 +73,13 @@ __VA_ARGS__ \
 - (void) moveToNext:(BOOL)isNext;
 - (void) loadSelections;
 - (void) removeColorsFromDB;
+- (void) scrollToTop;
 -(void) presentMessageComposeViewController:(NSString *)text;//+20130905
 @end
 
 @implementation MalayalamBibleDetailViewController
 
+@synthesize imgArrowbooks, imgArrowChapter, imgArrowNext, imgArrowPrevious;
 
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedBook = _selectedBook;
@@ -192,11 +195,11 @@ __VA_ARGS__ \
         
         
         if([UIDeviceHardware isOS7Device]){
-            TintedImageView * iviewt = [[TintedImageView alloc] initWithImage:img];
+            imgArrowbooks = [[TintedImageView alloc] initWithImage:img];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            //os7iviewt.tintColor = appDelegate.window.tintColor;
-            [iviewt setFrame:CGRectMake(booknameWidth + middle, (45-img.size.height)/2, img.size.width, img.size.height)];
-            [referenceBtn addSubview:iviewt];
+            imgArrowbooks.tintColor = appDelegate.window.tintColor;
+            [imgArrowbooks setFrame:CGRectMake(booknameWidth + middle, (45-img.size.height)/2, img.size.width, img.size.height)];
+            [referenceBtn addSubview:imgArrowbooks];
         }else{
             UIImageView *iviewt = [[UIImageView alloc] initWithImage:img];
             [iviewt setFrame:CGRectMake(booknameWidth + middle, (45-img.size.height)/2, img.size.width, img.size.height)];
@@ -268,10 +271,10 @@ __VA_ARGS__ \
             
             img = [UIImage imageWithImage:[UIImage imageNamed:@"down-arrow.png"] scaledToSize:CGSizeMake(chIconWidth, 28)];
             if([UIDeviceHardware isOS7Device]){
-                TintedImageView * iviewc = [[TintedImageView alloc] initWithImage:img];
+                imgArrowChapter = [[TintedImageView alloc] initWithImage:img];
                 MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-                //os7iviewc.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
-                [iviewc setFrame:CGRectMake(chapterwidth+middleC, (45-img.size.height)/2, img.size.width, img.size.height)];
+                imgArrowChapter.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
+                [imgArrowChapter setFrame:CGRectMake(chapterwidth+middleC, (45-img.size.height)/2, img.size.width, img.size.height)];
                 
                 /*if(1 == self.selectedBook.numOfChapters){
                     iviewc.alpha = .3;
@@ -279,7 +282,7 @@ __VA_ARGS__ \
                     iviewc.alpha = 1.0;
                 }*/
                 
-                [chapterBtn addSubview:iviewc];
+                [chapterBtn addSubview:imgArrowChapter];
                 
             }else{
                 UIImageView *iviewc = [[UIImageView alloc] initWithImage:img];
@@ -316,33 +319,34 @@ __VA_ARGS__ \
         CGRect previewframe;
         if([UIDeviceHardware isOS7Device]){
             
-            TintedImageView * preView = [[TintedImageView alloc] initWithImage:prev];
+            
+            imgArrowPrevious = [[TintedImageView alloc] initWithImage:prev];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            //os7preView.tintColor = appDelegate.window.tintColor;
+            imgArrowPrevious.tintColor = appDelegate.window.tintColor;
             if(self.chapterId-1 < 1){//bookindex == 1 &&
-                preView.alpha = .3;
+                imgArrowPrevious.alpha = .3;
             }else{
-                preView.alpha = 1.0;
+                imgArrowPrevious.alpha = 1.0;
             }
             
             
             previewframe = CGRectMake(0, (45-prev.size.height)/2.+3, prev.size.width, prev.size.height);
-            [preView setFrame:previewframe];
-            preView.tag = 0;
+            [imgArrowPrevious setFrame:previewframe];
+            imgArrowPrevious.tag = 0;
             
             UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self                                               action:@selector(nextPreviousTap:)];
             
             
-            [preView addGestureRecognizer:singleFingerTap];
+            [imgArrowPrevious addGestureRecognizer:singleFingerTap];
 
             //[preView addTarget:self action:@selector(nextPrevious:) forControlEvents:UIControlEventTouchUpInside];
             
             
             
-            [alltitleView addSubview:preView];
+            [alltitleView addSubview:imgArrowPrevious];
         }else{
             
-            //UIImageView *preView = [[UIImageView alloc] initWithImage:prev];
+            
             UIButton *preView = [UIButton buttonWithType:UIButtonTypeCustom];
             
             //[preView setBackgroundImage:prev forState:UIControlStateNormal];
@@ -369,26 +373,26 @@ __VA_ARGS__ \
         CGRect nexviewframe;
         if([UIDeviceHardware isOS7Device]){
             
-            TintedImageView * nextView = [[TintedImageView alloc] initWithImage:next];
+            imgArrowNext = [[TintedImageView alloc] initWithImage:next];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            //os7nextView.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
+            imgArrowNext.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
             if(self.chapterId+1 > self.selectedBook.numOfChapters){//bookindex == 66 &&
-                nextView.alpha = .3;
+                imgArrowNext.alpha = .3;
             }else{
-                nextView.alpha = 1.0;
+                imgArrowNext.alpha = 1.0;
             }
             nexviewframe =CGRectMake(previewframe.size.width+nextPrevgap+viewTitle.frame.size.width+nextPrevgap, (45-next.size.height)/2. +3, next.size.width, next.size.height);
-            [nextView setFrame:nexviewframe];
-            nextView.tag = 1;
+            [imgArrowNext setFrame:nexviewframe];
+            imgArrowNext.tag = 1;
             //[nextView addTarget:self action:@selector(nextPrevious:) forControlEvents:UIControlEventTouchUpInside];
             UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self                                               action:@selector(nextPreviousTap:)];
             
             
-            [nextView addGestureRecognizer:singleFingerTap];
+            [imgArrowNext addGestureRecognizer:singleFingerTap];
             
             
             
-            [alltitleView addSubview:nextView];
+            [alltitleView addSubview:imgArrowNext];
             
         }else{
             
@@ -497,7 +501,14 @@ __VA_ARGS__ \
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationDuration:0.5];
                 
-        
+    
+    CGFloat yValue = 0;
+    
+	
+    if([UIDeviceHardware isOS7Device]){
+        yValue += 64;
+    }
+    
         if(!isFullScreen){
             
             CGRect rectToolbar = self.bottomToolBar.frame;
@@ -511,8 +522,8 @@ __VA_ARGS__ \
 
             
             CGRect tableRect2 =  self.tableViewVerses.frame;
-            tableRect2.origin.y = 0;
-            tableRect2.size.height = self.view.frame.size.height-45;
+            tableRect2.origin.y = yValue;
+            tableRect2.size.height = self.view.frame.size.height-45-yValue;
             //tableRect2.size.height -= 45;
             self.tableViewVerses.frame = tableRect2;
             
@@ -546,9 +557,9 @@ __VA_ARGS__ \
             
             
             CGRect tableRect1 =  self.tableViewVerses.frame;
-            tableRect1.origin.y += 20;
-            tableRect1.size.height -= 20;
-            tableRect1.size.height += 45;
+            tableRect1.origin.y = 20;
+            tableRect1.size.height = self.view.frame.size.height - 20;
+            //tableRect1.size.height += 45;
             self.tableViewVerses.frame = tableRect1;
             
             
@@ -959,19 +970,24 @@ __VA_ARGS__ \
     
     [super loadView];
     
-    //CGRect cgRect = self.view.frame;
+    
+   
     
     CGFloat yValue = 0;
     
 	
+    if([UIDeviceHardware isOS7Device]){
+        yValue += 64;
+    }
+    
 	//UIView *myView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, cgRect.size.width, cgRect.size.height)]; //initilize the view
-	self.view.autoresizesSubviews = YES;              //allow it to tweak size of elements in view
+	//+20131001self.view.autoresizesSubviews = YES;              //allow it to tweak size of elements in view
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	//self.view = myView;
     
     CGFloat tableWidth = 25;
-    
+    self.view.backgroundColor = [UIColor whiteColor];//+20131001
     //self.tableViewVerses = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];//
     
     self.tableViewVerses = [[UITableView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-tableWidth, yValue, tableWidth, self.view.frame.size.height-(45+yValue)) style:UITableViewStylePlain];
@@ -982,28 +998,48 @@ __VA_ARGS__ \
     
      
     CGRect rect = self.view.frame;
-	self.webViewVerses = [[UIWebView alloc] initWithFrame:CGRectMake(0, yValue, self.view.frame.size.width-tableWidth, self.view.frame.size.height-(45+yValue))];
+	self.webViewVerses = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-tableWidth, self.view.frame.size.height-(45))];
+   
     self.webViewVerses.backgroundColor = [UIColor whiteColor];
     
-    for (UIView* subView in [self.webViewVerses subviews])
-    {
-        if ([subView isKindOfClass:[UIScrollView class]]) {
-            
-            //[(UIScrollView*)[webview.subviews objectAtIndex:0] setShowsHorizontalScrollIndicator:NO];
-            UIScrollView *sView = (UIScrollView *)subView;
-            [sView setShowsVerticalScrollIndicator:NO];
-            
-            for (UIView* shadowView in [subView subviews])
-            {
-                if ([shadowView isKindOfClass:[UIImageView class]]) {
-                    [shadowView setHidden:YES];
+    if([UIDeviceHardware isOS5Device]){
+        
+        UIScrollView *zview = self.webViewVerses.scrollView;
+        [zview setShowsVerticalScrollIndicator:NO];
+        zview.delegate = self;//+20131111
+        for (UIView* shadowView in [zview subviews])
+        {
+            if ([shadowView isKindOfClass:[UIImageView class]]) {
+                [shadowView setHidden:YES];
+                
+            }
+        }
+        
+
+    }else{
+        
+        for (UIView* subView in [self.webViewVerses subviews])
+        {
+            if ([subView isKindOfClass:[UIScrollView class]]) {
+                
+                //[(UIScrollView*)[webview.subviews objectAtIndex:0] setShowsHorizontalScrollIndicator:NO];
+                UIScrollView *sView = (UIScrollView *)subView;
+                [sView setShowsVerticalScrollIndicator:NO];
+                
+                for (UIView* shadowView in [subView subviews])
+                {
+                    if ([shadowView isKindOfClass:[UIImageView class]]) {
+                        [shadowView setHidden:YES];
+                    }
                 }
+                break;
             }
         }
     }
     
+    
 	self.webViewVerses.delegate = self;
-	self.webViewVerses.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin;
+	self.webViewVerses.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin| UIViewAutoresizingFlexibleWidth;
 
     //self.webViewVerses.scalesPageToFit = YES;
     self.webViewVerses.autoresizesSubviews = YES;
@@ -1042,7 +1078,7 @@ __VA_ARGS__ \
     self.bottomToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin;
     if([UIDeviceHardware isOS7Device]){
 
-        //os7[self.bottomToolBar setBarTintColor:[UIColor whiteColor]];
+        [self.bottomToolBar setBarTintColor:[UIColor whiteColor]];
 
     }else{
         self.bottomToolBar.barStyle =  UIBarStyleBlack;
@@ -1084,9 +1120,12 @@ __VA_ARGS__ \
     
     //self.tableViewVerses.backgroundColor = [UIColor grayColor];
     if([UIDeviceHardware isOS7Device]){
+        
+        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
               
-        //os7[self setEdgesForExtendedLayout:UIRectEdgeNone];
+        //noneed[self setEdgesForExtendedLayout:UIRectEdgeNone];
     }else{
+        
         self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     }
     
@@ -1187,24 +1226,37 @@ IF_IOS5_OR_GREATER(
     isDetailControllerVisible = YES;
 }
 
-  /*
- - (void)viewDidUnload
- {
+
+- (void)viewDidUnload{
+    
      [super viewDidUnload];
- }
+}
+- (void)statusBarTappedAction:(NSNotification*)notification {
+    NSLog(@"StatusBar tapped");
+   
+    [self scrollToTop];
 
- - (void)viewWillAppear:(BOOL)animated
- {
- [super viewWillAppear:animated];
- }
+    //handle StatusBar tap here.
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+     [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector(statusBarTappedAction:)
+                                                  name:kStatusBarTappedNotification
+                                                object:nil];
+
+     [super viewWillAppear:animated];
+     
+}
  
 
  
- - (void)viewWillDisappear:(BOOL)animated
- {
+- (void)viewWillDisappear:(BOOL)animated
+{
  [super viewWillDisappear:animated];
- }
-  */
+     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusBarTappedNotification object:nil];
+}
+
  - (void)viewDidDisappear:(BOOL)animated
 { 
    [super viewDidDisappear:animated];
@@ -1215,7 +1267,7 @@ IF_IOS5_OR_GREATER(
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
 	
    
-    }
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -1545,7 +1597,19 @@ IF_IOS5_OR_GREATER(
     
     
 }
-
+- (void) scrollToTop{
+    
+     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSString *command = @"scrollToTop()";
+        
+        MBLog(@"command = %@", command);
+        
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+        
+        [self.webViewVerses stringByEvaluatingJavaScriptFromString:command];
+        
+    
+}
 - (void) scrollToVerseId{
     
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -1925,23 +1989,99 @@ IF_IOS5_OR_GREATER(
         
        
    // }
+    
+    MalayalamBibleAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    BOOL isios7 = NO;
+    if([UIDeviceHardware isOS7Device]){
+    
+        isios7 = YES;
+        appDelegate.window.tintColor = [UIColor lightGrayColor];
+              
+        imgArrowNext.tintColor = [UIColor darkGrayColor];
+        if(imgArrowNext.alpha != .3f){
+            imgArrowNext.alpha = .5;
+        }
+        imgArrowPrevious.tintColor = [UIColor darkGrayColor];
+        MBLog(@"imgArrowPrevious.alpha = %f", imgArrowPrevious.alpha);
+        if(imgArrowPrevious.alpha != .3f){
+            MBLog(@"setting .5");
+            imgArrowPrevious.alpha = .5;
+        }
+        imgArrowbooks.tintColor = [UIColor darkGrayColor];
+        imgArrowbooks.alpha = .5;
+        
+        
+        if(imgArrowChapter){
+            imgArrowChapter.tintColor = [UIColor darkGrayColor];
+            imgArrowChapter.alpha = .5;
+        }
+        
+        //self.navigationItem.titleView.alpha = .5;
+        
+    }
+    
+    
+    
     if([UIDeviceHardware isIpad]){
         
         
-        self.popoverActionController = [[UIPopoverController alloc] initWithContentViewController:controller];
-                
-        [self.popoverActionController setPopoverContentSize:CGSizeMake(kActionViewWidth+20, 195)];
+        if(isios7){
+            self.popoverActionController = [[UIPopoverController alloc] initWithContentViewController:controller];
+        }else{
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+            self.popoverActionController = [[UIPopoverController alloc] initWithContentViewController:nav];
+        }
+        
+        if(isios7){
+        self.popoverActionController.delegate = self;
+        }
+        
+        [self.popoverActionController setPopoverContentSize:CGSizeMake(kActionViewWidth+20, 220)];//195
       
         CGRect frame1 = toolBarShare.frame;
-        frame1.origin.y -= self.webViewVerses.scrollView.bounds.origin.y;
+        
+        
+        
+        
+        
+        
+        if([UIDeviceHardware isOS5Device]){
+            
+            UIScrollView *zview = self.webViewVerses.scrollView;
+            
+            frame1.origin.y -= zview.bounds.origin.y;
+            
+        }else{
+            
+            for (UIView* subView in [self.webViewVerses subviews])
+            {
+                if ([subView isKindOfClass:[UIScrollView class]]) {
+                    
+                   frame1.origin.y -= subView.bounds.origin.y;
+                    break;
+                }
+            }
+        }
+        
         
        [self.popoverActionController presentPopoverFromRect:frame1 inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 
         
         
     }else{
-         popover = [[FPPopoverController alloc] initWithViewController:controller];
         
+        if(isios7){
+        self.view.alpha = .8;
+        self.webViewVerses.alpha = .8;
+        self.navigationController.navigationBar.alpha = .8;
+        
+        [self.tableViewVerses setNeedsDisplay];
+        }
+        
+        popover = [[FPPopoverController alloc] initWithViewController:controller];
+        if(isios7){
+        popover.delegate = self;
+        }
         [popover setContentSize:CGSizeMake(kActionViewWidth, 220)];
         [popover presentPopoverFromView:toolBarShare];
     }
@@ -1983,7 +2123,7 @@ IF_IOS5_OR_GREATER(
 }
 - (void) showPreferences:(id)sender{
     
-    SettingsViewController *ctrlr = [[SettingsViewController alloc] init];
+    SettingsViewController *ctrlr = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:ctrlr animated:YES];
     
     
@@ -2284,32 +2424,63 @@ IF_IOS5_OR_GREATER(
 - (void) buttonClickedWithTag:(NSInteger)actionTag{
     
     
-    if(popover) [popover dismissPopoverAnimated:YES];
-    if(self.popoverActionController) [self.popoverActionController dismissPopoverAnimated:YES];
+    if(popover){
+        MBLog(@"fbpop smsiss");
+        [popover dismissPopoverAnimated:YES];
+    }
+    if(self.popoverActionController){
+     
+        MBLog(@"popover dismsiss");
+        [self.popoverActionController dismissPopoverAnimated:YES];
+    }
     
     if(actionTag == kActionClear){
         
-        [self removeColorsFromDB];
-        /***/
-        
-        
-        for(int i=0; i<self.arrayToMookmark.count ; i++){
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        if([def valueForKey:@"easteregg"]){
+                        
+            MBLog(@"self.arrayToMookmark = %@", self.arrayToMookmark);
             
-            NSString *row = [self.arrayToMookmark objectAtIndex:i];
+            if(self.arrayToMookmark.count == 1 ){
+                
+                NSString *row = [self.arrayToMookmark objectAtIndex:0];
+                NSDictionary *dict4 = [self.bVerses objectAtIndex:[row intValue]];
+                
+                MBLog(@"dict4 = %@", dict4);
+                
+                if([dict4 valueForKey:@"versetoedit"]){
+                    VerseEditViewController *cc = [[VerseEditViewController alloc] initWithVerse:dict4 BookId:self.selectedBook.bookId AndChapterId:self.chapterId];
+                    [self.navigationController pushViewController:cc animated:YES];
+                }
+            }
+           
             
-            NSDictionary *dict = [self.bVerses objectAtIndex:[row intValue]];
+        }else{
             
-            NSString *divid = [NSString stringWithFormat:@"Font-%@",[dict valueForKey:@"verseid"]];
+            [self removeColorsFromDB];
+            /***/
             
-            NSMutableString *command = [NSMutableString stringWithFormat:@"deSelectVerse(\"%@\")", divid];
-            //NSMutableString *command = [NSMutableString stringWithFormat:@"selectVerse(\"%@\", \"yellow\")", divid];
             
-            MBLog(@"command = %@", command);
+            for(int i=0; i<self.arrayToMookmark.count ; i++){
+                
+                NSString *row = [self.arrayToMookmark objectAtIndex:i];
+                
+                NSDictionary *dict = [self.bVerses objectAtIndex:[row intValue]];
+                
+                NSString *divid = [NSString stringWithFormat:@"Font-%@",[dict valueForKey:@"verseid"]];
+                
+                NSMutableString *command = [NSMutableString stringWithFormat:@"deSelectVerse(\"%@\")", divid];
+                //NSMutableString *command = [NSMutableString stringWithFormat:@"selectVerse(\"%@\", \"yellow\")", divid];
+                
+                MBLog(@"command = %@", command);
+                
+                [self.webViewVerses stringByEvaluatingJavaScriptFromString:command];
+            }
             
-            [self.webViewVerses stringByEvaluatingJavaScriptFromString:command];
+            [self.arrayToMookmark removeAllObjects];
         }
         
-        [self.arrayToMookmark removeAllObjects];
+        
         
     }else if(actionTag == kActionColor1 || actionTag == kActionColor2 || actionTag == kActionColor3 || actionTag == kActionColor4 || actionTag == kActionColor5){
         
@@ -2348,6 +2519,7 @@ IF_IOS5_OR_GREATER(
             [bookMarktoSave setChapter:[NSNumber numberWithInt:self.chapterId]];
             [bookMarktoSave setVerseid:verseid];
             [bookMarktoSave setColorcode:colorClass];
+            [bookMarktoSave setCreateddate:[NSDate date]];
             //[bookMarktoSave setColorindex:[NSNumber numberWithInt:actionTag]];
                         
             NSError *error;
@@ -2775,6 +2947,7 @@ IF_IOS5_OR_GREATER(
     
     self.isWebViewLoaded = YES;
     //self.isJSWebViewLoaded = YES;
+    
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
@@ -2869,7 +3042,7 @@ IF_IOS5_OR_GREATER(
         toolBarShare = [[UIToolbar alloc] initWithFrame:CGRectMake(frma2.size.width-70, ypos, 70, 28)];
         //toolBarShare.tintColor = [UIColor blackColor];
         if([UIDeviceHardware isOS7Device]){
-            //os7[toolBarShare setBarTintColor:[UIColor whiteColor]];
+           [toolBarShare setBarTintColor:[UIColor whiteColor]];
             
         }else{
             toolBarShare.barStyle = UIBarStyleBlackTranslucent;
@@ -2915,7 +3088,23 @@ IF_IOS5_OR_GREATER(
         
         toolBarShare.items = [NSArray arrayWithObjects: itemspace,itemShare,flexx3,nil];
         
-        [self.webViewVerses.scrollView addSubview:toolBarShare];
+        
+        
+        if([UIDeviceHardware isOS5Device]){
+            
+            [self.webViewVerses.scrollView addSubview:toolBarShare];
+            
+        }else{
+            
+            for (UIView* subView in [self.webViewVerses subviews])
+            {
+                if ([subView isKindOfClass:[UIScrollView class]]) {
+                    
+                    [subView addSubview:toolBarShare];
+                    break;
+                }
+            }
+        }
         
     }else{
         
@@ -3069,7 +3258,10 @@ IF_IOS5_OR_GREATER(
 #pragma mark Deferred image loading (UIScrollViewDelegate)
 
 
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [scrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y)];
+}
+/*
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -3091,13 +3283,71 @@ IF_IOS5_OR_GREATER(
     
     
 }
-
+*/
 //+20130905
 #pragma mark MFMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     [self dismissModalViewControllerAnimated:NO];
     
+}
+
+
+#pragma mark FPPopoverControllerDelegate
+- (void)popoverControllerDidDismissPopoverFB:(FPPopoverController *)popoverController{
+ 
+    MalayalamBibleAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    appDelegate.window.tintColor = nil;
+    self.view.alpha = 1.0;
+    self.webViewVerses.alpha = 1.0;
+    self.navigationController.navigationBar.alpha = 1.0;
+    [self.tableViewVerses setNeedsDisplay];
+    
+    
+    imgArrowNext.tintColor = appDelegate.window.tintColor;
+    if(imgArrowNext.alpha != .3f){
+        imgArrowNext.alpha = 1.0;
+    }
+    imgArrowPrevious.tintColor = appDelegate.window.tintColor;
+    if(imgArrowPrevious.alpha != .3f){
+        imgArrowPrevious.alpha = 1.0;
+    }
+    imgArrowbooks.tintColor = appDelegate.window.tintColor;
+    imgArrowbooks.alpha = 1.0;
+    
+    
+    if(imgArrowChapter){
+        imgArrowChapter.tintColor = appDelegate.window.tintColor;
+        imgArrowChapter.alpha = 1.0;
+    }
+}
+
+
+#pragma mark UIPopoverControllerDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
+    
+    MBLog(@"popover dismissed");
+    
+    MalayalamBibleAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    appDelegate.window.tintColor = nil;
+    
+    imgArrowNext.tintColor = appDelegate.window.tintColor;
+    if(imgArrowNext.alpha != .3f){
+        imgArrowNext.alpha = 1.0;
+    }
+    imgArrowPrevious.tintColor = appDelegate.window.tintColor;
+    if(imgArrowPrevious.alpha != .3f){
+        imgArrowPrevious.alpha = 1.0;
+    }
+    imgArrowbooks.tintColor = appDelegate.window.tintColor;
+    imgArrowbooks.alpha = 1.0;
+    
+    
+    if(imgArrowChapter){
+        imgArrowChapter.tintColor = appDelegate.window.tintColor;
+        imgArrowChapter.alpha = 1.0;
+    }
 }
 @end
 

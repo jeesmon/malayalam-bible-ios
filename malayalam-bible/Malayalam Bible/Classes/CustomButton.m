@@ -7,7 +7,7 @@
 //
 
 #import "CustomButton.h"
-
+#import  "UIDeviceHardware.h"
 
 @implementation CustomButton
 
@@ -36,7 +36,12 @@
         label.textAlignment = UITextAlignmentCenter;
         
         label.text = btnTitle;
-        label.textColor = [UIColor whiteColor];
+        if([UIDeviceHardware isOS7Device]){
+            label.textColor = [UIColor blackColor];
+        }else{
+            label.textColor = [UIColor whiteColor];
+        }
+        
         label.font = [UIFont systemFontOfSize:10];
         label.minimumFontSize = 6;
         [self addSubview:label];

@@ -8,6 +8,7 @@
 
 #import "NotesAddViewController.h"
 #import "MalayalamBibleAppDelegate.h"
+#import "UIDeviceHardware.h"
 
 @interface NotesAddViewController ()
 @property (nonatomic,strong) UITextView *textArea;
@@ -29,7 +30,18 @@
 
 - (void)viewDidLoad
 {
-    self.textArea = [[UITextView alloc]initWithFrame:CGRectMake(0, 5, self.view.frame.size.width, self.view.frame.size.height-10)];
+    
+    if([UIDeviceHardware isOS7Device]){
+        
+        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+        
+        //noneed[self setEdgesForExtendedLayout:UIRectEdgeNone];
+    }else{
+        
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    }
+    
+    self.textArea = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
 	self.textArea.autoresizingMask =	UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight|
 	UIViewAutoresizingFlexibleBottomMargin;
@@ -157,9 +169,9 @@
     //newFrame.origin.y -= keyboardFrame.size.height * (up? 1 : -1);
     CGRect screenRect = [self.view bounds];
     if(up){
-        newFrame.size.height = screenRect.size.height - keyboardFrame.size.height -10;
+        newFrame.size.height = screenRect.size.height - keyboardFrame.size.height;
     }else{
-        newFrame.size.height = screenRect.size.height -10;
+        newFrame.size.height = screenRect.size.height;
     }
     
     self.textArea.frame = newFrame;

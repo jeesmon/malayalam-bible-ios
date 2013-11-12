@@ -83,18 +83,18 @@
     if([UIDeviceHardware isOS7Device]){
         
         mySearchBar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        //[mySearchBar setTintColor:[UIColor whiteColor]];
+        [mySearchBar setBarTintColor:[UIColor whiteColor]];
         mySearchBar.showsCancelButton = NO;
         mySearchBar.frame = CGRectMake(0, yValue, self.view.frame.size.width-70, 45);
         
-        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        /*UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
         
         [cancelBtn setTitle:@"Cancel" forState:UIControlStateNormal];
         [cancelBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
         cancelBtn.frame = CGRectMake(self.view.frame.size.width-70, yValue, 70 , 45);
         cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-
+         */
         //[cancelBtn.titleLabel setTextColor:[UIColor whiteColor]];
         
         //CGFloat components[8] = { 244./255, 245./255, 247./255, 1.0,   // Start color
@@ -103,12 +103,10 @@
         
         
         
-        
+        [mySearchBar setBackgroundColor:[UIColor whiteColor]];//jijo
         //[cancelBtn setBackgroundColor:[UIColor colorWithRed:(10/255.0) green:(10/255.0) blue:(10/255.0) alpha:1]];
         
-        [cancelBtn addTarget: self
-                      action: @selector(cancelClicked:)
-            forControlEvents: UIControlEventTouchDown];
+        //[cancelBtn addTarget: self  action: @selector(cancelClicked:)   forControlEvents: UIControlEventTouchDown];
         //[self.view addSubview:cancelBtn];
         //[self.navigationController.navigationBar addSubview:cancelBtn];
     }else{
@@ -194,7 +192,7 @@
     
     if([UIDeviceHardware isOS7Device]){
         
-        //os7[self.searchBarr setBarTintColor:[UIColor whiteColor]];
+        [self.searchBarr setBarTintColor:[UIColor whiteColor]];
         yValue += 60;
                 
     }else{
@@ -223,9 +221,15 @@
     if([UIDeviceHardware isOS7Device]){
         self.labelSearch.textColor = [UIColor blackColor];
         self.labelSearch.backgroundColor = [UIColor whiteColor];
+        
+        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, self.labelSearch.frame.size.height-1, self.labelSearch.frame.size.width, 1)];
+        borderView.backgroundColor = [UIColor lightGrayColor];
+        [self.labelSearch addSubview:borderView];
+        
     }else{
         self.labelSearch.textColor = [UIColor whiteColor];
         self.labelSearch.backgroundColor = [UIColor blackColor];
+        
     }
     self.labelSearch.numberOfLines = 2;
     //self.labelSearch.textAlignment = UITextAlignmentCenter;
@@ -268,16 +272,16 @@
          self.labelSearch.userInteractionEnabled = NO;
      }*/
          
-     
-     [self.view addSubview:tableViewSearch];
     
+         [self.view addSubview:tableViewSearch];
+  
 	
 	//[self.searchDisplayController.searchResultsTableView reloadData];
 	//self.searchDisplayController.searchResultsTableView.scrollEnabled = YES;
     
-    
+    if(![UIDeviceHardware isOS7Device]){
     [self performSelector:@selector(enableCancelButton:) withObject:self.searchBarr afterDelay:0.5];
-       
+    }
   	self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 }
 
@@ -293,6 +297,9 @@
     [super viewWillAppear:animated];
     if(![UIDeviceHardware isOS7Device]){
     self.navigationController.navigationBarHidden = YES;
+    }
+    if(searchBarr.text == nil || [searchBarr.text isEqualToString:@""]){
+        [searchBarr becomeFirstResponder];
     }
     /*
 	 Hide the search bar
@@ -509,8 +516,10 @@
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
     
     if(![searchBarr isFirstResponder]){
-    if (action == @selector(copy:))
-        return YES;
+        if (action == @selector(copy:)){
+             return YES;
+        }
+        
     }
     return NO;
 }
@@ -532,6 +541,9 @@
         [theMenu setMenuVisible:YES animated:YES];
     }else{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [searchBarr resignFirstResponder];
+        [self.tableViewSearch becomeFirstResponder];
+        
     }
     
     
@@ -643,6 +655,43 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
+    
+    if([@"mbediton***" isEqualToString:searchBar.text]){
+        
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        [def setValue:@"mbediton***" forKey:@"easteregg"];
+        [def synchronize];
+         
+        return;
+    }else if([@"mbeditoff***" isEqualToString:searchBar.text]){
+        
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        [def removeObjectForKey:@"easteregg"];
+        [def synchronize];
+        
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"userdata"];
+        BOOL isDire = YES;
+        
+        if(![fileManager fileExistsAtPath:documentsDirectory isDirectory:&isDire]){
+            
+            [fileManager createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
+        }
+        
+        NSString *localStringPath = [documentsDirectory stringByAppendingPathComponent:@"myedit.sql"];
+        
+        if([fileManager fileExistsAtPath:localStringPath]){
+            
+            [fileManager removeItemAtPath:localStringPath error:NULL];
+        }
+        
+        return;
+    }
+    
     if([arrayResults count] > 0){
         
         self.arrayResults = nil;
@@ -668,22 +717,31 @@
     [self performSelector:@selector(showResult) withObject:nil afterDelay:.1];
     
     [self.searchBarr resignFirstResponder];
+    [self.tableViewSearch becomeFirstResponder];//+20101003
         
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     
-    for (UIView *subview in self.searchBarr.subviews) {
-        if ([subview conformsToProtocol:@protocol(UITextInputTraits)]) {
-            
-            UITextField *fieldSearch = (UITextField *)subview;
-            UILabel *lblCount = (UILabel *)[fieldSearch viewWithTag:tagLabelCount];
-            [lblCount removeFromSuperview];
-        }
-    }
+    
     
     UISegmentedControl *segmentControl = [[UISegmentedControl alloc] initWithItems:[NSArray   arrayWithObjects:@"All",@"Old", @"New", selectedBook.shortName, nil]];
     segmentControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    segmentControl.tintColor = [UIColor darkGrayColor];
+    if([UIDeviceHardware isOS7Device]){
+        //segmentControl.tintColor = window.tintColor;
+    }else{
+        
+        for (UIView *subview in self.searchBarr.subviews) {
+            if ([subview conformsToProtocol:@protocol(UITextInputTraits)]) {
+                
+                UITextField *fieldSearch = (UITextField *)subview;
+                UILabel *lblCount = (UILabel *)[fieldSearch viewWithTag:tagLabelCount];
+                [lblCount removeFromSuperview];
+            }
+        }
+        
+        segmentControl.tintColor = [UIColor darkGrayColor];
+    }
+    
     //  control.momentary = YES;
     [segmentControl addTarget:self action:@selector(segementClicked:) forControlEvents:UIControlEventValueChanged];
     searchBar.inputAccessoryView = segmentControl;//ios6
@@ -734,6 +792,7 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     
     [searchBar resignFirstResponder];
+    [self.tableViewSearch becomeFirstResponder];//+20101003
     if(![UIDeviceHardware isOS7Device]){
         [self performSelector:@selector(enableCancelButton:) withObject:searchBar afterDelay:0.5];
     }
@@ -815,7 +874,7 @@
     //[self.activityView setHidden:YES];
     [self.activityView removeFromSuperview];
     
-    
+    //[self.tableViewSearch setEditing:YES animated:NO];
 
     [self.tableViewSearch reloadData];
    

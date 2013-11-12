@@ -12,6 +12,7 @@
 
 @interface BibleDao : NSObject
 
+- (BOOL) executeQuery:(NSString *)sql;
 - (NSDictionary *)fetchBookNames;
 - (NSDictionary *) getChapter:(int)bookId Chapter:(int)chapterId;
 

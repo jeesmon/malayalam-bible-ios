@@ -315,9 +315,9 @@
 -(void)dismissPopover
 {
     [self.view removeFromSuperview];
-    if([self.delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+    if([self.delegate respondsToSelector:@selector(popoverControllerDidDismissPopoverFB:)])
     {
-        [self.delegate popoverControllerDidDismissPopover:self];
+        [self.delegate popoverControllerDidDismissPopoverFB:self];
     }
      _window=nil;
      _parentView=nil;
