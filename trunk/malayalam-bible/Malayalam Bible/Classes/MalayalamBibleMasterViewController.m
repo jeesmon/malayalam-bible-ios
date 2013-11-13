@@ -17,6 +17,7 @@
 #import "MBConstants.h"
 #import "VerseCell.h"
 #import "WebViewController.h"
+#import "UIDeviceHardware.h"
 
 //const NSString *bmBookSection = @"BookPathSection";
 //const NSString *bmBookRow = @"BookPathRow";
@@ -110,7 +111,13 @@
 {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
+    if([UIDeviceHardware isOS7Device]){
+        
+    }else{
+            self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    }
+    
     
     self.tableViewBooks.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
@@ -119,6 +126,7 @@
         self.tableViewBooks.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMe:)];
+        //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelMe:)];
         
     }else{
         

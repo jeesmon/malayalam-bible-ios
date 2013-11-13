@@ -8,6 +8,7 @@
 #import "MalayalamBibleAppDelegate.h"
 #import "ChapterSelection.h"
 #import "BibleDao.h"
+#import "UIDeviceHardware.h"
 
 #define FONT_SIZE 17.0f
 
@@ -187,7 +188,12 @@ const CGFloat tagWidthOffset = 10.0f;
 - (void) viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    if([UIDeviceHardware isOS7Device]){
+        
+    }else{
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    }
+    
 }
 - (void) viewDidAppear:(BOOL)animated{
     
