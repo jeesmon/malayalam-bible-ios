@@ -10,6 +10,7 @@
 #import "MalayalamBibleDetailViewController.h"
 #import "RootWindow.h"
 
+static NSString * const kStatusBarTappedNotification = @"statusBarTappedNotification";
 
 @interface MalayalamBibleAppDelegate : UIResponder <UIApplicationDelegate>{
     

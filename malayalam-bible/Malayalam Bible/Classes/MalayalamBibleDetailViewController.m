@@ -997,7 +997,7 @@ __VA_ARGS__ \
     self.tableViewVerses.separatorStyle = UITableViewCellSeparatorStyleNone;
     
      
-    CGRect rect = self.view.frame;
+    //CGRect rect = self.view.frame;
 	self.webViewVerses = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-tableWidth, self.view.frame.size.height-(45))];
    
     self.webViewVerses.backgroundColor = [UIColor whiteColor];
@@ -1972,7 +1972,6 @@ IF_IOS5_OR_GREATER(
 }
 - (void) actionClicked:(id)sender{
     
-    MBLog(@"clicked");
     
     //sorting
     [self.arrayToMookmark sortUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
@@ -3061,9 +3060,12 @@ IF_IOS5_OR_GREATER(
         
         UILabel *lbl = [[UILabel alloc] init];
         if([UIDeviceHardware isOS7Device]){
+       
+            MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+            
             lbl.textColor = [UIColor blackColor];
-            [toolBarShare.layer setBorderWidth:.1];
-            [toolBarShare.layer setBorderColor:[UIColor blackColor].CGColor];
+            [toolBarShare.layer setBorderWidth:.7];
+            [toolBarShare.layer setBorderColor:appDelegate.window.tintColor.CGColor];
         }else{
             lbl.textColor = [UIColor whiteColor];
             //[toolBarShare.layer setBorderWidth:.01];

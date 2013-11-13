@@ -108,7 +108,7 @@
     
     
     
-    
+    //self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 
     

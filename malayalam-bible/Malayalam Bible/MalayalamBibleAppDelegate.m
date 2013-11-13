@@ -252,7 +252,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         
             
               
-          //self.window.tintColor = [UIColor colorWithHexString:appColor];
+          self.window.tintColor = [UIColor colorWithHexString:appColor];
             
             
         }
@@ -432,6 +432,21 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - Status bar touch tracking
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    if (CGRectContainsPoint(statusBarFrame, location)) {
+        [self statusBarTouchedAction];
+    }
+}
+
+- (void)statusBarTouchedAction {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStatusBarTappedNotification
+                                                        object:nil];
 }
 
 @end
