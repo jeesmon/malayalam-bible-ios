@@ -2032,7 +2032,7 @@ IF_IOS5_OR_GREATER(
         }
         
         if(isios7){
-        self.popoverActionController.delegate = self;
+            self.popoverActionController.delegate = self;
         }
         
         [self.popoverActionController setPopoverContentSize:CGSizeMake(kActionViewWidth+20, 220)];//195
@@ -2422,15 +2422,16 @@ IF_IOS5_OR_GREATER(
 }
 - (void) buttonClickedWithTag:(NSInteger)actionTag{
     
-    
+    //(@"dddd");
     if(popover){
-        MBLog(@"fbpop smsiss");
+        //(@"fbpop smsiss");
         [popover dismissPopoverAnimated:YES];
     }
     if(self.popoverActionController){
      
-        MBLog(@"popover dismsiss");
+        //(@"popover dismsiss");
         [self.popoverActionController dismissPopoverAnimated:YES];
+        [self.popoverActionController.delegate popoverControllerDidDismissPopover:self.popoverActionController];
     }
     
     if(actionTag == kActionClear){
@@ -3329,7 +3330,7 @@ IF_IOS5_OR_GREATER(
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
     
-    MBLog(@"popover dismissed");
+    //(@"popover dismissed");
     
     MalayalamBibleAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.window.tintColor = nil;
