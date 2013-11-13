@@ -134,7 +134,7 @@
             [bself dismissPopoverAnimated:YES];
         }];
 
-        self.contentSize = CGSizeMake(200, 300); //default size
+        self.contentSize = CGSizeMake(250, 300); //default size //+20131113 200, 300
 
         _contentView = [[FPPopoverView alloc] initWithFrame:CGRectMake(0, 0, 
                                               self.contentSize.width, self.contentSize.height)];
@@ -526,10 +526,13 @@
         r.origin.y = 0;
         r.size.height += old_y;
     }
+    NSLog(@"1r.size.width = %f", r.size.width);
+    NSLog(@"1r.size.height = %f", r.size.height);
     
     //need to be resized horizontally ?
     if(r.origin.x + r.size.width > [self parentWidth])
     {
+        NSLog(@"resizing..");
         r.size.width = [self parentWidth] - r.origin.x;
     }
     
@@ -554,6 +557,8 @@
 
     //using the frame calculated
     _contentView.frame = r;
+    NSLog(@"r.size.width = %f", r.size.width);
+    NSLog(@"r.size.height = %f", r.size.height);
 
     self.origin = CGPointMake(p.x + v.frame.size.width/2.0, p.y + v.frame.size.height/2.0);
     _contentView.relativeOrigin = [_parentView convertPoint:self.origin toView:_contentView];
