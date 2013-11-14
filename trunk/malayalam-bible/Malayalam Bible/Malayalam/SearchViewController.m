@@ -717,8 +717,10 @@
     [self performSelector:@selector(showResult) withObject:nil afterDelay:.1];
     
     [self.searchBarr resignFirstResponder];
-    [self becomeFirstResponder];//+20101003
-        
+    if([UIDeviceHardware isOS7Device]){//+20131114
+        [self becomeFirstResponder];//+20101003
+    }
+    
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     
@@ -792,7 +794,9 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     
     [searchBar resignFirstResponder];
-    [self becomeFirstResponder];//+20101003
+    if([UIDeviceHardware isOS7Device]){//+20131114
+        [self becomeFirstResponder];//+20101003
+    }
     if(![UIDeviceHardware isOS7Device]){
         [self performSelector:@selector(enableCancelButton:) withObject:searchBar afterDelay:0.5];
     }

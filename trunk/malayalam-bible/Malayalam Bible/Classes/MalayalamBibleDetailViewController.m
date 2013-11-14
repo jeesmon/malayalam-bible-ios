@@ -1268,7 +1268,11 @@ IF_IOS5_OR_GREATER(
 	
    
 }
-
+//+20131114
+- (BOOL)shouldAutorotate {
+    
+    return YES;
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     
@@ -1970,6 +1974,7 @@ IF_IOS5_OR_GREATER(
     
     
 }
+
 - (void) actionClicked:(id)sender{
     
     
