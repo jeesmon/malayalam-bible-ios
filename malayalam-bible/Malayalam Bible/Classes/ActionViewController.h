@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CustomButton.h"
 
-#define kActionViewWidth    250
+
 
 @interface ActionViewController : UIViewController{
     

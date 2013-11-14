@@ -8,6 +8,7 @@
 
 
 #import "FPPopoverController.h"
+#import "MBConstants.h"
 
 //ivars
 @interface FPPopoverController()
@@ -134,7 +135,7 @@
             [bself dismissPopoverAnimated:YES];
         }];
 
-        self.contentSize = CGSizeMake(250, 300); //default size //+20131113 200, 300
+        self.contentSize = CGSizeMake(kActionViewWidth, 220); //default size //+20131113 200, 300
 
         _contentView = [[FPPopoverView alloc] initWithFrame:CGRectMake(0, 0, 
                                               self.contentSize.width, self.contentSize.height)];
@@ -196,16 +197,26 @@
 
     [self setupView];
     [self addObservers];
+  
 }
 
 #pragma mark Orientation
-
+//+20131114http://stackoverflow.com/questions/12260261/shouldautorotatetointerfaceorientation-not-being-called-in-ios-6
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
+    
+    
 	if ([_viewController respondsToSelector:@selector(shouldAutorotateToInterfaceOrientation:)])
 		return [_viewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 	return YES;
 }
+- (BOOL)shouldAutorotate {
+    
+    
+    return YES;
+}
+
+
 
 
 #pragma mark presenting
@@ -518,28 +529,31 @@
         r.origin.x = 0;
     }
     
+    //+20131114r.origin.x -= 20;
     
     //need to move up?
     if(r.origin.y < 0)
     {
-        CGFloat old_y = r.origin.y;
+        //+20131114
+        //CGFloat old_y = r.origin.y;
         r.origin.y = 0;
-        r.size.height += old_y;
+        //r.size.height += old_y;
     }
-    NSLog(@"1r.size.width = %f", r.size.width);
-    NSLog(@"1r.size.height = %f", r.size.height);
     
     //need to be resized horizontally ?
     if(r.origin.x + r.size.width > [self parentWidth])
     {
-        NSLog(@"resizing..");
+      
         r.size.width = [self parentWidth] - r.origin.x;
     }
     
     //need to be resized vertically ?
+   
     if(r.origin.y + r.size.height > [self parentHeight])
     {
-        r.size.height = [self parentHeight] - r.origin.y;
+        //+20131114
+        r.origin.y = [self parentHeight] - r.size.height;
+        //r.size.height = [self parentHeight] - r.origin.y;
     }
     
     
@@ -557,9 +571,7 @@
 
     //using the frame calculated
     _contentView.frame = r;
-    NSLog(@"r.size.width = %f", r.size.width);
-    NSLog(@"r.size.height = %f", r.size.height);
-
+   
     self.origin = CGPointMake(p.x + v.frame.size.width/2.0, p.y + v.frame.size.height/2.0);
     _contentView.relativeOrigin = [_parentView convertPoint:self.origin toView:_contentView];
 

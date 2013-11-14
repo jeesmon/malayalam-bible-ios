@@ -13,6 +13,7 @@ extern  CGFloat FONT_SIZE;
 
 #define kFontMaxSize 25
 #define kFontMinSize 9
+#define kActionViewWidth    250
 
 extern const NSString *bmBookSection;
 //extern const NSString *bmBookRow;

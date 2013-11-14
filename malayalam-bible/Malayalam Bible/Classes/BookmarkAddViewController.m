@@ -12,6 +12,7 @@
 
 #import "Folders.h"
 #import "BookMarks.h"
+#import "UIDeviceHardware.h"
 
 @interface BookmarkAddViewController ()
 
@@ -43,6 +44,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if([UIDeviceHardware isOS7Device]){
+        
+    }else{
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    }
 
     self.title = NSLocalizedString(@"add.bookmark", @"");
     

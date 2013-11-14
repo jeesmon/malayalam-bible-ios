@@ -10,6 +10,7 @@
 #import "FPPopoverView.h"
 #import "ARCMacros.h"
 #import "UIDeviceHardware.h"
+#import "MBConstants.h"
 
 #define FP_POPOVER_ARROW_HEIGHT 20.0
 #define FP_POPOVER_ARROW_BASE 20.0
@@ -148,6 +149,8 @@
 //the content with the arrow
 -(CGPathRef)newContentPathWithBorderWidth:(CGFloat)borderWidth arrowDirection:(FPPopoverArrowDirection)direction
 {
+    
+    
     CGFloat w = self.bounds.size.width;
     CGFloat h = self.bounds.size.height;
     CGFloat ah = FP_POPOVER_ARROW_HEIGHT; //is the height of the triangle of the arrow
@@ -155,6 +158,11 @@
     CGFloat radius = FP_POPOVER_RADIUS;
     CGFloat b = 0;//borderWidth;
     
+    //+20131114
+    /*if(direction == FPPopoverArrowDirectionRight){
+        
+        w += 20;
+    }*/
     
     //NO BORDER
     if(self.border == NO) {
@@ -537,7 +545,7 @@
     {
         
         contentRect.origin = CGPointMake(10, 40);        
-        contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);
+        contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);// +20131114
         
         _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
@@ -577,6 +585,20 @@
 
 -(void)layoutSubviews
 {
+    //+20131114
+    
+    if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)){
+        
+        CGRect ff = self.frame;
+        ff.size.width = kActionViewWidth + 20;
+        ff.origin.x = (kActionViewWidth + 20)/2 - 20;
+        
+        self.frame = ff;
+        
+        
+    
+    }
+    
     [super layoutSubviews];
     [self setupViews];
 }

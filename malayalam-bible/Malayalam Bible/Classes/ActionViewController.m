@@ -13,6 +13,7 @@
 #import "CustomView.h"
 #import "MBUtils.h"
 #import "UIDeviceHardware.h"
+#import "MBConstants.h"
 
 
 
@@ -46,6 +47,15 @@
     }
     return self;
 }
+//+20131114
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    
+    return YES;
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
 -(void)loadView{
 	
 	[super loadView];
@@ -75,7 +85,7 @@
     if([UIDeviceHardware isOS7Device]){
         
         self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        SeparatorView *sview = [[SeparatorView alloc] initWithFrame:CGRectMake(0, 1, kActionViewWidth, 1)];
+        SeparatorView *sview = [[SeparatorView alloc] initWithFrame:CGRectMake(0, 1, kActionViewWidth-20, 1)];//+20131114
         [sview setBackgroundColor:[UIColor blackColor]];
         [self.view addSubview:sview];
         
