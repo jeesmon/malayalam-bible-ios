@@ -201,7 +201,6 @@
 }
 
 #pragma mark Orientation
-//+20131114http://stackoverflow.com/questions/12260261/shouldautorotatetointerfaceorientation-not-being-called-in-ios-6
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     

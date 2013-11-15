@@ -82,7 +82,8 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-       
+   
+    
     self.window = [[RootWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.detailViewController = [[MalayalamBibleDetailViewController alloc] init];
@@ -158,13 +159,15 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     {
         //(@"restore point %@", selection);
         
+        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             
-            
+           
             [self restoreLevelWithSelectionArray:savedLocation];
             
         }else{
-            
+           
+            //+20131114
             [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:savedLocation];
         }
         
@@ -172,14 +175,18 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     else
     {    
         //(@"no restore point");
+       
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            
             
             self.savedLocation = [NSMutableArray arrayWithObjects:
                                   [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0],@"BookPathSection",[NSNumber numberWithInt:0], @"BookPathRow", nil],	// book selection at 1st level
                                   [NSNumber numberWithInt:1],	// .. 2nd level , the chapter idex
                                   [NSMutableDictionary dictionaryWithCapacity:1],	
                                   nil];
+            
             [(MalayalamBibleMasterViewController*)[[self.splitViewController.viewControllers objectAtIndex:0] topViewController] restoreLevelWithSelectionArray:self.savedLocation];
+           
         }else{
             
             
@@ -198,11 +205,8 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     }
 	
     
-    
-    
-        
     // register our preference selection data to be archived
-	NSDictionary *savedLocationDict = [NSDictionary dictionaryWithObject:savedLocation forKey:kRestoreLocationKey];
+	//NSDictionary *savedLocationDict = [NSDictionary dictionaryWithObject:savedLocation forKey:kRestoreLocationKey];
 	//[[NSUserDefaults standardUserDefaults] registerDefaults:savedLocationDict];
 	[[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -267,7 +271,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     }else{
         statusBarHeight = 0;
     }
-    
+   
     
     return YES;
 }
@@ -405,7 +409,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        MBLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
@@ -420,7 +424,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            MBLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }

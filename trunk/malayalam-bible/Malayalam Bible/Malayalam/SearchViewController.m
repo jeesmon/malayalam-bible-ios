@@ -746,7 +746,19 @@
     
     //  control.momentary = YES;
     [segmentControl addTarget:self action:@selector(segementClicked:) forControlEvents:UIControlEventValueChanged];
-    searchBar.inputAccessoryView = segmentControl;//ios6
+    
+    //+20131114
+    if([UIDeviceHardware isOS6Device]){
+        searchBar.inputAccessoryView = segmentControl;//ios6
+    }else{
+        for (UIView* v in searchBar.subviews) {
+            if ([v isKindOfClass:[UITextField class]]) {
+                ((UITextField*)v).inputAccessoryView = segmentControl;
+            }
+        }
+    }
+    
+    
     segmentControl.selectedSegmentIndex = self.scopeValue;
     return YES;
 }

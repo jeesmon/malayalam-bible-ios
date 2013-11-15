@@ -46,7 +46,7 @@
 
 - (void)restoreLevelWithSelectionArray:(NSArray *)selectionArray{
     
-    
+  
     NSDictionary *dict = [selectionArray objectAtIndex:0];
         
     NSUInteger section = [[dict objectForKey:bmBookSection] intValue];
@@ -57,7 +57,7 @@
     
     [self.tableViewBooks scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     [self.tableViewBooks selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-    
+   
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     int chapterId = [[appDelegate.savedLocation objectAtIndex:1] intValue];
@@ -473,8 +473,16 @@
             
             self.detailViewController.selectedBook = selectedBook;
             self.detailViewController.chapterId = chapter;
+          
+            //+20131114
+            if(self.detailViewController.webViewVerses){
+                [self.detailViewController configureView];
+                
+            }else{
+                //set a variable and call configview after load
+                self.detailViewController.isLoadViewSET = YES;
+            }
             
-            [self.detailViewController configureView];
         }
         
     }

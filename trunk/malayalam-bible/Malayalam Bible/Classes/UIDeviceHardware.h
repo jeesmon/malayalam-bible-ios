@@ -14,6 +14,7 @@
 
 +(BOOL) isOS4Device;
 +(BOOL) isOS5Device;
++(BOOL) isOS6Device;
 +(BOOL) isOS7Device;
 +(BOOL) isIpad;
 +(BOOL)isSupportRotation:(UIInterfaceOrientation)interfaceOrientation;

@@ -103,7 +103,7 @@ __VA_ARGS__ \
 @synthesize isWebViewLoaded;
 @synthesize colordObjs = _colordObjs;
 @synthesize bookMarkedObjs = _bookMarkedObjs;
-
+@synthesize isLoadViewSET;
 //@synthesize tableWebViewVerses = _tableWebViewVerses;
 
 #pragma mark - Managing the detail item
@@ -188,7 +188,6 @@ __VA_ARGS__ \
         
         lblTitle.font = fontt;
         
-        
         [referenceBtn addSubview:lblTitle];
         
         UIImage *img = [UIImage imageWithImage:[UIImage imageNamed:@"down-arrow.png"] scaledToSize:CGSizeMake(iconwidth, 28)];//(10, 13
@@ -218,8 +217,7 @@ __VA_ARGS__ \
             [referenceBtn addGestureRecognizer:singleFingerTap];
         }
         
-
-               
+        
         
         [viewTitle addSubview:referenceBtn];
         
@@ -363,8 +361,6 @@ __VA_ARGS__ \
             [alltitleView addSubview:preView];
         }
         
-        
-        
         [viewTitle setFrame:CGRectMake(previewframe.size.width+nextPrevgap, 0, booknameWidth+middle+iconwidth+gapBnBC+chapterwidth+middleC+chIconWidth, 45)];
         
 
@@ -445,7 +441,7 @@ __VA_ARGS__ \
         }
         
         */
-        
+       
         [appDelegate.savedLocation replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:self.chapterId]];
         //[appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];    
         
@@ -455,18 +451,18 @@ __VA_ARGS__ \
         NSString *fullverse = [ddict valueForKey:@"fullverse"];
         
         //(@"fullverse = %@", fullverse);
-        
+       
         self.isWebViewLoaded = NO;
         [self.webViewVerses loadHTMLString:fullverse  baseURL:[MBUtils getBaseURL]];
         
         
                 
         [self resetBottomToolbar];
-               
+        
         [self.tableViewVerses reloadData];
-                
+        
         while(!isWebViewLoaded) {
-            
+           
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
         
@@ -474,7 +470,7 @@ __VA_ARGS__ \
             UILabel *ttitlelabel = (UILabel *)[self.view viewWithTag:kTagFullScreenTitle];
             ttitlelabel.text = [NSString stringWithFormat:@"%@ - %i", self.selectedBook.shortName, self.chapterId];
         }
-        
+     
         [self scrollToVerseId];
         
         [self loadSelections];
@@ -970,7 +966,16 @@ __VA_ARGS__ \
     
     [super loadView];
     
-    
+    //+20131114
+    if([UIDeviceHardware isOS7Device]){
+        
+        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+        
+        //noneed[self setEdgesForExtendedLayout:UIRectEdgeNone];
+    }else{
+        
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    }
    
     
     CGFloat yValue = 0;
@@ -999,7 +1004,7 @@ __VA_ARGS__ \
      
     //CGRect rect = self.view.frame;
 	self.webViewVerses = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-tableWidth, self.view.frame.size.height-(45))];
-   
+    
     self.webViewVerses.backgroundColor = [UIColor whiteColor];
     
     if([UIDeviceHardware isOS5Device]){
@@ -1198,6 +1203,11 @@ __VA_ARGS__ \
         
         //Adding observer to notify the language changes
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshList:) name:@"NotifyTableReload" object:nil];
+        //+20131114
+        if(isLoadViewSET){
+            [self configureView];
+            self.isLoadViewSET = NO;
+        }
     }
     if(!isFromSeachController){
         
@@ -1232,7 +1242,7 @@ IF_IOS5_OR_GREATER(
      [super viewDidUnload];
 }
 - (void)statusBarTappedAction:(NSNotification*)notification {
-    NSLog(@"StatusBar tapped");
+  
    
     [self scrollToTop];
 
@@ -2762,7 +2772,10 @@ IF_IOS5_OR_GREATER(
                 navCtrlr.modalPresentationStyle = UIModalPresentationPageSheet;
             }
             
-            [[self navigationController] presentModalViewController:navCtrlr animated:YES];
+            
+                [[self navigationController] presentModalViewController:navCtrlr animated:YES];
+            
+            
             
             
             
@@ -2947,16 +2960,19 @@ IF_IOS5_OR_GREATER(
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     
     //self.isJSWebViewLoaded = YES;
+    ///+20131114
+   
+    self.isWebViewLoaded = YES;
 }
 - (void)webViewDidFinishLoad:(UIWebView *)wView {
-    
+   
     self.isWebViewLoaded = YES;
     //self.isJSWebViewLoaded = YES;
     
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    
+   
    
     
     NSString *url = [[request URL] absoluteString];
