@@ -117,7 +117,33 @@
     [context rollback];
 }
 
-
+//+20131114
+- (BOOL)shouldAutorotate {
+    
+    
+    return YES;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    
+    if([UIDeviceHardware isOS6Device]){
+        return YES;
+    }else{
+        
+    }
+    if(UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)){
+        
+        if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) ||
+           (interfaceOrientation == UIInterfaceOrientationLandscapeRight))  {
+            return YES;
+        }
+        return NO;
+    }else{
+        return YES;
+    }
+    
+    
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

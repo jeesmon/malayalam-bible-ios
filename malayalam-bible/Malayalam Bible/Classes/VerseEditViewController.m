@@ -38,7 +38,7 @@
         schapterid = chpaterid;
         
         vtextView.delegate = self;
-        NSLog(@"dictVerse = %@", dictVerse);
+      
         vtextView.text = [dictVerse valueForKey:@"versetoedit"];
     }
     return self;

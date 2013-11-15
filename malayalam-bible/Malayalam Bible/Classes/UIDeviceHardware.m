@@ -123,6 +123,14 @@ __VA_ARGS__ \
     }
     return NO;
 }
++(BOOL) isOS6Device {
+    
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+        return YES;
+    }
+    return NO;
+}
 +(BOOL)isSupportRotation:(UIInterfaceOrientation)interfaceOrientation{
     
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);

@@ -59,9 +59,11 @@
     TintedImageView *imgArrowPrevious;
     TintedImageView *imgArrowNext;
     
-    
+    BOOL isLoadViewSET;//+20131114
 }
 
+
+@property(nonatomic, assign) BOOL isLoadViewSET;
 @property (strong, nonatomic) TintedImageView *imgArrowbooks;
 @property (strong, nonatomic) TintedImageView *imgArrowChapter;
 @property (strong, nonatomic) TintedImageView *imgArrowPrevious;

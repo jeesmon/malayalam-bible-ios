@@ -325,10 +325,10 @@
         CustomButton *fbButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionFB Title:NSLocalizedString(@"action.facebook", @"") Image:[UIImage imageNamed:imgFB]];
         
         fbButton.btndelegate = self.btndelegate;
-      if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
+      if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
         fbButton.tag = kActionFB;
       }else{
-          fbButton.alpha = .5;
+          fbButton.alpha = .4;
       }
         [fbButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         
@@ -343,10 +343,10 @@
         
         CustomButton *twButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionTwitter Title:NSLocalizedString(@"action.twitter", @"") Image:[UIImage imageNamed:imgTw]];
         twButton.btndelegate = self.btndelegate;
-       if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+       if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
         twButton.tag = kActionTwitter;
        }else{
-           twButton.alpha = .5;
+           twButton.alpha = .4;
        }
         [twButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         

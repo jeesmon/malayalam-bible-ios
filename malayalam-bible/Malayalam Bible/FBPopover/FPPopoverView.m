@@ -158,11 +158,7 @@
     CGFloat radius = FP_POPOVER_RADIUS;
     CGFloat b = 0;//borderWidth;
     
-    //+20131114
-    /*if(direction == FPPopoverArrowDirectionRight){
-        
-        w += 20;
-    }*/
+   
     
     //NO BORDER
     if(self.border == NO) {
@@ -545,7 +541,7 @@
     {
         
         contentRect.origin = CGPointMake(10, 40);        
-        contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);// +20131114
+        contentRect.size = CGSizeMake(self.bounds.size.width-40, self.bounds.size.height-50);
         
         _titleLabel.frame = CGRectMake(10, 10+incre, self.bounds.size.width-20, 20);
 		if (self.title==nil || self.title.length==0) {
