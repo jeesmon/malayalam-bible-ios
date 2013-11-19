@@ -847,7 +847,7 @@
     webViewCtrlr.requestURL = [[NSBundle mainBundle] pathForResource:@"lipi" ofType:@"png"];
     [self.navigationController pushViewController:webViewCtrlr animated:YES];*/
     
-    WebViewController *webViewCtrlr = [[WebViewController alloc] init];
+    /*WebViewController *webViewCtrlr = [[WebViewController alloc] init];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = [paths objectAtIndex:0];
@@ -861,6 +861,7 @@
     
     webViewCtrlr.requestURL = path;
     [self.navigationController pushViewController:webViewCtrlr animated:YES];
+     */
 }
 
 #pragma mark -

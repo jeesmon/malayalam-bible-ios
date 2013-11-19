@@ -16,7 +16,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = [paths objectAtIndex:0];
-    NSString *storePath = [basePath stringByAppendingPathComponent:@"narayam"];
+    NSString *storePath = [basePath stringByAppendingPathComponent:@"Bible"];
     NSURL *url = [NSURL fileURLWithPath:storePath];
     
     return url;
