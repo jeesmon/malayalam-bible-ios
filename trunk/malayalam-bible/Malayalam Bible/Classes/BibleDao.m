@@ -654,11 +654,12 @@ const CGFloat Line_Height = 1.2;
     const char *dbpath = [pathname UTF8String];
     sqlite3 *bibleDB = nil;
     
-    NSMutableString *functions = [NSMutableString stringWithString:@" var newClassName; var i; var isExist; var classes; function scrollToDivId(divid){   var ele = document.getElementById(divid); window.scrollTo(ele.offsetLeft,ele.offsetTop);} function scrollToTop(){ window.scrollTo(0,0);} function getPosition(divid){ var ele = document.getElementById(divid); return ele.offsetTop; }"];//el.style.color=\"#FF0000\";
+    NSMutableString *functions = [NSMutableString stringWithString:@" var newClassName; var i; var isExist; var classes; function scrollToDivId(divid){   var ele = document.getElementById(divid); window.scrollTo(ele.offsetLeft,ele.offsetTop);}  function scrollToTop(){ window.scrollTo(0,0); } function getPosition(divid){ var ele = document.getElementById(divid); return ele.offsetTop; }"];//el.style.color=\"#FF0000\";
     //el.style.fontWeight == 'bold' ? 'normal' : 'bold';
+    //scrollFromY(window.pageYOffset);
+    //function scrollFromY(yPos) { for(var i = yPos; i > 0; i--) {(function() setTimeout(function(){window.scrollTo(0,yPos);},100); } }
     
     NSString *selectionClass = @"lightgray";
-    
     
     [functions appendFormat:@" function makeBold(noteid){var el = document.getElementById(noteid);el.style.fontWeight =  'bold'; } function makeNormal(noteid){var el = document.getElementById(noteid);el.style.fontWeight = 'normal';}  function toggleSelection(fontid) {  var elem = document.getElementById(fontid); if(elem.isselected == \"yes\"){ if(elem.colorcode){elem.style.background = elem.colorcode; }else if(elem.bookmarkcolor){elem.style.background = elem.bookmarkcolor;}else{elem.style.background=\"\"; elem.isselected = \"no\"; } elem.isselected = undefined;}else{elem.isselected = \"yes\"; elem.style.background =\"%@\";} }", selectionClass];
     
@@ -668,7 +669,6 @@ const CGFloat Line_Height = 1.2;
     //[functions appendFormat:@" function selectBMVerse(fontid, colorvalue){ var elem = document.getElementById(fontid); elem.style.background = colorvalue; elem.bookmarkcolor=colorvalue;} "];
     [functions appendFormat:@" function selectBMVerse(fontid, colorvalue){ var elem = document.getElementById(fontid); elem.className = \"underline\"; } "];
     [functions appendFormat:@" function deSelectVerse(fontid){ var elem = document.getElementById(fontid); elem.colorcode = undefined; elem.bookmarkcolor=undefined;elem.isselected = \"no\";elem.style.background = \"\";} "];
-    
     
     NSString *jsssource = @"<meta name=”viewport” content=”width=device-width” />";
     
@@ -842,7 +842,7 @@ const CGFloat Line_Height = 1.2;
                         
                         NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
                         
-                        NSString *verseCell = [NSString stringWithFormat:@"%@<br>%@", primaryVerse, verseWithId];
+                        NSString *verseCell = [NSString stringWithFormat:@"%@<br><Font color=\"Gray\">%@</Font>", primaryVerse, verseWithId];//+20131119
                         
                         NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@\n%@", primaryVerse, verseWithId], @"verse_text", [NSNumber numberWithInt:verseId], @"verseid", nil];
                         
