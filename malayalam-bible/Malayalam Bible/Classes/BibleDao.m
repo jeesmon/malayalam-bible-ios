@@ -533,6 +533,9 @@ const CGFloat Line_Height = 1.2;
                 if(verse){
                     
                     NSMutableString *versse = [NSMutableString stringWithUTF8String:verse];
+                    //+20131120
+                    [versse replaceOccurrencesOfString:@"<[^>]*>" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, versse.length)];
+                    
                     origVerse = [NSString stringWithFormat:@"%@%@", str,versse];
                      
                     NSRange rangeS;
@@ -745,13 +748,13 @@ const CGFloat Line_Height = 1.2;
                 
                 
                 NSMutableString *htmlContent = [[NSMutableString alloc] init];
-                NSString *verseWithId;
+                NSMutableString *verseWithId;//+20131120
                 if(verseId > 0) {
-                    verseWithId = [NSString stringWithFormat:@"%d. %@", verseId, verse];
+                    verseWithId = [NSMutableString stringWithFormat:@"%d. %@", verseId, verse];
                     [htmlContent appendString:[NSString stringWithFormat:@"<html><head></head><b>%d. </b>", verseId]];
                 }
                 else {
-                    verseWithId = verse;
+                    verseWithId = [NSMutableString stringWithString:verse];
                     
                 }
                 
@@ -765,7 +768,8 @@ const CGFloat Line_Height = 1.2;
                     
                 }else{
                     
-                    
+                    //+20131120
+                    [verseWithId replaceOccurrencesOfString:@"<[^>]*>" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, verseWithId.length)];
                     
                     NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:verseWithId, @"verse_text", [NSNumber numberWithInt:verseId], @"verseid", nil];
                     
