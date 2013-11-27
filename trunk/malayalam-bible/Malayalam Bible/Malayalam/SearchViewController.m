@@ -283,6 +283,20 @@
     [self performSelector:@selector(enableCancelButton:) withObject:self.searchBarr afterDelay:0.5];
     }
   	self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    MBLog(@"show indicator..");
+	CGRect cgRect = self.tableViewSearch.frame;
+	CGSize cgSize = cgRect.size;
+    self.activityView.frame=CGRectMake(cgSize.width/2 - 25, cgSize.height/3, 50, 50);
+    //self.activityView.frame=CGRectMake(cgSize.width/2, cgSize.height/3, 50, 50);
+	
+	self.activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
+	self.activityView.tag  = 1;
+    
+    [self.view addSubview:self.activityView];
+    
+    self.activityView.hidesWhenStopped = YES;
+
 }
 
 - (void)viewDidUnload
@@ -674,7 +688,7 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"userdata"];
+        documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"queries"];
         BOOL isDire = YES;
         
         if(![fileManager fileExistsAtPath:documentsDirectory isDirectory:&isDire]){
@@ -712,7 +726,8 @@
         labelSearch.text = searchBar.text;
     }
     
-    [NSThread detachNewThreadSelector:@selector(showIndicator) toTarget:self withObject:nil];
+    
+    [self.activityView startAnimating];
     
     [self performSelector:@selector(showResult) withObject:nil afterDelay:.1];
     
@@ -871,38 +886,25 @@
 -(void)threadStartAnimating
 {
    
-    MBLog(@"show indicator..");
-	CGRect cgRect = self.tableViewSearch.frame;
-	CGSize cgSize = cgRect.size;
-    self.activityView.frame=CGRectMake(cgSize.width/2 - 25, cgSize.height/3, 50, 50);
-    //self.activityView.frame=CGRectMake(cgSize.width/2, cgSize.height/3, 50, 50);
-	
-	self.activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
-	self.activityView.tag  = 1;
-    
-    [self.view addSubview:self.activityView];
-   
-    
     [self.activityView startAnimating];
 }
 -(void)threadStopAnimating
 {
     [self.activityView stopAnimating];
-    //[self.activityView setHidden:YES];
-    [self.activityView removeFromSuperview];
     
-    //[self.tableViewSearch setEditing:YES animated:NO];
-
+    //[self.activityView removeFromSuperview];
+    
+    
     [self.tableViewSearch reloadData];
    
 }
-    
+
 - (void)showIndicator{
     
     
     [self performSelectorOnMainThread:@selector(threadStartAnimating) withObject:nil waitUntilDone:NO];
     
-}   
+}
 - (void) showResult{
     
     [self performSelectorOnMainThread:@selector(showResultset) withObject:nil waitUntilDone:NO];
@@ -911,6 +913,7 @@
 }
 - (void) showResultset{
     
+   
     [self filterContentForSearchText:labelSearch.text scope:self.scopeValue AndBookid:self.selectedBook.bookId];
     
 }
