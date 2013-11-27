@@ -179,7 +179,7 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"userdata"];
+        documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"queries"];
         BOOL isDire = YES;
         
         if(![fileManager fileExistsAtPath:documentsDirectory isDirectory:&isDire]){
@@ -196,7 +196,7 @@
         }
         
         
-        NSString *strToAppend = [NSString stringWithFormat:@"\n%@", sql];
+        NSString *strToAppend = [NSString stringWithFormat:@"\n%@;", sql];
         
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:localStringPath];
         [fileHandle seekToEndOfFile];
