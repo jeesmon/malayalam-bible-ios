@@ -37,12 +37,15 @@
 #define kActionMore 9
 
 #define kTagFullScreenTitle 48
+#define kTagFullScreenView  54
 
 #define kTagShareToolbar    49
 #define kTagTrasparentView  50
 #define kTagNavBarTrasparentView    51
 #define kTagActionToolbar   52
 #define kTagShareLabelCount    53
+
+CGFloat tableWidth = 25;
 
 //#import "SelectableCell.h"
 
@@ -73,13 +76,13 @@ __VA_ARGS__ \
 - (void) moveToNext:(BOOL)isNext;
 - (void) loadSelections;
 - (void) removeColorsFromDB;
-- (void) scrollToTop;
+- (void) scrollToTop:(UITapGestureRecognizer *)recognizer;
 -(void) presentMessageComposeViewController:(NSString *)text;//+20130905
 @end
 
 @implementation MalayalamBibleDetailViewController
 
-@synthesize imgArrowbooks, imgArrowChapter, imgArrowNext, imgArrowPrevious;
+@synthesize imgArrowbooks, imgArrowChapter, imgArrowNext, imgArrowPrevious, isLoaded;
 
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedBook = _selectedBook;
@@ -508,7 +511,7 @@ __VA_ARGS__ \
         if(!isFullScreen){
             
             CGRect rectToolbar = self.bottomToolBar.frame;
-            [[self.view viewWithTag:kTagFullScreenTitle] removeFromSuperview];
+            [[self.view viewWithTag:kTagFullScreenView] removeFromSuperview];
             
             CGRect tableRect =  self.webViewVerses.frame;
             tableRect.origin.y = 0;
@@ -533,8 +536,10 @@ __VA_ARGS__ \
             
         }else{
             
+            UIView *titleLabel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,  20)];
             UILabel *titleVieww = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,  20)];
             
+            titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
             titleVieww.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
             
             titleVieww.text = [NSString stringWithFormat:@"%@ - %i", self.selectedBook.shortName, self.chapterId];
@@ -543,7 +548,14 @@ __VA_ARGS__ \
             [titleVieww setTextColor:[UIColor whiteColor]];
             [titleVieww setFont:[UIFont boldSystemFontOfSize:12]];
             titleVieww.tag = kTagFullScreenTitle;
-            [self.view addSubview:titleVieww];
+            titleLabel.tag = kTagFullScreenView;
+            
+            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self                                               action:@selector(scrollToTop:)];
+            
+            
+            [titleLabel addGestureRecognizer:singleFingerTap];
+            [titleLabel addSubview:titleVieww];
+            [self.view addSubview:titleLabel];
             
             CGRect tableRect =  self.webViewVerses.frame;
             tableRect.origin.y += 20;
@@ -991,7 +1003,7 @@ __VA_ARGS__ \
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	//self.view = myView;
     
-    CGFloat tableWidth = 25;
+   
     self.view.backgroundColor = [UIColor whiteColor];//+20131001
     //self.tableViewVerses = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];//
     
@@ -1244,7 +1256,7 @@ IF_IOS5_OR_GREATER(
 - (void)statusBarTappedAction:(NSNotification*)notification {
   
    
-    [self scrollToTop];
+    [self scrollToTop:nil];
 
     //handle StatusBar tap here.
 }
@@ -1492,15 +1504,18 @@ IF_IOS5_OR_GREATER(
             
             self.chapterId--;
             isContinue = NO;
-            /*
+            
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.4];
             
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
+            CGRect frame1 =  self.webViewVerses.frame;
             frame1.origin.x = -100;
+            self.webViewVerses.frame = frame1;
             
-            self.tableViewVerses.frame = frame1;
+            
+            CGRect framet1 =  self.tableViewVerses.frame;
+            framet1.origin.x = self.webViewVerses.frame.size.width-100;
+            self.tableViewVerses.frame = framet1;
             
             
             [UIView commitAnimations];
@@ -1509,30 +1524,50 @@ IF_IOS5_OR_GREATER(
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.6];
             
-            CGRect frame2 =  self.tableViewVerses.frame;
-            
+            CGRect frame2 =  self.webViewVerses.frame;
             frame2.origin.x = 0;
+            self.webViewVerses.frame = frame2;
             
-            self.tableViewVerses.frame = frame2;
+            CGRect framet2 =  self.tableViewVerses.frame;
+            framet2.origin.x = self.view.frame.size.width-tableWidth;
+            self.tableViewVerses.frame = framet2;
             
             
             [UIView commitAnimations];
-             */
+            
             
         }else{
-            /*
+            
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.3];
             
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
+            CGRect frame1 =  self.webViewVerses.frame;
             frame1.origin.x = 	frame1.size.width;
+            self.webViewVerses.frame = frame1;
             
-            self.tableViewVerses.frame = frame1;
+            
+            CGRect framet1 =  self.tableViewVerses.frame;
+            framet1.origin.x += 	framet1.size.width;
+            self.tableViewVerses.frame = framet1;
+
+            
+            [UIView commitAnimations];
+            
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.6];
+            
+            CGRect frame2 =  self.webViewVerses.frame;
+            frame2.origin.x = 0;
+            self.webViewVerses.frame = frame2;
+            
+            CGRect framet2 =  self.tableViewVerses.frame;
+            framet2.origin.x = self.view.frame.size.width-tableWidth;
+            self.tableViewVerses.frame = framet2;
             
             
             [UIView commitAnimations];
-             */
+            
         }
         
         
@@ -1546,14 +1581,16 @@ IF_IOS5_OR_GREATER(
             self.chapterId++;
             isContinue = NO;
             
-            /*[UIView beginAnimations:nil context:nil];
+            [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.4];
             
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
+            CGRect frame1 =  self.webViewVerses.frame;
             frame1.origin.x = 100;
+            self.webViewVerses.frame = frame1;
             
-            self.tableViewVerses.frame = frame1;
+            CGRect framet1 =  self.tableViewVerses.frame;
+            framet1.origin.x = self.webViewVerses.frame.size.width+100;
+            self.tableViewVerses.frame = framet1;
             
             
             [UIView commitAnimations];
@@ -1562,29 +1599,48 @@ IF_IOS5_OR_GREATER(
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.6];
             
-            CGRect frame2 =  self.tableViewVerses.frame;
-            
+            CGRect frame2 =  self.webViewVerses.frame;
             frame2.origin.x = 0;
+            self.webViewVerses.frame = frame2;
             
-            self.tableViewVerses.frame = frame2;
+            CGRect framet2 =  self.tableViewVerses.frame;
+            framet2.origin.x = self.view.frame.size.width-tableWidth;
+            self.tableViewVerses.frame = framet2;
             
             
             [UIView commitAnimations];
-             */
+            
         }else{
             
-            /*[UIView beginAnimations:nil context:nil];
+            [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.3];
             
-            CGRect frame1 =  self.tableViewVerses.frame;
-            
+            CGRect frame1 =  self.webViewVerses.frame;
             frame1.origin.x -= 	frame1.size.width;
+            self.webViewVerses.frame = frame1;
             
-            self.tableViewVerses.frame = frame1;
+            CGRect framet1 =  self.tableViewVerses.frame;
+            framet1.origin.x =  frame1.origin.x + frame1.size.width;
+            self.tableViewVerses.frame = framet1;
             
             
             [UIView commitAnimations];
-             */
+            
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.6];
+            
+            CGRect frame2 =  self.webViewVerses.frame;
+            frame2.origin.x = 0;
+            self.webViewVerses.frame = frame2;
+            
+            CGRect framet2 =  self.tableViewVerses.frame;
+            framet2.origin.x = self.view.frame.size.width-tableWidth;
+            self.tableViewVerses.frame = framet2;
+            
+            
+            [UIView commitAnimations];
+            
         }
        
     }
@@ -1611,14 +1667,14 @@ IF_IOS5_OR_GREATER(
     
     
 }
-- (void) scrollToTop{
+- (void) scrollToTop:(UITapGestureRecognizer *)recognizer{
     
      MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
         NSString *command = @"scrollToTop()";
         
         MBLog(@"command = %@", command);
         
-        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSMutableDictionary dictionary]];
         
         [self.webViewVerses stringByEvaluatingJavaScriptFromString:command];
         
@@ -1630,10 +1686,9 @@ IF_IOS5_OR_GREATER(
     NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:2];
     
     
-    MBLog(@"dict j = %@", dict);
-    
     NSNumber *verseid = [dict valueForKey:@"verse_id"];
-    if(verseid){
+    NSNumber *sPos = [dict valueForKey:@"scroll_position"];
+    if(verseid){//this is for bookmark selection
         
         NSString *divid = [NSString stringWithFormat:@"Verse-%@",verseid];
         
@@ -1643,13 +1698,22 @@ IF_IOS5_OR_GREATER(
         
         MBLog(@"command = %@", command);
         
-        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSDictionary dictionary]];
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSMutableDictionary dictionary]];
         
         [self.webViewVerses stringByEvaluatingJavaScriptFromString:command];
 
+    }else if(sPos){
+        
+        if([UIDeviceHardware isOS5Device]){
+            
+            [self.webViewVerses.scrollView setContentOffset:CGPointMake(0, [sPos floatValue])];
+        }
+        
+        
+        [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:[NSMutableDictionary dictionary]];
     }
      
-    
+    self.isLoaded = YES;
     /*
     MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:2];   
@@ -3283,7 +3347,25 @@ IF_IOS5_OR_GREATER(
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+   
     [scrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y)];
+    if(self.isLoaded){
+        
+        
+        MalayalamBibleAppDelegate *appDelegate = (MalayalamBibleAppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSMutableDictionary *dict = [appDelegate.savedLocation objectAtIndex:2];//:2 withObject:[NSDictionary dictionary]];
+        if(dict){
+            
+            [dict setValue:[NSNumber numberWithFloat:scrollView.contentOffset.y] forKey:@"scroll_position"];
+        }else{
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithFloat:scrollView.contentOffset.y] forKey:@"scroll_position"];
+            [appDelegate.savedLocation replaceObjectAtIndex:2 withObject:dict];
+        }
+    }
+    
+    
+    
 }
 /*
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
