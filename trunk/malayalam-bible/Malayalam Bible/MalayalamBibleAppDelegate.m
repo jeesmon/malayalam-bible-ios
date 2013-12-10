@@ -120,7 +120,7 @@ NSString *kRestoreLocationKey = @"RestoreLocation";	// preference key to obtain 
     // load the stored preference of the user's last location from a previous launch
     NSUserDefaults *def  =[NSUserDefaults standardUserDefaults];
 	self.savedLocation = [[def objectForKey:kRestoreLocationKey] mutableCopy];
-    NSInteger fontSize = [def integerForKey:@"fontSize"];
+    CGFloat fontSize = [def floatForKey:@"fontSize"];
     
     if(fontSize > 0){
         FONT_SIZE = fontSize;

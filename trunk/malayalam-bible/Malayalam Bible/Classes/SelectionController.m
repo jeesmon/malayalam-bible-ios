@@ -85,8 +85,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
-                 nil];
+                //+20131210[[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:                 nil];
 
 
             }else if(self.optionType == 2){
@@ -96,8 +95,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:dictPref forKey:@"Preferences"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:
-                 nil];
+                //+20131210[[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:                 nil];
             }
             
             

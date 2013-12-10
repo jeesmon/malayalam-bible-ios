@@ -33,5 +33,5 @@
 - (NSMutableArray *)getAllFolders;
 - (NSMutableArray *)getAllColordVersesOfBook:(NSInteger)bookiid ChapterId:(NSInteger)chpteriid;
 - (NSMutableArray *)getAllColordVersesOfColor:(NSString *)colorcode;
-
+- (Book *)fetchBookWithId:(int)bookid;
 @end

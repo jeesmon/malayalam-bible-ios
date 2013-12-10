@@ -15,6 +15,13 @@
     NSArray *arrayLangs;
     
     NSArray *arrayPrefs;
+    
+   
+    
+    NSString *selectedPrimary;
+    NSString *selectedSecondary;
 }
+
+
 
 @end

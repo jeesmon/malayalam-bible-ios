@@ -45,6 +45,7 @@
 {
     [super viewDidLoad];
 
+    self.navigationItem.title = NSLocalizedString(@"title.bookmarks", @"");
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
