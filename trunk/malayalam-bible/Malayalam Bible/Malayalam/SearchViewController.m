@@ -242,10 +242,16 @@
     if([self.primaryL isEqualToString:kLangPrimary]){
         
         [self.view addSubview:self.labelSearch];
+       
+        yValue += 45;
+    }else{
         
-        yValue+=45;
+        if([UIDeviceHardware isOS7Device]){
+            yValue = 0;
+        }
     }
     
+    //(@"yValue = %f", yValue);
     
     self.tableViewSearch = [[UITableView alloc] initWithFrame:CGRectMake(0, yValue, self.view.frame.size.width, self.view.frame.size.height-yValue) style:UITableViewStylePlain];
     self.tableViewSearch.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
@@ -284,7 +290,7 @@
     }
   	self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    MBLog(@"show indicator..");
+    
 	CGRect cgRect = self.tableViewSearch.frame;
 	CGSize cgSize = cgRect.size;
     self.activityView.frame=CGRectMake(cgSize.width/2 - 25, cgSize.height/3, 50, 50);
