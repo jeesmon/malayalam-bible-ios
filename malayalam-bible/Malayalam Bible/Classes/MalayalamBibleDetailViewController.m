@@ -2989,6 +2989,7 @@ IF_IOS5_OR_GREATER(
 - (void)refreshList:(NSNotification *)note
 {
 	
+    self.searchController = nil;//+20131210
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     NSString *secondaryL = kLangNone;
