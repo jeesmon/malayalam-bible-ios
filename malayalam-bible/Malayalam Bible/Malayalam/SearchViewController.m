@@ -402,7 +402,7 @@
         
     CGSize constraintSize = CGSizeMake(self.tableViewSearch.frame.size.width-70, MAXFLOAT);//280
     
-    CGSize labelSize = [verseStr sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [verseStr sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
     
     return labelSize.height +10 ;
     

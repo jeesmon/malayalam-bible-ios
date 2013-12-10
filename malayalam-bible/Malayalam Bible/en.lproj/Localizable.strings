@@ -8,6 +8,9 @@
 
 
 
+"title.bookmarks"   = "Bookmarks";
+"title.notes"   = "Notes";
+
 "Notes"          = "Notes";
 "AddToBookmark"     = "Add To Bookmark";
 "add.bookmark"      = "Add Bookmark";

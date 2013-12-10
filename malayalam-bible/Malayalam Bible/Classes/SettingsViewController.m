@@ -23,6 +23,15 @@
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         
+        NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+        
+        
+        if(dictPref !=nil ){
+            
+            selectedPrimary = [dictPref valueForKey:@"primaryLanguage"];
+            selectedSecondary = [dictPref valueForKey:@"secondaryLanguage"];
+            
+        }
     }
     return self;
 }
@@ -53,6 +62,20 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
     
@@ -90,12 +113,12 @@
     
     
     NSDictionary *sdict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"Malayalam Typing" ,@"header",@"1", @"sectionindex",[NSArray arrayWithObjects:dict11, nil], @"data", nil];
-
+    
     NSDictionary *sdict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"Text Size" ,@"header",@"2", @"sectionindex", nil];
-
+    
     
     NSDictionary *dict31 = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"AppInfo", @"") ,@"label",@"", @"value", nil];
-
+    
     
     NSDictionary *sdict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"Info" ,@"header",@"3", @"sectionindex", [NSArray arrayWithObjects:dict31, nil], @"data",nil];
     
@@ -119,18 +142,8 @@
     if(sdict3){
         [arraySettings addObject:sdict3];
     }
-}
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -140,10 +153,43 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:FONT_SIZE forKey:@"fontSize"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:nil];
+    CGFloat fontSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"];
+    
+   
+    if(fontSize != FONT_SIZE){
+        [[NSUserDefaults standardUserDefaults] setFloat:FONT_SIZE forKey:@"fontSize"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    }
+    
+    NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+    
+    BOOL isLangChanged = NO;
+    
+    if(dictPref !=nil ){
+        
+       NSString *changedPrimary = [dictPref valueForKey:@"primaryLanguage"];
+       NSString *changedSecondary = [dictPref valueForKey:@"secondaryLanguage"];
+        
+       
+       if( ![changedPrimary isEqualToString:selectedPrimary] || ![changedSecondary isEqualToString:selectedSecondary]){
+           
+            isLangChanged = YES;
+       }
+        
+    }
+    
+    
+    
+    if(fontSize != FONT_SIZE || isLangChanged){
+        
+      
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyTableReload" object:nil userInfo:nil];
+        
+    }
+    
     
     [super viewWillDisappear:animated];
 }
@@ -325,6 +371,7 @@
     
     // Navigation logic may go here. Create and push another view controller.
     if(indexconst == 0){
+        
         /*LanguageViewController *detailViewController = [[LanguageViewController alloc] init];
         // ...
         // Pass the selected object to the new view controller.

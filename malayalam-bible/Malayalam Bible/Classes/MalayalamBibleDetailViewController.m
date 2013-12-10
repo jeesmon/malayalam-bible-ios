@@ -474,9 +474,9 @@ __VA_ARGS__ \
             ttitlelabel.text = [NSString stringWithFormat:@"%@ - %i", self.selectedBook.shortName, self.chapterId];
         }
      
-        [self scrollToVerseId];
         
-        [self loadSelections];
+        //[self scrollToVerseId];
+        //[self loadSelections];
     }
 }
 
@@ -1688,6 +1688,7 @@ IF_IOS5_OR_GREATER(
     
     NSNumber *verseid = [dict valueForKey:@"verse_id"];
     NSNumber *sPos = [dict valueForKey:@"scroll_position"];
+    
     if(verseid){//this is for bookmark selection
         
         NSString *divid = [NSString stringWithFormat:@"Verse-%@",verseid];
@@ -1706,7 +1707,10 @@ IF_IOS5_OR_GREATER(
         
         if([UIDeviceHardware isOS5Device]){
             
-            [self.webViewVerses.scrollView setContentOffset:CGPointMake(0, [sPos floatValue])];
+            
+            CGFloat yVal = MIN((self.webViewVerses.scrollView.contentSize.height - self.webViewVerses.scrollView.frame.size.height), [sPos floatValue]);
+            
+            [self.webViewVerses.scrollView setContentOffset:CGPointMake(0, yVal)];
         }
         
         
@@ -3007,15 +3011,20 @@ IF_IOS5_OR_GREATER(
     NSString *fullverse = [ddict valueForKey:@"fullverse"];
     
     //(@"fullverse = %@", fullverse);
+    self.isLoaded = NO;
     
     self.isWebViewLoaded = NO;
     [self.webViewVerses loadHTMLString:fullverse  baseURL:[MBUtils getBaseURL]];
     
     
     
-    [self resetBottomToolbar];
+    //+20131209[self resetBottomToolbar];
     
     [self.tableViewVerses reloadData];
+    
+    
+    //[self scrollToVerseId];
+    //[self loadSelections];
     
 }
 
@@ -3029,9 +3038,16 @@ IF_IOS5_OR_GREATER(
     self.isWebViewLoaded = YES;
 }
 - (void)webViewDidFinishLoad:(UIWebView *)wView {
+    
+  
    
     self.isWebViewLoaded = YES;
     //self.isJSWebViewLoaded = YES;
+    
+    [self scrollToVerseId];
+    [self loadSelections];
+    
+    
     
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -3349,6 +3365,8 @@ IF_IOS5_OR_GREATER(
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
    
+   
+    
     [scrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y)];
     if(self.isLoaded){
         

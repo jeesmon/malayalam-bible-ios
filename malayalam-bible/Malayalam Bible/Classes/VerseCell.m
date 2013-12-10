@@ -67,7 +67,7 @@
 
     UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
     CGSize constraintSize = CGSizeMake(cgSize.width-adjustWidth, MAXFLOAT);//280
-    CGSize labelSize = [verseText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [verseText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
    
     CGFloat adjustht = 0;
     if(self.isUnderlined){

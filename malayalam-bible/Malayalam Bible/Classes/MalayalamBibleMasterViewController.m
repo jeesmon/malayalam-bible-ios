@@ -324,7 +324,7 @@
         
         UIFont *cellFont = [UIFont fontWithName:kFontName size:FONT_SIZE];
         CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
-        CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+        CGSize labelSize = [cellText sizeWithFont:cellFont constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
         
         return labelSize.height + 15;
     
@@ -422,11 +422,13 @@
     self.infoViewController.title = @"About";
     [self.navigationController pushViewController:self.infoViewController animated:YES];
 }
+/*
 - (void) showPreferences:(id)sender{
     
     SettingsViewController *ctrlr = [[SettingsViewController alloc] init];
     [self.navigationController pushViewController:ctrlr animated:YES];
 }
+ */
 //for iPhone only
 - (void) cancelMe:(id)sender{
     [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -504,6 +506,20 @@
 - (void)refreshList:(NSNotification *)note
 {
 	self.isNeedReload = YES;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        
+        
+        
+        
+        [self loadData];
+        self.title = [BibleDao getTitleBooks];
+        //NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        [self.tableViewBooks reloadData];
+       
+        self.isNeedReload = NO;
+    }
+
     
 	//NSDictionary *dict = [note userInfo];
     

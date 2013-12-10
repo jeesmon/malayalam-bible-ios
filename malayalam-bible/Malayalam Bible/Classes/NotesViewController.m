@@ -43,6 +43,8 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addClicked:)];
+    
+    self.navigationItem.title = NSLocalizedString(@"title.notes", @"");
 }
 
 - (void)didReceiveMemoryWarning
