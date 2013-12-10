@@ -70,7 +70,6 @@
 		03D3FFF614C053FD004A8BE8 /* MBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D3FFF514C053FC004A8BE8 /* MBConstants.m */; };
 		03D7FB5A173A7ACB00CFB46E /* MBUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D7FB59173A7ACB00CFB46E /* MBUtils.m */; };
 		03DA7A5E17C733E10067F9DA /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DA7A5D17C733E10067F9DA /* NotesViewController.m */; };
-		03DD68701738C4FE008A5FD7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 03DD686F1738C4FE008A5FD7 /* Default.png */; };
 		03E0484315419CDC008DDB41 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E0484215419CDC008DDB41 /* UIDeviceHardware.m */; };
 		03E30AC1163009380072802F /* userdata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03E30ABF163009380072802F /* userdata.xcdatamodeld */; };
 		03E30AC8163009DA0072802F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E30AC7163009DA0072802F /* CoreData.framework */; };
@@ -231,7 +230,6 @@
 		03D7FB59173A7ACB00CFB46E /* MBUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBUtils.m; sourceTree = "<group>"; };
 		03DA7A5C17C733E10067F9DA /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesViewController.h; sourceTree = "<group>"; };
 		03DA7A5D17C733E10067F9DA /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesViewController.m; sourceTree = "<group>"; };
-		03DD686F1738C4FE008A5FD7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		03E0484115419CDC008DDB41 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
 		03E0484215419CDC008DDB41 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
 		03E30AC0163009380072802F /* userdata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = userdata.xcdatamodel; sourceTree = "<group>"; };
@@ -455,7 +453,6 @@
 		0FFE50781450636E00BC85EE = {
 			isa = PBXGroup;
 			children = (
-				03DD686F1738C4FE008A5FD7 /* Default.png */,
 				0FFE508D1450636E00BC85EE /* Malayalam Bible */,
 				0FFE50861450636E00BC85EE /* Frameworks */,
 				0FFE50841450636E00BC85EE /* Products */,
@@ -784,7 +781,6 @@
 				0316038817369FAE00ED3BE5 /* notes.png in Resources */,
 				8FF6341417FC5AAC006C8A1B /* ios7_envelope@2x.png in Resources */,
 				0316038917369FAE00ED3BE5 /* notes@2x.png in Resources */,
-				03DD68701738C4FE008A5FD7 /* Default.png in Resources */,
 				8FF7338D17872FEE0015D281 /* ActionViewController.xib in Resources */,
 				0378D0681795A4BD00967604 /* facebook.png in Resources */,
 				0378D0691795A4BD00967604 /* facebook@2x.png in Resources */,
