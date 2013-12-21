@@ -114,6 +114,7 @@
 		8FB58B8614A2475C009226AE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FB58B8514A2475C009226AE /* MessageUI.framework */; };
 		8FB6BFE41798ED3B00A090AA /* BookMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6BFE31798ED3B00A090AA /* BookMarks.m */; };
 		8FB6BFEA1798ED6A00A090AA /* Folders.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6BFE91798ED6A00A090AA /* Folders.m */; };
+		8FBE3A1018660E7900D8C24D /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FBE3A0F18660E7900D8C24D /* Toast+UIView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8FD56BC317CF996A00B25023 /* FontSizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD56BC217CF996A00B25023 /* FontSizeCell.m */; };
 		8FE23FE617873D5E00066DD6 /* UIButtonGlossy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE23FE517873D5E00066DD6 /* UIButtonGlossy.m */; };
 		8FE6A050178B135E00D9E5A3 /* SeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6A04F178B135E00D9E5A3 /* SeparatorView.m */; };
@@ -294,6 +295,8 @@
 		8FB6BFE31798ED3B00A090AA /* BookMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookMarks.m; path = Classes/BookMarks.m; sourceTree = "<group>"; };
 		8FB6BFE81798ED6A00A090AA /* Folders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Folders.h; path = Classes/Folders.h; sourceTree = "<group>"; };
 		8FB6BFE91798ED6A00A090AA /* Folders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Folders.m; path = Classes/Folders.m; sourceTree = "<group>"; };
+		8FBE3A0E18660E7900D8C24D /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
+		8FBE3A0F18660E7900D8C24D /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
 		8FD56BC117CF996A00B25023 /* FontSizeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSizeCell.h; sourceTree = "<group>"; };
 		8FD56BC217CF996A00B25023 /* FontSizeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontSizeCell.m; sourceTree = "<group>"; };
 		8FE23FE417873D5E00066DD6 /* UIButtonGlossy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtonGlossy.h; sourceTree = "<group>"; };
@@ -631,6 +634,8 @@
 		8FD56BC017CF988400B25023 /* CustomComponents */ = {
 			isa = PBXGroup;
 			children = (
+				8FBE3A0E18660E7900D8C24D /* Toast+UIView.h */,
+				8FBE3A0F18660E7900D8C24D /* Toast+UIView.m */,
 				8FF7338917872FEE0015D281 /* ActionViewController.h */,
 				8FF7338A17872FEE0015D281 /* ActionViewController.m */,
 				030EFE9617D62B9A003A70A9 /* CustomView.h */,
@@ -796,6 +801,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FBE3A1018660E7900D8C24D /* Toast+UIView.m in Sources */,
 				0FFE50941450636E00BC85EE /* main.m in Sources */,
 				0FFE50981450636E00BC85EE /* MalayalamBibleAppDelegate.m in Sources */,
 				8FB58B7414A246D0009226AE /* Book.m in Sources */,
@@ -978,7 +984,7 @@
 				INFOPLIST_FILE = "Malayalam Bible/Malayalam Bible-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA0FDC4F-4E33-4AE0-A050-041813CF98D3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2E5E0F2C-4EE2-4F18-980D-4BB71EF1CBAB";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

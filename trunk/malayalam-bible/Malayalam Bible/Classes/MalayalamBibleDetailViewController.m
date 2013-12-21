@@ -29,7 +29,7 @@
 #import "NotesAddViewController.h"
 #import  "TintedImageView.h"
 #import "VerseEditViewController.h"
-
+#import "Toast+UIView.h"
 
 
 #define kActionHelp 7
@@ -2843,6 +2843,7 @@ IF_IOS5_OR_GREATER(
             
                 [[self navigationController] presentModalViewController:navCtrlr animated:YES];
             
+                     
             
             
             
@@ -2850,8 +2851,133 @@ IF_IOS5_OR_GREATER(
             
             
             
+        }else if(actionTag == kActionFB){
             
-        }else if(actionTag == kActionNotes){
+            NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+            NSString *secondaryL = kLangNone;
+            if(dictPref !=nil ){
+                secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+            }
+
+            
+            NSMutableString *emailBody = [[NSMutableString alloc] init ];
+            [emailBody appendFormat:@"%@", self.selectedBook.shortName];
+            [emailBody appendFormat:@" %i", self.chapterId];
+            
+            NSUInteger countV = [self.arrayToMookmark count];
+            
+            if(countV == 0){
+                
+                //return ? or mail entire chapter ?
+                
+            }else if(countV == 1 && [secondaryL isEqualToString:kLangNone]){
+                
+                NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:0] intValue]];
+                [emailBody appendFormat:@" : %@\n", [dict valueForKey:@"verse_text"]];
+                
+            }else{
+                
+                [emailBody appendFormat:@"\n"];
+                for(NSUInteger i=0; i<countV ; i++ ){
+                    
+                    NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:i] intValue]];
+                    [emailBody appendFormat:@"%@\n", [dict valueForKey:@"verse_text"]];
+                }
+            }
+         
+            SLComposeViewController *objvc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            
+            //setting the text to post
+            [objvc setInitialText:emailBody];
+            
+            
+            [self presentViewController:objvc animated:YES
+                             completion:nil];
+            
+            objvc.completionHandler = ^(SLComposeViewControllerResult result)
+            {
+                if (result == SLComposeViewControllerResultDone) {
+                    [self.view makeToast:@"Verses posted to Facebook" duration:2.0 position:@"center"];
+                }
+                /*
+                 else if (result == SLComposeViewControllerResultCancelled)
+                 {
+                 UIAlertView *objresponseAlert = [[UIAlertView alloc]initWithTitle:nil message:@"Action cancelled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                 [objresponseAlert show];
+                 }
+                 */
+                
+            };
+            
+        }else if(actionTag == kActionTwitter){
+            
+            NSMutableDictionary *dictPref = [[NSUserDefaults standardUserDefaults] objectForKey:kStorePreference];
+            NSString *secondaryL = kLangNone;
+            if(dictPref !=nil ){
+                secondaryL = [dictPref valueForKey:@"secondaryLanguage"];
+            }
+            
+            
+            NSMutableString *emailBody = [[NSMutableString alloc] init ];
+            [emailBody appendFormat:@"%@", self.selectedBook.shortName];
+            [emailBody appendFormat:@" %i", self.chapterId];
+            
+            NSUInteger countV = [self.arrayToMookmark count];
+            
+            if(countV == 0){
+                
+                //return ? or mail entire chapter ?
+                
+            }else if(countV == 1 && [secondaryL isEqualToString:kLangNone]){
+                
+                NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:0] intValue]];
+                [emailBody appendFormat:@" : %@\n", [dict valueForKey:@"verse_text"]];
+                
+            }else{
+                
+                [emailBody appendFormat:@"\n"];
+                for(NSUInteger i=0; i<countV ; i++ ){
+                    
+                    NSDictionary *dict = [self.bVerses objectAtIndex:[[self.arrayToMookmark objectAtIndex:i] intValue]];
+                    [emailBody appendFormat:@"%@\n", [dict valueForKey:@"verse_text"]];
+                }
+            }
+
+            
+                SLComposeViewController *objvc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+                
+                //setting the text to post
+                [objvc setInitialText:emailBody];
+                
+                
+                [self presentViewController:objvc animated:YES
+                                 completion:nil];
+                
+                objvc.completionHandler = ^(SLComposeViewControllerResult result)
+                {
+                    if (result == SLComposeViewControllerResultDone) {
+                        [self.view makeToast:@"Verses posted to Twitter" duration:2.0 position:@"center"];
+                    }
+                    /*
+                     else if (result == SLComposeViewControllerResultCancelled)
+                     {
+                     UIAlertView *objresponseAlert = [[UIAlertView alloc]initWithTitle:nil message:@"Action cancelled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                     [objresponseAlert show];
+                     }
+                     */
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self dismissViewControllerAnimated:NO completion:^{
+                           
+                        }];
+                    });
+                    
+                    //[self.editorView becomeFirstResponder];+20130909
+                };
+            
+            
+            
+        }/*else if(actionTag == kActionNotes){
             
             NSMutableString *verseid = [NSMutableString string];
             for(int i=0 ; i<[self.arrayToMookmark count]; i++){
@@ -2899,7 +3025,7 @@ IF_IOS5_OR_GREATER(
             }
             
             [[self navigationController] presentModalViewController:navCtrlr animated:YES];
-        }
+        }*/
 
         
     }
