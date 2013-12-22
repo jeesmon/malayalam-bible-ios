@@ -2689,6 +2689,8 @@ IF_IOS5_OR_GREATER(
             
             pasteboard.string = verseStr;
             
+            [self.view makeToast:@"Verses copied. Paste anywhere." duration:1.5 position:@"center"];
+            
         }else if(actionTag == kActionMail){
             Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
             if (mailClass != nil)
@@ -2897,7 +2899,7 @@ IF_IOS5_OR_GREATER(
             objvc.completionHandler = ^(SLComposeViewControllerResult result)
             {
                 if (result == SLComposeViewControllerResultDone) {
-                    [self.view makeToast:@"Verses posted to Facebook" duration:2.0 position:@"center"];
+                    [self.view makeToast:@"Verses posted to Facebook" duration:1.5 position:@"center"];
                 }
                 /*
                  else if (result == SLComposeViewControllerResultCancelled)
@@ -2956,7 +2958,7 @@ IF_IOS5_OR_GREATER(
                 objvc.completionHandler = ^(SLComposeViewControllerResult result)
                 {
                     if (result == SLComposeViewControllerResultDone) {
-                        [self.view makeToast:@"Verses posted to Twitter" duration:2.0 position:@"center"];
+                        [self.view makeToast:@"Verses posted to Twitter" duration:1.5 position:@"center"];
                     }
                     /*
                      else if (result == SLComposeViewControllerResultCancelled)
