@@ -478,6 +478,11 @@ __VA_ARGS__ \
         //[self scrollToVerseId];
         //[self loadSelections];
     }
+    if([UIDeviceHardware isIpad]){//+20131231
+        if (self.masterPopoverController != nil) {
+            [self.masterPopoverController dismissPopoverAnimated:YES];
+        }
+    }
 }
 
 - (void)showAlert:(NSString *)message
