@@ -321,15 +321,19 @@
     x += gap;
     
     
+    NSInteger ftag = 0;
+    if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
+        ftag = kActionFB;
+    }
+    
+    
+        CustomButton *fbButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:ftag Title:NSLocalizedString(@"action.facebook", @"") Image:[UIImage imageNamed:imgFB]];
+    if(ftag == 0){
         
-        CustomButton *fbButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionFB Title:NSLocalizedString(@"action.facebook", @"") Image:[UIImage imageNamed:imgFB]];
-        
+        fbButton.alpha = .4;
+    }
         fbButton.btndelegate = self.btndelegate;
-      if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
-        fbButton.tag = kActionFB;
-      }else{
-          fbButton.alpha = .4;
-      }
+    
         [fbButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         
         [self.view addSubview:fbButton];
@@ -337,17 +341,20 @@
    
     
     
+    NSInteger ttag = 0;
+    if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+        ttag = kActionTwitter;
+    }
     
     
-    
-        
-        CustomButton *twButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:kActionTwitter Title:NSLocalizedString(@"action.twitter", @"") Image:[UIImage imageNamed:imgTw]];
+        CustomButton *twButton = [[CustomButton alloc] initWithFrame:CGRectMake(0, 0, 30, 35) Tag:ttag Title:NSLocalizedString(@"action.twitter", @"") Image:[UIImage imageNamed:imgTw]];
         twButton.btndelegate = self.btndelegate;
-       if ([UIDeviceHardware isOS6Device] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
-        twButton.tag = kActionTwitter;
-       }else{
-           twButton.alpha = .4;
-       }
+    
+    if(ttag == 0){
+        
+        twButton.alpha = .4;
+    }
+    
         [twButton setFrame:CGRectMake(x, y, btnwidth, btnHeight)];
         
         [self.view addSubview:twButton];

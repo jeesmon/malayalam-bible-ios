@@ -26,7 +26,9 @@
         [btnNewSignature1 setFrame:CGRectMake((48-imgNewSignature1.size.width)/2, (26-imgNewSignature1.size.height)/2, imgNewSignature1.size.width, imgNewSignature1.size.height)];
         btnNewSignature1.tag = actionTag;
         //[btnNewSignature1 addTarget:btndelegate action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
+        if(actionTag == 0){
+            btnNewSignature1.enabled = false;
+        }
         
         [self addSubview:btnNewSignature1];
         
