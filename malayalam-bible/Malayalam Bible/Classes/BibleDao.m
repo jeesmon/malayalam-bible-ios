@@ -976,14 +976,49 @@ const CGFloat Line_Height = 1.2;
             
             NSString *primaryVerse = [dictVersePrim valueForKey:@"verse_text"];
             
-            NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text", nil];
+            NSMutableDictionary *dictVerse = [NSMutableDictionary dictionaryWithObjectsAndKeys:primaryVerse, @"verse_text",[NSNumber numberWithInt:[key integerValue]], @"verseid", nil];
             
             if([key intValue] < [verses count]){
-                                
+                
+                NSUInteger preverseid = ([key integerValue]-1);
+                NSRange rge = [mString rangeOfString:[NSString stringWithFormat:@"%@</FONT></div><hr>",[NSString stringWithFormat:@"Font-%i",preverseid]]];
+                
+                NSString *divid = [NSString stringWithFormat:@"Verse-%i",[key integerValue]];
+                NSString *fontid = [NSString stringWithFormat:@"Font-%i",[key integerValue]];
+                NSString *noteid = [NSString stringWithFormat:@"Note-%i",[key integerValue]];
+                
+                NSString *content = [NSString stringWithFormat:@"<div id=\"%@\"><a id=\"%@\" href=\"melt://chapterClicked:%i\"></a><FONT id=\"%@\"  colorcode=\"\" bookmarkcolor=\"\" isselected=\"\" onClick=\"window.open('melt://verseClicked:%i')\">%@</FONT></div><hr>", divid,noteid,[verses count],fontid, [verses count], primaryVerse];
+                
+                if(rge.length > 0){
+                    
+                    
+                    
+                    [mString insertString:content atIndex:rge.location+rge.length];
+                    
+                    
+                }else{
+                    
+                    rge = [mString rangeOfString:@"</style><body>"];
+                    if(rge.length > 0){
+                        
+                        [mString insertString:content atIndex:rge.location+rge.length];
+                    }
+                    
+                }
+                
                 [verses insertObject:dictVerse atIndex:[key intValue]];
+                
                 
             }else{
                 
+                
+                NSString *divid = [NSString stringWithFormat:@"Verse-%i",[key integerValue]];
+                NSString *fontid = [NSString stringWithFormat:@"Font-%i",[key integerValue]];
+                NSString *noteid = [NSString stringWithFormat:@"Note-%i",[key integerValue]];
+                
+                
+                
+                [mString appendFormat:@"<div id=\"%@\"><a id=\"%@\" href=\"melt://chapterClicked:%i\"></a><FONT id=\"%@\"  colorcode=\"\" bookmarkcolor=\"\" isselected=\"\" onClick=\"window.open('melt://verseClicked:%i')\">%@</FONT></div><hr>", divid,noteid,[verses count],fontid, [verses count], primaryVerse];
                 
                 [verses addObject:dictVerse];
             }
