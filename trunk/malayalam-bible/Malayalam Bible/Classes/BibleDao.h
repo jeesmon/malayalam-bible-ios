@@ -35,3 +35,10 @@
 - (NSMutableArray *)getAllColordVersesOfColor:(NSString *)colorcode;
 - (Book *)fetchBookWithId:(int)bookid;
 @end
+
+//+20130903
+@interface UIColor (MyProject)
+
++(UIColor *) defaultWindowColor;
+
+@end
