@@ -771,7 +771,7 @@ const CGFloat Line_Height = 1.2;
     if(appColor == nil){
         if([UIDeviceHardware isOS7Device]){
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            appColor = [self getHexStringForColor:appDelegate.window.tintColor];
+            appColor = [self getHexStringForColor:[UIColor defaultWindowColor]];//[self getHexStringForColor:appDelegate.window.tintColor];//+20140312
         }else{
             appColor = @"#000000";
         }
@@ -1364,5 +1364,13 @@ const CGFloat Line_Height = 1.2;
     return [NSMutableArray arrayWithArray:array1];
     
 }
+
+@end
+@implementation UIColor (MyProject)
+
++(UIColor *) defaultWindowColor {
+    
+    return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];;//[UIColor colorWithRed:19/255.0 green:144/255.0 blue:255/255.0 alpha:1.0];
+}//CJ 20131007 //[UIColor colorWithRed:69/255.0 green:157/255.0 blue:255/255.0 alpha:1]//+20131011 //green:122.0/255.0 blue:1.0 alpha:1.0
 
 @end

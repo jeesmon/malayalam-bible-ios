@@ -152,9 +152,9 @@ __VA_ARGS__ \
             booknameWidth = 220;
           
         }
-        
-        
-        CGSize titlesize = [titleNew sizeWithFont:fontt constrainedToSize:CGSizeMake(booknameWidth, 45) lineBreakMode:NSLineBreakByTruncatingTail];
+      
+        NSString *titleNew1 = [NSString stringWithFormat:@"%@." ,titleNew];//+20140312 to fix the issue with os7.1
+        CGSize titlesize = [titleNew1 sizeWithFont:fontt constrainedToSize:CGSizeMake(booknameWidth, 45) lineBreakMode:NSLineBreakByTruncatingTail];
         
         booknameWidth  = titlesize.width;
         //viewTitle.backgroundColor = [UIColor redColor];
@@ -177,7 +177,7 @@ __VA_ARGS__ \
             lblTitle.textAlignment = UITextAlignmentCenter;
         }else{
 
-            lblTitle.textAlignment = UITextAlignmentRight;
+            lblTitle.textAlignment = UITextAlignmentCenter;//+20140312ITextAlignmentRight;
         }
         
         
@@ -199,7 +199,7 @@ __VA_ARGS__ \
         if([UIDeviceHardware isOS7Device]){
             imgArrowbooks = [[TintedImageView alloc] initWithImage:img];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            imgArrowbooks.tintColor = appDelegate.window.tintColor;
+            imgArrowbooks.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
             [imgArrowbooks setFrame:CGRectMake(booknameWidth + middle, (45-img.size.height)/2, img.size.width, img.size.height)];
             [referenceBtn addSubview:imgArrowbooks];
         }else{
@@ -274,7 +274,7 @@ __VA_ARGS__ \
             if([UIDeviceHardware isOS7Device]){
                 imgArrowChapter = [[TintedImageView alloc] initWithImage:img];
                 MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-                imgArrowChapter.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
+                imgArrowChapter.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;//[UIColor redColor]; =
                 [imgArrowChapter setFrame:CGRectMake(chapterwidth+middleC, (45-img.size.height)/2, img.size.width, img.size.height)];
                 
                 /*if(1 == self.selectedBook.numOfChapters){
@@ -323,7 +323,7 @@ __VA_ARGS__ \
             
             imgArrowPrevious = [[TintedImageView alloc] initWithImage:prev];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            imgArrowPrevious.tintColor = appDelegate.window.tintColor;
+            imgArrowPrevious.tintColor = [UIColor defaultWindowColor];//+20140312  appDelegate.window.tintColor;
             if(self.chapterId-1 < 1){//bookindex == 1 &&
                 imgArrowPrevious.alpha = .3;
             }else{
@@ -374,7 +374,7 @@ __VA_ARGS__ \
             
             imgArrowNext = [[TintedImageView alloc] initWithImage:next];
             MalayalamBibleAppDelegate *appDelegate =   [[UIApplication sharedApplication] delegate];
-            imgArrowNext.tintColor = appDelegate.window.tintColor;//[UIColor redColor]; =
+            imgArrowNext.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;//[UIColor redColor]; =
             if(self.chapterId+1 > self.selectedBook.numOfChapters){//bookindex == 66 &&
                 imgArrowNext.alpha = .3;
             }else{
@@ -3301,7 +3301,7 @@ IF_IOS5_OR_GREATER(
             
             lbl.textColor = [UIColor blackColor];
             [toolBarShare.layer setBorderWidth:.7];
-            [toolBarShare.layer setBorderColor:appDelegate.window.tintColor.CGColor];
+            [toolBarShare.layer setBorderColor:[UIColor defaultWindowColor].CGColor];//+20140312 appDelegate.window.tintColor.CGColor];
         }else{
             lbl.textColor = [UIColor whiteColor];
             //[toolBarShare.layer setBorderWidth:.01];
@@ -3562,20 +3562,20 @@ IF_IOS5_OR_GREATER(
     [self.tableViewVerses setNeedsDisplay];
     
     
-    imgArrowNext.tintColor = appDelegate.window.tintColor;
+    imgArrowNext.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     if(imgArrowNext.alpha != .3f){
         imgArrowNext.alpha = 1.0;
     }
-    imgArrowPrevious.tintColor = appDelegate.window.tintColor;
+    imgArrowPrevious.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     if(imgArrowPrevious.alpha != .3f){
         imgArrowPrevious.alpha = 1.0;
     }
-    imgArrowbooks.tintColor = appDelegate.window.tintColor;
+    imgArrowbooks.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     imgArrowbooks.alpha = 1.0;
     
     
     if(imgArrowChapter){
-        imgArrowChapter.tintColor = appDelegate.window.tintColor;
+        imgArrowChapter.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
         imgArrowChapter.alpha = 1.0;
     }
 }
@@ -3590,20 +3590,20 @@ IF_IOS5_OR_GREATER(
     MalayalamBibleAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.window.tintColor = nil;
     
-    imgArrowNext.tintColor = appDelegate.window.tintColor;
+    imgArrowNext.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     if(imgArrowNext.alpha != .3f){
         imgArrowNext.alpha = 1.0;
     }
-    imgArrowPrevious.tintColor = appDelegate.window.tintColor;
+    imgArrowPrevious.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     if(imgArrowPrevious.alpha != .3f){
         imgArrowPrevious.alpha = 1.0;
     }
-    imgArrowbooks.tintColor = appDelegate.window.tintColor;
+    imgArrowbooks.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
     imgArrowbooks.alpha = 1.0;
     
     
     if(imgArrowChapter){
-        imgArrowChapter.tintColor = appDelegate.window.tintColor;
+        imgArrowChapter.tintColor = [UIColor defaultWindowColor];//+20140312 appDelegate.window.tintColor;
         imgArrowChapter.alpha = 1.0;
     }
 }
